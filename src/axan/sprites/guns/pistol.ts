@@ -20,7 +20,7 @@ export class Pistol extends Gun implements GunProps {
     size: 10,
     gravity: false,
     key: 'projectile',
-    anim: 'projectile'
+    anim: 'beam2'
   };
 
   scene: DungeonScene;
@@ -56,7 +56,8 @@ export class Pistol extends Gun implements GunProps {
           .setData('dmg', this.damage)
           .setData('onCollide', this.projectileCollide) as Phaser.GameObjects.Sprite;
 
-      projectile.anims.play('projectile');
+      projectile.anims.play('beam1');
+      projectile.flipX = this.flipX;
 
       projectile.body
         .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)

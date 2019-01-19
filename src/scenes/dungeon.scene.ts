@@ -181,12 +181,25 @@ export class DungeonScene extends Phaser.Scene {
       }, undefined, this);
     this.anims.create({
       key: 'projectile',
-      frames: [{ key: 'projectiles', frame: 0 }]
+      frames: [{ key: 'projectiles', frame: 1 }]
     });
     this.anims.create({
       key: 'projectile',
-      frames: [{ key: 'beam', frame: 10 }]
+      frames: [{ key: 'beam', frame: 2 }]
     });
+
+  [
+    {
+      key: 'beam1',
+      defaultTextureKey: 'projectiles',
+      frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
+    },
+    {
+      key: 'beam2',
+      defaultTextureKey: 'projectiles',
+      frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
+    },
+  ].forEach(anim => this.anims.create(anim))
   }
 
   setupEnemies() {

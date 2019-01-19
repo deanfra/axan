@@ -21,7 +21,7 @@ export class Smg extends Pistol implements GunProps {
     size: 5,
     gravity: false,
     key: 'projectile',
-    anim: 'projectile'
+    anim: 'beam1'
   };
 
   constructor(scene, x, y, key = 'guns', frame) {
@@ -36,10 +36,12 @@ export class Smg extends Pistol implements GunProps {
     const projectile =
       this.scene.projectileGroup.create(x, this.y, 'projectiles', this.projectile.key)
         .setData('bypass', true)
+        .setData('flipX', this.flipX)
         .setData('dmg', this.damage)
         .setData('onCollide', this.projectileCollide) as Phaser.GameObjects.Sprite;
 
-    projectile.anims.play('projectile');
+    projectile.anims.play('beam2');
+    projectile.flipX = this.flipX;
 
     projectile.body
       .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
@@ -55,6 +57,7 @@ export class Smg extends Pistol implements GunProps {
       angle: this.flipX ? this.recoil : -this.recoil,
     });
     this.shootTimer = 0;
+
     if (this.scene.player.body.onFloor()) {
       // this.scene.player.x += this.flipX ? 1 : -1;
       // this.scene.player.body.setVelocityX(this.flipX ? this.pushBackFloor : -this.pushBackFloor);
