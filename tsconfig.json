@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": false,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "typings"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "assets",
+    "scripts",
+    "**/*.d.ts"
+  ]
+}
