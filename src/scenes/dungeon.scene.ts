@@ -45,9 +45,9 @@ export class DungeonScene extends Phaser.Scene {
   create(): void {
 
     console.log("Welcome to "+RandomPlanetName());
-    this.rooms = new Rooms(this.scene);
+    this.rooms = new Rooms(this);
     this.makeTiles();
-    this.rooms.setupRooms(this.groundLayer);
+    this.rooms.setupRooms();
     this.setupRoomVisibility();
     this.setupPlayer();
     this.setupCamera();
@@ -188,18 +188,18 @@ export class DungeonScene extends Phaser.Scene {
       frames: [{ key: 'beam', frame: 2 }]
     });
 
-  [
-    {
-      key: 'beam1',
-      defaultTextureKey: 'projectiles',
-      frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
-    },
-    {
-      key: 'beam2',
-      defaultTextureKey: 'projectiles',
-      frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
-    },
-  ].forEach(anim => this.anims.create(anim))
+    [
+      {
+        key: 'beam1',
+        defaultTextureKey: 'projectiles',
+        frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
+      },
+      {
+        key: 'beam2',
+        defaultTextureKey: 'projectiles',
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
+      },
+    ].forEach(anim => this.anims.create(anim))
   }
 
   setupEnemies() {

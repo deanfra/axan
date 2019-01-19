@@ -144,7 +144,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityY(-150);
       } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
         this.jumpTimer += delta;
-        this.body.setVelocityY(-150);
+        this.body.setVelocityY(-160);
       } else if (this.body.onCeiling()) {
         this.jumpTimer = 301;
       }

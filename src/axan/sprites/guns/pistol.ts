@@ -3,6 +3,7 @@ import { DungeonScene } from 'scenes/dungeon.scene';
 
 export class Pistol extends Gun implements GunProps {
   static id = 'PISTOL';
+  private direction: string;
   id = 'PISTOL';
   sfx = 'pistolshoot';
 
@@ -33,7 +34,13 @@ export class Pistol extends Gun implements GunProps {
   update(time: number, delta: number): void {
     const player = this.scene.player;
 
-    this.x = this.flipX ? player.x - 8 : player.x + 8;
+    // refactor
+    if (!this.scene.player.inputs.up || !this.scene.player.inputs.down) {
+      this.x = this.flipX ? player.x - 8 : player.x + 8;
+    } else {
+      this.x = player.x;
+    }
+
     this.y = player.isCrouching ? player.y + 6 : player.y - 4;
     this.flipX = player.flipX;
     this.setDepth(this.flipX ? 11 : 9);
@@ -45,8 +52,12 @@ export class Pistol extends Gun implements GunProps {
       // if (shake) {
       //   this.scene.minishake();
       // }
-
-      const x = this.flipX ? this.x - 16 : this.x + 16;
+      
+      // refactor
+      let x = this.x;
+      if (!this.scene.player.inputs.up && !this.scene.player.inputs.down) {
+        x = this.flipX ? this.x - 16 : this.x + 16;
+      }
 
       this.canShoot = false;
       this.released = false;
@@ -57,10 +68,23 @@ export class Pistol extends Gun implements GunProps {
           .setData('onCollide', this.projectileCollide) as Phaser.GameObjects.Sprite;
 
       projectile.anims.play('beam1');
+      
+      // shoot direction
       projectile.flipX = this.flipX;
+      if(this.scene.player.inputs.up) {
+        projectile.angle = 90;
+        projectile.body
+          .setVelocityY(-this.projectile.velocity)
+      } else if (this.scene.player.inputs.down && !this.scene.player.body.onFloor()) {
+        projectile.angle = 90;
+        projectile.body
+          .setVelocityY(this.projectile.velocity)
+      } else {
+        projectile.body
+          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+      }
 
       projectile.body
-        .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
         .setSize(this.projectile.size, this.projectile.size)
         .allowGravity = this.projectile.gravity;
 

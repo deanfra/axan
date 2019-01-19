@@ -1,14 +1,18 @@
-import RoomInstance from "../interfaces/room-instance";
 // import { TileType } from "../interfaces/tile-types";
+// import * as Cellular from "cellular-dungeon";
+import RoomInstance from "../interfaces/room-instance";
 import Door from "./environment/door";
 import None from "./environment/none";
 import Wall from "./environment/wall";
 import Tile from "./environment/tile";
-import * as Cellular from "cellular-dungeon";
+
+import { Piq } from "./sprites/enemies/piq";
+import { DungeonScene } from "scenes/dungeon.scene";
 
 export default class Room {
   public readonly room: RoomInstance;
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  private enemyGroup: Phaser.GameObjects.Group;
   public tiles: Array<Array<Tile|Wall>>;
   public id: number;
   public x: number;
@@ -20,8 +24,9 @@ export default class Room {
   public right: number;
   public bottom: number;
   private isSetup: boolean;
+  private scene: DungeonScene;
 
-  constructor(room, groundLayer) {
+  constructor(room, scene) {
     this.room = room;
     this.id = room.id;
     this.x = room.x;
@@ -33,7 +38,8 @@ export default class Room {
     this.right = room.right;
     this.bottom = room.bottom;
 
-    this.groundLayer = groundLayer;
+    this.groundLayer = scene.groundLayer;
+    this.enemyGroup = scene.enemyGroup;
   }
 
   setup(): Room {
@@ -43,6 +49,9 @@ export default class Room {
       const collisionArray = Array.apply(null, { length: 22 }).map(Number.call, Number);
       this.groundLayer.setCollision(collisionArray, true);
       this.isSetup = true;
+      if (this.enemyGroup) {
+        this.enemyGroup.add(new Piq(this, this.scene.map.tileToWorldX(this.room.centerX), this.scene.map.tileToWorldX(this.room.centerY), Math.floor(Math.random() * 2)), true);
+      }
     }
     return this;
   }

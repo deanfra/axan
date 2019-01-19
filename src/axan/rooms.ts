@@ -2,6 +2,7 @@ import * as Dungeon from "@mikewesthad/dungeon";
 import Room from "./room";
 import RoomInstance from "../interfaces/room-instance.js";
 import DungeonFactoryOutput from "../interfaces/dungeon-factory-output";
+import { DungeonScene } from "scenes/dungeon.scene";
 
 // TODO: Store room instances against this
 
@@ -14,7 +15,7 @@ export default class Rooms {
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public readonly rooms: Array<Room>;
 
-  constructor(scene) {
+  constructor(scene: DungeonScene) {
     this.dungeonInstance = new Dungeon({
       width: 200,
       height: 100,
@@ -35,9 +36,10 @@ export default class Rooms {
     this.groundLayer = scene.groundLayer;
   }
   
-  setupRooms(groundLayer): void {
+  setupRooms(): void {
+    const { groundLayer, enemyGroup } = this.scene;
     this.dungeonInstance.rooms.forEach((roomInstance: RoomInstance) => {
-      const room = new Room(roomInstance, groundLayer);
+      const room = new Room(roomInstance, this.scene);
       this.rooms.push(room);
       // room.setup();
     });

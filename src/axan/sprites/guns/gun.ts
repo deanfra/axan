@@ -33,12 +33,14 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
 
   shootTimer: number;
 
+  // TODO: lots of shared code can go in this class
   constructor(scene, x, y, key = 'guns', frame?) {
     super(scene, x, y, key, frame);
     this.scene.physics.world.enable(this as Phaser.GameObjects.Sprite);
   }
   
   shoot(...args: any[]): undefined | number {
+    console.log('super shoot')
     return;
   }
 
