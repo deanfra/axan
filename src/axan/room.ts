@@ -7,6 +7,7 @@ import Wall from "./environment/wall";
 import Tile from "./environment/tile";
 
 import { Piq } from "./sprites/enemies/piq";
+import { Vroll } from "./sprites/enemies/vroll";
 import { DungeonScene } from "scenes/dungeon.scene";
 
 export default class Room {
@@ -57,10 +58,12 @@ export default class Room {
 
   addEnemies(): void {
     
-    const worldX = this.scene.map.tileToWorldX(this.room.x+1) // + (this.room.width/2);
-    const worldY = this.scene.map.tileToWorldY(this.room.y+1) // + (this.room.height/2);
+    const worldX = this.scene.map.tileToWorldX(this.room.x + (this.room.width/2));
+    const worldY = this.scene.map.tileToWorldY(this.room.y + (this.room.height/2));
 
-    this.enemyGroup.add(new Piq(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
+    const EnemyClass = (Math.random()*2>1) ? Vroll : Piq;
+
+    this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
   }
   
   instantiateTiles(): void {

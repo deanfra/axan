@@ -226,6 +226,18 @@ export class DungeonScene extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNames('enemies', { start: 0, end: 3 })
     });
+    this.anims.create({
+      key: 'vroll',
+      frameRate: 4,
+      repeat: -1,
+      frames: this.anims.generateFrameNames('enemies', { start: 4, end: 5 })
+    });
+    this.anims.create({
+      key: 'vroll-down',
+      frameRate: 4,
+      repeat: -1,
+      frames: this.anims.generateFrameNames('enemies', { start: 6, end: 7 })
+    });
 
     // this.enemyGroup.add(new Piq(this, this.player.x - 20, this.player.y, Math.floor(Math.random() * 2)), true);
   }
