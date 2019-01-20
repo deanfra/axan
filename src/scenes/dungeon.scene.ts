@@ -6,6 +6,11 @@ import RoomVisibility from "../axan/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/sprites/enemies";
 
+// The responsibility of the Dungeon (main) should be to:
+// - Manage camera
+// - Manage player
+// - Preload assets
+
 // Tasks
 // - Cleanup projectile code
 // - Cleanup pickup code

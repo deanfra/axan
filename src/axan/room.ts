@@ -1,5 +1,3 @@
-// import { TileType } from "../interfaces/tile-types";
-// import * as Cellular from "cellular-dungeon";
 import RoomInstance from "../interfaces/room-instance";
 import Door from "./environment/door";
 import None from "./environment/none";
@@ -9,6 +7,10 @@ import Tile from "./environment/tile";
 import { Piq } from "./sprites/enemies/piq";
 import { Vroll } from "./sprites/enemies/vroll";
 import { DungeonScene } from "scenes/dungeon.scene";
+
+// The responsibility of a Room should be to:
+// - Place layout, enemies & items
+// - Retrieve room state
 
 export default class Room {
   public readonly room: RoomInstance;

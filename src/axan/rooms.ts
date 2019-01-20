@@ -4,7 +4,11 @@ import RoomInstance from "../interfaces/room-instance.js";
 import DungeonFactoryOutput from "../interfaces/dungeon-factory-output";
 import { DungeonScene } from "scenes/dungeon.scene";
 
-// TODO: Store room instances against this
+// The resposibility of the Rooms (level) object should be to
+// - Contain all room instances
+// - Determine Room type/properties
+// - Manage room state
+// - Destroy and recreate
 
 export default class Rooms {
   public readonly dungeonInstance: DungeonFactoryOutput;
