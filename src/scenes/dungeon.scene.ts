@@ -43,18 +43,17 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
-
     console.log("Welcome to "+RandomPlanetName());
     this.rooms = new Rooms(this);
     this.makeTiles();
-    this.rooms.setupRooms();
     this.setupRoomVisibility();
+    this.setupBackground();
+    this.setupEnemyGroup();
+    this.rooms.setupRooms();
     this.setupPlayer();
     this.setupCamera();
-    this.setupBackground();
     this.setupGuns();
     this.setupProjectiles();
-    this.setupEnemies();
 
   }
 
@@ -105,7 +104,10 @@ export class DungeonScene extends Phaser.Scene {
     const playerY = this.map.tileToWorldY(bottom-1);
 
     this.player = new Player(this, playerX, playerY, 'player', this.groundLayer);
+    // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
+    // player / enemy hit detection
+    this.physics.add.overlap(this.player, this.enemyGroup as any, this.enemyHit);
     this.player.anims.play('begin');
     this.add.existing(this.player);
   }
@@ -188,6 +190,14 @@ export class DungeonScene extends Phaser.Scene {
       frames: [{ key: 'beam', frame: 2 }]
     });
 
+    // projectile / enemy hit detection
+    this.physics.add.overlap(
+      this.projectileGroup as any,
+      this.enemyGroup as any,
+      this.enemyShot,
+      undefined, this
+    );
+
     [
       {
         key: 'beam1',
@@ -202,15 +212,13 @@ export class DungeonScene extends Phaser.Scene {
     ].forEach(anim => this.anims.create(anim))
   }
 
-  setupEnemies() {
+  setupEnemyGroup() {
     this.enemyGroup = this.add.group();
     this.killedEnemies = this.add.group();
 
     // world / enemy hit detection
     this.physics.add.collider(this.enemyGroup as any, this.groundLayer);
     this.physics.add.collider(this.killedEnemies as any, this.groundLayer);
-    // enemy / player hit detection
-    this.physics.add.overlap(this.enemyGroup as any, this.player, this.enemyHit);
 
     this.anims.create({
       key: 'piq',
@@ -219,15 +227,7 @@ export class DungeonScene extends Phaser.Scene {
       frames: this.anims.generateFrameNames('enemies', { start: 0, end: 3 })
     });
 
-    // projectile / enemy hit detection
-    this.physics.add.overlap(
-      this.projectileGroup as any,
-      this.enemyGroup as any,
-      this.enemyShot,
-      undefined, this
-    );
-
-    this.enemyGroup.add(new Piq(this, this.player.x - 20, this.player.y, Math.floor(Math.random() * 2)), true);
+    // this.enemyGroup.add(new Piq(this, this.player.x - 20, this.player.y, Math.floor(Math.random() * 2)), true);
   }
 
   enemyHit = (enemy, player) => {

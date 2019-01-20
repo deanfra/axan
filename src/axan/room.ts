@@ -40,6 +40,7 @@ export default class Room {
 
     this.groundLayer = scene.groundLayer;
     this.enemyGroup = scene.enemyGroup;
+    this.scene = scene;
   }
 
   setup(): Room {
@@ -49,11 +50,17 @@ export default class Room {
       const collisionArray = Array.apply(null, { length: 22 }).map(Number.call, Number);
       this.groundLayer.setCollision(collisionArray, true);
       this.isSetup = true;
-      if (this.enemyGroup) {
-        this.enemyGroup.add(new Piq(this, this.scene.map.tileToWorldX(this.room.centerX), this.scene.map.tileToWorldX(this.room.centerY), Math.floor(Math.random() * 2)), true);
-      }
+      this.addEnemies();
     }
     return this;
+  }
+
+  addEnemies(): void {
+    
+    const worldX = this.scene.map.tileToWorldX(this.room.x+1) // + (this.room.width/2);
+    const worldY = this.scene.map.tileToWorldY(this.room.y+1) // + (this.room.height/2);
+
+    this.enemyGroup.add(new Piq(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
   }
   
   instantiateTiles(): void {
