@@ -66,6 +66,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
       shoot: this.keys.x.isDown
     };
 
+    // crouch walking
+    if (this.inputs.down && (this.keys.left.isDown || this.keys.right.isDown)) {
+      this.body.setSize(16, 30)
+    } else {
+      this.body.setSize(16, 40)
+    }
     
     if (this.body.onFloor() && this.isFalling) {
       this.isFalling = false;

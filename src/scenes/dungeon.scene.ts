@@ -4,7 +4,7 @@ import Room from "../axan/room";
 import Rooms from "../axan/rooms";
 import RoomVisibility from "../axan/room-visibility";
 import RandomPlanetName from "../util/name-gen";
-import { Enemy, Piq } from "axan/sprites/enemies";
+import { Enemy } from "axan/sprites/enemies";
 
 // Tasks
 // - Cleanup projectile code
@@ -24,6 +24,7 @@ export class DungeonScene extends Phaser.Scene {
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
+  public pickupGroup: Phaser.GameObjects.Group;
 
   public player: Player;
   public background: Background;
@@ -48,11 +49,14 @@ export class DungeonScene extends Phaser.Scene {
     this.makeTiles();
     this.setupRoomVisibility();
     this.setupBackground();
+    // push these into a room's constructor
     this.setupEnemyGroup();
-    this.rooms.setupRooms();
+    this.setupPickupGroup();
+    this.setupPickups();
+    this.rooms.instantiateRooms();
     this.setupPlayer();
     this.setupCamera();
-    this.setupGuns();
+    // Push these into the room's setup function
     this.setupProjectiles();
 
   }
@@ -97,7 +101,6 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   setupPlayer() {
-    // place player in the top most room
     const { centerX, bottom } = this.rooms.startRoom.room;
     
     const playerX = this.map.tileToWorldX(centerX);
@@ -131,24 +134,13 @@ export class DungeonScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     // this.cameraConstrainTo(this.rooms.rooms[0]);
   }
+  
+  setupPickupGroup() {
+    this.pickupGroup = this.add.group();
+    this.physics.add.overlap(this.pickupGroup as any, this.player, this.pickupGet);  
+  }
 
-  setupGuns() {
-    const smgPickup: Phaser.GameObjects.Sprite = this.add.sprite(this.player.x - 40, this.player.y + 10, 'beams');
-    smgPickup.setDepth(10);
-    smgPickup.name = 'smg';
-    this.physics.world.enable(smgPickup, Phaser.Physics.Arcade.DYNAMIC_BODY);
-    this.physics.add.overlap(smgPickup, this.player, this.pickupGet);
-    this.physics.add.collider(smgPickup, this.groundLayer);
-    smgPickup.body.allowGravity = false;
-
-    const pistolPickup: Phaser.GameObjects.Sprite = this.add.sprite(this.player.x + 40, this.player.y + 10, 'beams');
-    pistolPickup.setDepth(10);
-    pistolPickup.name = 'pistol';
-    this.physics.world.enable(pistolPickup, Phaser.Physics.Arcade.DYNAMIC_BODY);
-    this.physics.add.overlap(pistolPickup, this.player, this.pickupGet);
-    this.physics.add.collider(pistolPickup, this.groundLayer);
-    pistolPickup.body.allowGravity = false;
-
+  setupPickups() {
     [
       {
         key: 'charge',
@@ -165,8 +157,6 @@ export class DungeonScene extends Phaser.Scene {
       }
     ].forEach(anim => this.anims.create(anim));
 
-    smgPickup.play('charge');
-    pistolPickup.play('ice');
   }
 
   setupProjectiles() {
@@ -181,22 +171,9 @@ export class DungeonScene extends Phaser.Scene {
       (proj) => {
         if (proj.active && proj.getData('onCollide')) { proj.getData('onCollide')(proj, this); }
       }, undefined, this);
-    this.anims.create({
-      key: 'projectile',
-      frames: [{ key: 'projectiles', frame: 1 }]
-    });
-    this.anims.create({
-      key: 'projectile',
-      frames: [{ key: 'beam', frame: 2 }]
-    });
 
     // projectile / enemy hit detection
-    this.physics.add.overlap(
-      this.projectileGroup as any,
-      this.enemyGroup as any,
-      this.enemyShot,
-      undefined, this
-    );
+    this.physics.add.overlap( this.projectileGroup as any, this.enemyGroup as any, this.enemyShot, undefined, this);
 
     [
       {
@@ -238,8 +215,6 @@ export class DungeonScene extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNames('enemies', { start: 6, end: 7 })
     });
-
-    // this.enemyGroup.add(new Piq(this, this.player.x - 20, this.player.y, Math.floor(Math.random() * 2)), true);
   }
 
   enemyHit = (enemy, player) => {

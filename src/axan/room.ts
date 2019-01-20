@@ -52,18 +52,40 @@ export default class Room {
       this.groundLayer.setCollision(collisionArray, true);
       this.isSetup = true;
       this.addEnemies();
+      this.addPickups();
     }
     return this;
   }
 
   addEnemies(): void {
-    
     const worldX = this.scene.map.tileToWorldX(this.room.x + (this.room.width/2));
     const worldY = this.scene.map.tileToWorldY(this.room.y + (this.room.height/2));
-
     const EnemyClass = (Math.random()*2>1) ? Vroll : Piq;
 
     this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
+  }
+
+  addPickups() {
+    const randomX = Phaser.Math.Between(this.room.x+2, this.room.x+this.room.width-2);
+    const randomY = Phaser.Math.Between(this.room.y+2, this.room.y+this.room.height-2);
+    const worldX = this.scene.map.tileToWorldX(randomX);
+    const worldY = this.scene.map.tileToWorldY(randomY);
+
+    let PickupClass = this.scene.add.sprite(worldX, worldY, 'beams');
+
+    if(Math.random() * 2 > 1) {
+      PickupClass.name = "smg";
+    } else {
+      PickupClass.name = "pistol";
+    }
+
+    PickupClass.setDepth(10);
+    this.scene.physics.world.enable(PickupClass, Phaser.Physics.Arcade.STATIC_BODY);
+    this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.pickupGet);
+    this.scene.physics.add.collider(PickupClass, this.scene.groundLayer);
+    PickupClass.body.allowGravity = false;
+
+    PickupClass.play(PickupClass.name === "smg" ? "ice" : "charge");
   }
   
   instantiateTiles(): void {
@@ -77,9 +99,11 @@ export default class Room {
         if (tileNum === 3) {
           this.tiles[y][x] = new Door(x, y, this);
         } else if (tileNum === 2) {
+          // 20% chance to place a random tile
           if (Math.floor(Math.random() * 10) > 8) {
             this.tiles[y][x] = new Wall(x, y, this);
           } else {
+            // 40% chance to extend tiles into platforms
             const lastTile:Tile = this.tiles[y][x-1];
             if (lastTile.constructor.name === "Wall" && Math.floor(Math.random() * 10) > 6) {
               this.tiles[y][x] = new Wall(x, y, this);

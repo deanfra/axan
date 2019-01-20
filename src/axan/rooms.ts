@@ -36,12 +36,10 @@ export default class Rooms {
     this.groundLayer = scene.groundLayer;
   }
   
-  setupRooms(): void {
-    const { groundLayer, enemyGroup } = this.scene;
+  instantiateRooms(): void {
     this.dungeonInstance.rooms.forEach((roomInstance: RoomInstance) => {
       const room = new Room(roomInstance, this.scene);
       this.rooms.push(room);
-      // room.setup();
     });
     this.startRoom = this.rooms[0];
     this.startRoom.setup();
