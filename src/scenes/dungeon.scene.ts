@@ -43,7 +43,8 @@ export class DungeonScene extends Phaser.Scene {
 
   preload() {
     this.load.image("axan", "../assets/tilesets/16x16-crateria.png");
-    this.load.image("axan", "../assets/tilesets/player.png");
+    this.load.image("axan", "../assets/tilesets/player-atlas.png");
+    // this.load.image("axan", "../assets/tilesets/player.png");
     this.load.image("crateriaSprite", "../assets/tilesets/crateria.png");
     this.load.image("caves", "../assets/tilesets/caves.png");
   }
@@ -116,7 +117,6 @@ export class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.groundLayer);
     // player / enemy hit detection
     this.physics.add.overlap(this.player, this.enemyGroup as any, this.enemyHit);
-    this.player.anims.play('begin');
     this.add.existing(this.player);
   }
 

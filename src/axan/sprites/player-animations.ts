@@ -1,40 +1,85 @@
+// MOVE THIS FILE AND IMAGES INTO THE PLAYER FOLDER
+// it would be good to make all things folderised like modules
+
 export default function (scene): void {
   [
     {
-      key: 'stand',
-      repeat: -1,
-      frameRate: 4,
-      yoyo: true,
-      defaultTextureKey: 'player',
-      frames: scene.anims.generateFrameNames('player', { start: 0, end: 3 })
-    }, {
       key: 'begin',
-      defaultTextureKey: 'player',
-      frames: scene.anims.generateFrameNames('player', { start: 4, end: 4 })
-    }, {
-      key: 'crouch',
+      frameRate: 1,
       repeat: 0,
-      frameRate: 20,
-      defaultTextureKey: 'player',
-      frames: scene.anims.generateFrameNames('player', { start: 5, end: 6 })
-    }, {
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'begin', zeroPad: 2 })
+    },
+    {
       key: 'run',
-      defaultTextureKey: 'player',
+      frameRate: 15,
       repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 8, prefix: 'run', zeroPad: 2 })
+    },
+    {
+      key: 'run-aim',
       frameRate: 15,
-      frames: scene.anims.generateFrameNames('player', { start: 10, end: 19 })
-    }, {
-      key: 'jump-up',
-      defaultTextureKey: 'player',
-      repeat: 0,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 9, prefix: 'run-aim', zeroPad: 2 })
+    },
+    {
+      key: 'run-aim-up',
+      frameRate: 15,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 9, prefix: 'run-aim-up', zeroPad: 2 })
+    },
+    {
+      key: 'run-aim-down',
+      frameRate: 15,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 9, prefix: 'run-aim-down', zeroPad: 2 })
+    },
+    {
+      key: 'stand',
+      frameRate: 4,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 3, prefix: 'breathe', zeroPad: 2 })
+    },
+    {
+      key: 'crouch',
       frameRate: 20,
-      frames: scene.anims.generateFrameNames('player', { start: 20, end: 21 })
-    }, {
-      key: 'jump-down',
-      defaultTextureKey: 'player',
       repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 3, prefix: 'crouch', zeroPad: 2 })
+    },
+    {
+      key: 'jump-up',
+      frameRate: 20,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 2, prefix: 'jump', zeroPad: 2 })
+    },
+    {
+      key: 'jump-down',
       frameRate: 15,
-      frames: scene.anims.generateFrameNames('player', { start: 22, end: 25 })
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 2, end: 5, prefix: 'jump', zeroPad: 2 })
+    },
+    {
+      key: 'jump-aim-up',
+      frameRate: 1,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-up', zeroPad: 2 })
+    },
+    {
+      key: 'jump-aim-up-fwd',
+      frameRate: 1,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-up-fwd', zeroPad: 2 })
+    },
+    {
+      key: 'jump-aim-down',
+      frameRate: 1,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-down', zeroPad: 2 })
+    },
+    {
+      key: 'jump-aim-down-fwd',
+      frameRate: 1,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-down-fwd', zeroPad: 2 })
     }
   ].forEach(anim => scene.anims.create(anim))
 }

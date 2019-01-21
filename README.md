@@ -4,4 +4,4 @@ Hobby platformer wanting to achieve a procedurally generated metroidvania sci-fi
 ## Run
 ```yarn install```
 
-```yarn start```
+```yarn start```

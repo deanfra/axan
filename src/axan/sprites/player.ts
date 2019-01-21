@@ -40,7 +40,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     super(scene, x, y, key);
     this.scene.physics.world.enable(this);
     this.scene.physics.add.collider(this, layer);
-    this.body.setSize(16, 40).setCollideWorldBounds(false);
     this.setDepth(10);
 
     this.keys = scene.input.keyboard.addKeys({
@@ -67,11 +66,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     };
 
     // crouch walking
-    if (this.inputs.down && (this.keys.left.isDown || this.keys.right.isDown)) {
-      this.body.setSize(16, 30)
-    } else {
-      this.body.setSize(16, 40)
-    }
+    // if (this.inputs.down && (this.keys.left.isDown || this.keys.right.isDown)) {
+    //   this.body.setSize(16, 30)
+    // } else {
+    //   this.body.setSize(16, 40)
+    // }
     
     if (this.body.onFloor() && this.isFalling) {
       this.isFalling = false;
@@ -85,6 +84,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     const playerRoom = this.getCurrentRoom();
     this.scene.roomVisibility.checkActiveRoom(playerRoom);
+    if(this.inputs.down) {
+      this.body.setSize(16, 30);
+    } else {
+      this.body.setSize(16, 43);
+    }
   }
 
   getCurrentRoom(): Room {
@@ -98,12 +102,33 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   animation() {
     let anim: string;
-    if (this.body.velocity.y <= 0 && !this.body.onFloor()) {
-      anim = 'jump-up';
-    } else if (this.body.velocity.y > 0) {
-      anim = 'jump-down';
+    const leftOrRight = (this.inputs.left || this.inputs.right);
+
+    // airborne
+    if (!this.body.onFloor()) {
+      if (this.inputs.down && leftOrRight) {
+        anim = 'jump-aim-down-fwd';
+      } else if (this.inputs.up && leftOrRight) {
+        anim = 'jump-aim-up-fwd';
+      } else if (this.inputs.up) {
+        anim = 'jump-aim-up';
+      } else if (this.inputs.down) {
+        anim = 'jump-aim-down';
+      } else if (this.body.velocity.y <= 0) {
+        anim = 'jump-up';
+      } else if (this.body.velocity.y > 0) {
+        anim = 'jump-down';
+      }
+    // running
     } else if (this.body.velocity.x !== 0 && (this.inputs.left || this.inputs.right)) {
-      anim = 'run';
+      if (this.inputs.down) {
+        anim = 'run-aim-down';
+      } else if (this.inputs.up) {
+        anim = 'run-aim-up';
+      } else {
+        anim = 'run';
+      }
+    // crouching
     } else if (this.body.onFloor() && this.body.velocity.x === 0 && this.inputs.down) {
       anim = 'crouch';
     } else if (!this.hasMoved) {
@@ -111,8 +136,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
     } else {
       anim = 'stand';
     }
+
     if (this.anims.getCurrentKey() !== anim) {
-      this.anims.play(anim);
+      console.log(anim)        
+      try {
+        this.anims.play(anim);
+      } catch {
+        console.error("Error playing "+ anim);
+      }
     }
 
   }
