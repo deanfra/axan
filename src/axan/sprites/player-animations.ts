@@ -37,7 +37,15 @@ export default function (scene): void {
       key: 'stand',
       frameRate: 4,
       repeat: -1,
-      frames: scene.anims.generateFrameNames('player', { start: 0, end: 3, prefix: 'breathe', zeroPad: 2 })
+      yoyo: true,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 4, prefix: 'breathe', zeroPad: 2 })
+    },
+    {
+      key: 'stand-aim-up',
+      frameRate: 4,
+      repeat: -1,
+      yoyo: true,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 2, prefix: 'stand-aim-up', zeroPad: 2 })
     },
     {
       key: 'crouch',

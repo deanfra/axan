@@ -131,6 +131,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // crouching
     } else if (this.body.onFloor() && this.body.velocity.x === 0 && this.inputs.down) {
       anim = 'crouch';
+    } else if (this.inputs.up) {
+      anim = 'stand-aim-up';
     } else if (!this.hasMoved) {
       anim = 'begin';
     } else {
