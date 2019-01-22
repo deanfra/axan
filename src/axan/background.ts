@@ -1,4 +1,4 @@
-import { DungeonScene } from '../../scenes/dungeon.scene';
+import { DungeonScene } from '../scenes/dungeon.scene';
 
 export default class Background extends Phaser.GameObjects.TileSprite {
   public scene: DungeonScene;

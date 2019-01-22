@@ -1,6 +1,6 @@
-import { DungeonScene } from '../../scenes/dungeon.scene';
+import { DungeonScene } from '../scenes/dungeon.scene';
 import { Gun, GunFactory } from './guns';
-import Room from "../room";
+import Room from "./rooms/room";
 import createPlayerAnimations from './player-animations';
 
 interface Keys {

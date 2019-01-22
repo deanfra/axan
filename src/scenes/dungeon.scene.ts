@@ -1,10 +1,10 @@
-import Player from '../axan/sprites/player';
-import Background from '../axan/sprites/background';
-import Room from "../axan/room";
-import Rooms from "../axan/rooms";
+import Player from '../axan/player';
+import Background from '../axan/background';
+import Room from "../axan/rooms/room";
+import Rooms from "../axan/level";
 import RoomVisibility from "../axan/room-visibility";
 import RandomPlanetName from "../util/name-gen";
-import { Enemy } from "axan/sprites/enemies";
+import { Enemy } from "axan/enemies";
 
 // The responsibility of the Dungeon (main) should be to:
 // - Manage camera

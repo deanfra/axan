@@ -1,5 +1,5 @@
 import Tile from "./tile";
-import Room from "../room";
+import Room from "../rooms/room";
 
 export default class None extends Tile {
   placeTile(): void {

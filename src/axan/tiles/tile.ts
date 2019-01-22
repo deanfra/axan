@@ -1,4 +1,4 @@
-import Room from "../room";
+import Room from "../rooms/room";
 import Wall from "./wall";
 
 export enum TileType {

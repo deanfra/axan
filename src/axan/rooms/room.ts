@@ -1,11 +1,11 @@
-import RoomInstance from "../interfaces/room-instance";
-import Door from "./environment/door";
-import None from "./environment/none";
-import Wall from "./environment/wall";
-import Tile from "./environment/tile";
+import RoomInstance from "../../interfaces/room-instance";
+import Door from "../tiles/door";
+import None from "../tiles/none";
+import Wall from "../tiles/wall";
+import Tile from "../tiles/tile";
 
-import { Piq } from "./sprites/enemies/piq";
-import { Vroll } from "./sprites/enemies/vroll";
+import { Piq } from "../enemies/piq";
+import { Vroll } from "../enemies/vroll";
 import { DungeonScene } from "scenes/dungeon.scene";
 
 // The responsibility of a Room should be to:
