@@ -33,15 +33,31 @@ export class Pistol extends Gun implements GunProps {
 
   update(time: number, delta: number): void {
     const player = this.scene.player;
+    const { up, down } = player.inputs;
+    this.y = player.isCrouching ? player.y - 10 : player.y - 25;
 
     // refactor
-    if (!this.scene.player.inputs.up || !this.scene.player.inputs.down) {
+    if (!player.inputs.up && !player.inputs.down) {
       this.x = this.flipX ? player.x - 8 : player.x + 8;
+    } else if(up && player.isMoving) {
+      // Run aim up
+      this.y = player.y - 50;
+      this.x = this.flipX ? player.x - 14 : player.x + 14;
+    } else if (up) {
+      // Standing aim up
+      this.y = player.y - 50;
+      this.x = player.x;
+    } else if (down && player.isMoving) {
+      // Run aim down
+      this.y = player.y - 20;
+      this.x = this.flipX ? player.x - 14 : player.x + 14;
+    } else if (down && !player.body.onFloor()) {
+      this.y = player.y;
+      this.x = player.x;
     } else {
       this.x = player.x;
     }
 
-    this.y = player.isCrouching ? player.y + 6 : player.y - 4;
     this.flipX = player.flipX;
     this.setDepth(this.flipX ? 11 : 9);
     this.shootTimer += delta;
@@ -49,12 +65,11 @@ export class Pistol extends Gun implements GunProps {
 
   shoot(shake = false) {
     if (this.canShoot) {
-      // if (shake) {
-      //   this.scene.minishake();
-      // }
-      
       // refactor
       let x = this.x;
+      const player = this.scene.player;
+      const {up, down} = player.inputs;
+
       if (!this.scene.player.inputs.up && !this.scene.player.inputs.down) {
         x = this.flipX ? this.x - 16 : this.x + 16;
       }
@@ -71,11 +86,23 @@ export class Pistol extends Gun implements GunProps {
       
       // shoot direction
       projectile.flipX = this.flipX;
-      if(this.scene.player.inputs.up) {
+      if(up && player.isMoving) {
+        projectile.angle = this.flipX ? 45 : -45;
+        projectile.body
+          .setVelocityY(-this.projectile.velocity)
+        projectile.body
+          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+      } else if(down && player.isMoving) {
+        projectile.angle = this.flipX ? -45 : 45;
+        projectile.body
+          .setVelocityY(this.projectile.velocity)
+        projectile.body
+          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+      } else if(up) {
         projectile.angle = 90;
         projectile.body
           .setVelocityY(-this.projectile.velocity)
-      } else if (this.scene.player.inputs.down && !this.scene.player.body.onFloor()) {
+      } else if (down && !player.body.onFloor()) {
         projectile.angle = 90;
         projectile.body
           .setVelocityY(this.projectile.velocity)

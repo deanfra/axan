@@ -29,15 +29,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
   // timers
   jumpTimer = 0;
   shootTimer = 0;
+  animTimer = 0;
 
   // states
   isShooting = false;
   isJumping = false;
   isFalling = false;
+  public isMoving = false;
   public isCrouching = false;
+  public isRunning = false;
 
   constructor(scene, x, y, key, layer) {
     super(scene, x, y, key);
+    this.setOrigin(0.5, .8);
     this.scene.physics.world.enable(this);
     this.scene.physics.add.collider(this, layer);
     this.setDepth(10);
@@ -65,18 +69,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
       shoot: this.keys.x.isDown
     };
 
-    // crouch walking
-    // if (this.inputs.down && (this.keys.left.isDown || this.keys.right.isDown)) {
-    //   this.body.setSize(16, 30)
-    // } else {
-    //   this.body.setSize(16, 40)
-    // }
-    
     if (this.body.onFloor() && this.isFalling) {
       this.isFalling = false;
     }
+    const leftOrRight = (this.inputs.left || this.inputs.right);
+
     this.isFalling = this.body.velocity.y > 50;
     this.isCrouching = (this.body.onFloor() && this.inputs.down)
+    this.isMoving = (this.body.velocity.x !== 0 && leftOrRight);
+    this.isRunning = (this.body.onFloor() && this.isMoving)
+    this.isJumping = !this.body.onFloor();
 
     this.animation();
     this.controls(delta);
@@ -84,11 +86,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     const playerRoom = this.getCurrentRoom();
     this.scene.roomVisibility.checkActiveRoom(playerRoom);
-    if(this.inputs.down) {
-      this.body.setSize(16, 30);
-    } else {
-      this.body.setSize(16, 43);
-    }
+
+  }
+
+  setSizeWithOffset(newX, newY) {
+    this.body.setSize(newX, newY)
+    this.body.setOffset(4, 0);
+    this.setOrigin(0.5, 1);
   }
 
   getCurrentRoom(): Room {
@@ -101,56 +105,70 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   animation() {
+    // Run on every second frame, prevents crazy jitters
+    const {left, right, up, down} = this.inputs;
     let anim: string;
-    const leftOrRight = (this.inputs.left || this.inputs.right);
+    let tileSize: Array<number> = [23, 43];
+    this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
     // airborne
-    if (!this.body.onFloor()) {
-      if (this.inputs.down && leftOrRight) {
+    /*if (!this.body.onFloor()) {
+      if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
-      } else if (this.inputs.up && leftOrRight) {
+      } else if (up && (left || right)) {
         anim = 'jump-aim-up-fwd';
-      } else if (this.inputs.up) {
+      } else if (up) {
         anim = 'jump-aim-up';
-      } else if (this.inputs.down) {
+      } else if (down) {
         anim = 'jump-aim-down';
       } else if (this.body.velocity.y <= 0) {
         anim = 'jump-up';
-      } else if (this.body.velocity.y > 0) {
+      } else if (this.body.velocity.y > 80) {
         anim = 'jump-down';
       }
     // running
-    } else if (this.body.velocity.x !== 0 && (this.inputs.left || this.inputs.right)) {
-      if (this.inputs.down) {
+    } else*/ if (this.body.velocity.x !== 0 && (left || right)) {
+      if (down) {
         anim = 'run-aim-down';
-      } else if (this.inputs.up) {
+      } else if (up) {
+        tileSize = [23, 54];
         anim = 'run-aim-up';
       } else {
         anim = 'run';
       }
     // crouching
-    } else if (this.body.onFloor() && this.body.velocity.x === 0 && this.inputs.down) {
-      anim = 'crouch';
-    } else if (this.inputs.up) {
-      anim = 'stand-aim-up';
-    } else if (!this.hasMoved) {
-      anim = 'begin';
-    } else {
-      anim = 'stand';
+    } else if (this.body.velocity.x === 0) {
+      if(down) {
+        tileSize = [23, 30];
+        anim = 'crouch';
+      } else if (up) {
+        tileSize = [23, 54];
+        anim = 'stand-aim-up';
+      } else if (!this.hasMoved) {
+        anim = 'begin';
+      } else {
+        anim = 'stand';
+      }
     }
+    
 
-    if (this.anims.getCurrentKey() !== anim) {
-      console.log(anim)        
+    if (anim && this.anims.getCurrentKey() !== anim) {
+      console.log(anim)
       try {
         this.anims.play(anim);
       } catch {
         console.error("Error playing "+ anim);
       }
     }
-
+    this.setSizeWithOffset(tileSize[0], tileSize[1]);
   }
 
   controls(delta: number): void {
+
+    if (this.body.onCeiling() && this.body.onFloor()) {
+      console.log('----------------- JAMMED')
+    }
+
     if (this.inputs.shoot) {
       this.hasMoved = true;
       if (this.gun.shootTimer > this.gun.cooldown) {
