@@ -1,4 +1,4 @@
-import Room from "../rooms/room";
+import { Room } from "../rooms/";
 import Wall from "./wall";
 
 export enum TileType {
@@ -42,20 +42,36 @@ export default class Tile {
     };
   }
 
+  getNeighboursTypes(): Array<string> {
+    const neighbours = this.getNeighbours();
+
+    const n = (neighbours.n) ? neighbours.n.constructor.name : "";
+    const s = (neighbours.s) ? neighbours.s.constructor.name : "";
+    const w = (neighbours.w) ? neighbours.w.constructor.name : "";
+    const e = (neighbours.e) ? neighbours.e.constructor.name : "";
+    const nw = (neighbours.nw) ? neighbours.nw.constructor.name : "";
+    const ne = (neighbours.ne) ? neighbours.ne.constructor.name : "";
+    const sw = (neighbours.sw) ? neighbours.sw.constructor.name : "";
+    const se = (neighbours.se) ? neighbours.se.constructor.name : "";
+
+    return [n, ne, e, se, s, sw, w, nw];
+  }
+
+  getNESWNeighboursTypes(): Array<string> {
+    const neighbours = this.getNeighbours();
+
+    const n = (neighbours.n) ? neighbours.n.constructor.name : "";
+    const s = (neighbours.s) ? neighbours.s.constructor.name : "";
+    const w = (neighbours.w) ? neighbours.w.constructor.name : "";
+    const e = (neighbours.e) ? neighbours.e.constructor.name : "";
+
+    return [n, e, s, w];
+  }
+
   // Pass in an array of tile types to check if the neighbours match
   checkAllNeighbours(checkNeighbours: Array<string|null>) {
     this.neighbours = this.neighbours || this.getNeighbours();
-
-    const n =  (this.neighbours.n)  ? this.neighbours.n.constructor.name: "";
-    const s =  (this.neighbours.s)  ? this.neighbours.s.constructor.name: "";
-    const w =  (this.neighbours.w)  ? this.neighbours.w.constructor.name: "";
-    const e =  (this.neighbours.e)  ? this.neighbours.e.constructor.name: "";
-    const nw = (this.neighbours.nw) ? this.neighbours.nw.constructor.name: "";
-    const ne = (this.neighbours.ne) ? this.neighbours.ne.constructor.name: "";
-    const sw = (this.neighbours.sw) ? this.neighbours.sw.constructor.name: "";
-    const se = (this.neighbours.se) ? this.neighbours.se.constructor.name : "";
-
-    const actualNeighbours = [n, ne, e, se, s, sw, w, nw];
+    const actualNeighbours = this.getNeighboursTypes();
 
     return checkNeighbours.every((tileName, i) => {
       // Basically stringifies nulls so we can call split
@@ -68,13 +84,7 @@ export default class Tile {
 
   checkNESWNeighbours(checkNeighbours: Array<string|null>) {
     this.neighbours = this.neighbours || this.getNeighbours();
-
-    const n =  (this.neighbours.n)  ? this.neighbours.n.constructor.name: "";
-    const s =  (this.neighbours.s)  ? this.neighbours.s.constructor.name: "";
-    const w =  (this.neighbours.w)  ? this.neighbours.w.constructor.name: "";
-    const e =  (this.neighbours.e)  ? this.neighbours.e.constructor.name: "";
-
-    const actualNeighbours = [n, e, s, w];
+    const actualNeighbours = this.getNESWNeighboursTypes();
 
     return checkNeighbours.every((tileName, i) => {
       let actualTile = actualNeighbours[i];

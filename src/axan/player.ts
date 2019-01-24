@@ -1,6 +1,6 @@
 import { DungeonScene } from '../scenes/dungeon.scene';
 import { Gun, GunFactory } from './guns';
-import Room from "./rooms/room";
+import { Room } from "./rooms/";
 import createPlayerAnimations from './player-animations';
 
 interface Keys {
@@ -108,7 +108,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // Run on every second frame, prevents crazy jitters
     const {left, right, up, down} = this.inputs;
     let anim: string;
-    let tileSize: Array<number> = [23, 43];
+    let tileSize: Array<number> = [16, 43];
     this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
     // airborne
@@ -129,9 +129,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // running
     } else*/ if (this.body.velocity.x !== 0 && (left || right)) {
       if (down) {
+        tileSize = [16, 28];
         anim = 'run-aim-down';
       } else if (up) {
-        tileSize = [23, 54];
+        tileSize = [16, 54];
         anim = 'run-aim-up';
       } else {
         anim = 'run';
@@ -139,10 +140,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // crouching
     } else if (this.body.velocity.x === 0) {
       if(down) {
-        tileSize = [23, 30];
+        tileSize = [16, 28];
         anim = 'crouch';
       } else if (up) {
-        tileSize = [23, 54];
+        tileSize = [16, 54];
         anim = 'stand-aim-up';
       } else if (!this.hasMoved) {
         anim = 'begin';
@@ -153,23 +154,27 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
 
     if (anim && this.anims.getCurrentKey() !== anim) {
-      console.log(anim)
+      // console.log(anim)
       try {
         this.anims.play(anim);
       } catch {
         console.error("Error playing "+ anim);
       }
     }
+    if(down) {
+      tileSize = [16, 28];
+    }
     this.setSizeWithOffset(tileSize[0], tileSize[1]);
   }
 
   controls(delta: number): void {
+    const { left, right, up, down, shoot, jump } = this.inputs;
 
     if (this.body.onCeiling() && this.body.onFloor()) {
       console.log('----------------- JAMMED')
     }
 
-    if (this.inputs.shoot) {
+    if (shoot) {
       this.hasMoved = true;
       if (this.gun.shootTimer > this.gun.cooldown) {
         this.knockback = this.shoot();
@@ -182,11 +187,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.knockback = 0;
     }
 
-    if (this.inputs.left && !this.inputs.right) {
+    if (left && !right) {
       this.hasMoved = true;
       this.body.setVelocityX(-this.runSpeed + this.knockback);
       this.flipX = true;
-    } else if (this.inputs.right && !this.inputs.left) {
+    } else if (right && !left) {
       this.hasMoved = true;
       this.body.setVelocityX(this.runSpeed + this.knockback);
       this.flipX = false;
@@ -194,17 +199,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.body.setVelocityX(this.knockback);
     }
 
-    if (this.inputs.jump) {
+    if (jump) {
       this.hasMoved = true;
-      if (this.body.onFloor() && this.jumpTimer === 0) {
+      // if (this.body.onFloor() && this.jumpTimer === 0) {
         this.jumpTimer = 1;
         this.body.setVelocityY(-150);
-      } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
-        this.jumpTimer += delta;
-        this.body.setVelocityY(-160);
-      } else if (this.body.onCeiling()) {
-        this.jumpTimer = 301;
-      }
+      // } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
+      //   this.jumpTimer += delta;
+      //   this.body.setVelocityY(-160);
+      // } else if (this.body.onCeiling()) {
+      //   this.jumpTimer = 301;
+      // }
     } else {
       this.jumpTimer = 0;
     }

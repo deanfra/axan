@@ -1,6 +1,7 @@
 import * as Dungeon from "@mikewesthad/dungeon";
-import Room from "./rooms/room";
-import RoomInstance from "../interfaces/room-instance.js";
+import { Room } from "./rooms/.";
+import RoomFactory from "./rooms/room-factory";
+import { RoomInstance } from "../interfaces/room-instance.js";
 import DungeonFactoryOutput from "../interfaces/dungeon-factory-output";
 import { DungeonScene } from "scenes/dungeon.scene";
 
@@ -42,7 +43,7 @@ export default class Level {
   
   instantiateRooms(): void {
     this.dungeonInstance.rooms.forEach((roomInstance: RoomInstance) => {
-      const room = new Room(roomInstance, this.scene);
+      const room = RoomFactory.createRoom(roomInstance, this.scene);
       this.rooms.push(room);
     });
     this.startRoom = this.rooms[0];

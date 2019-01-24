@@ -32,7 +32,7 @@ export const guns: Array<typeof Gun> = [
 ];
 
 export * from './gun';
-export * from './gunfactory';
+export * from './gun-factory';
 export * from './pistol';
 export * from './smg';
 // export * from './minigun';

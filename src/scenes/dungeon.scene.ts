@@ -1,8 +1,8 @@
 import Player from '../axan/player';
 import Background from '../axan/background';
-import Room from "../axan/rooms/room";
+import { Room } from "../axan/rooms/";
 import Rooms from "../axan/level";
-import RoomVisibility from "../axan/room-visibility";
+import RoomVisibility from "../axan/rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
 
@@ -22,9 +22,9 @@ export class DungeonScene extends Phaser.Scene {
 
   private groundTileset: Phaser.Tilemaps.Tileset;
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  public platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private outOfBoundsTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
-  private platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
 
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
@@ -223,7 +223,7 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   enemyHit = (enemy, player) => {
-    console.log('x - enemy hit')
+    // console.log('x - enemy hit')
   }
 
   enemyShot = (proj: Phaser.GameObjects.Sprite, enemy: Enemy) => {
