@@ -144,7 +144,7 @@ export class Room {
       }
     }
 
-    // this.clearDoorways();
+    this.clearDoorways();
   }
 
   clearDoorways() {
@@ -152,27 +152,33 @@ export class Room {
 
     // loop through doors
     for (const linkID in this.doorLookup){
-      console.log('----------- Door')
-
       const doorInstances = this.doorLookup[linkID];
       doorInstances.forEach(doorInstance => {
+        let clear = false;
         const doorY = doorInstance.y - roomTop;
         const doorX = doorInstance.x - roomLeft;
-        // what direction to head in
         const doorTile: any = this.tiles[doorY][doorX];
-        const { axis, inc } = doorTile.clearance;
-        let clear = false;
-        let i = inc;
 
-        console.log('y', doorY, 'x', doorX, 'axis', axis, 'inc', inc)
+        // what direction to head in
+        const { xInc, yInc } = doorTile.clearDirection;
+        let x = xInc;
+        let y = yInc;
 
         // walk in a direction and check for blocking walls
         while (!clear) {
-          const tileY = (axis==="y") ? this.tiles[doorY+i] || {}: this.tiles[doorY] || {};
-          const nextTile = (axis === "x") ? tileY[doorX+i]: tileY[doorX];
-          if (nextTile && nextTile.constructor.name==="Wall") {
-            this.tiles[nextTile.y][nextTile.x] = new None(nextTile.y, nextTile.x, this);
-            i += inc;
+          const tileY = this.tiles[doorY+y] || [];
+          const nextTile = tileY[doorX+x];
+          
+          if (!nextTile) {
+            // if we hit the edge of the room, step back and place wall
+            const lastY = (doorY+y)-yInc;
+            const lastX = (doorX+x)-xInc;
+            this.tiles[lastY][lastX] = new Wall(lastX, lastY, this);
+            clear = true;
+          } else if (nextTile.constructor.name==="Wall") {
+            this.tiles[nextTile.y][nextTile.x] = new None(nextTile.x, nextTile.y, this);
+            x += xInc;
+            y += yInc;
           } else {
             clear = true;
           }
