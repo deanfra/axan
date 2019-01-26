@@ -5,6 +5,7 @@ import Rooms from "../axan/level";
 import RoomVisibility from "../axan/rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
+import * as _ from "lodash";
 
 // The responsibility of the Dungeon (main) should be to:
 // - Manage camera
@@ -101,7 +102,7 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   setupRoomVisibility() {
-    const tileArray = Array.apply(null, { length: 20 }).map(Number.call, Number);
+    const tileArray = _.range(20);
     this.outOfBoundsLayer.randomize(0, 0, this.rooms.dungeonInstance.width, this.rooms.dungeonInstance.height, tileArray)
     this.outOfBoundsLayer.setDepth(100);
     this.roomVisibility = new RoomVisibility(this.outOfBoundsLayer, this);

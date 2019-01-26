@@ -8,6 +8,8 @@ import { Piq } from "../enemies/piq";
 import { Vroll } from "../enemies/vroll";
 import { DungeonScene } from "scenes/dungeon.scene";
 import * as Cellular from "cellular-dungeon";
+import * as _ from "lodash";
+
 
 // The responsibility of a Room should be to:
 // - Place layout, enemies & items
@@ -64,7 +66,7 @@ export class Room {
       this.instantiateWalls();
       this.instantiatePlatforms();
       this.placeTiles();
-      const collisionArray = Array.apply(null, { length: 22 }).map(Number.call, Number);
+      const collisionArray = _.range(22);
       this.groundLayer.setCollision(collisionArray, true);
       this.addEnemies();
       this.addPickups();
@@ -112,20 +114,17 @@ export class Room {
   addDoors(): void {
     let door;
 
-    for(let key in this.doorLookup) {
-      door = this.doorLookup[key][0];
-
-      const worldX = this.scene.map.tileToWorldX(door.x);
-      const worldY = this.scene.map.tileToWorldY(door.y);
+    _.forEach(this.doorLookup, ([doorInstance]) => {
+      const worldX = this.scene.map.tileToWorldX(doorInstance.x);
+      const worldY = this.scene.map.tileToWorldY(doorInstance.y);
 
       let DoorObject = this.scene.add.sprite((worldX+8), (worldY-8), "axan");
-      
       this.scene.doorGroup.add(DoorObject);
       this.scene.physics.world.enable(DoorObject, Phaser.Physics.Arcade.STATIC_BODY);
       this.scene.physics.add.collider(DoorObject, this.scene.player);
       
       DoorObject.play("idle");
-    }
+    });
   }
 
   addPickups() {
@@ -169,20 +168,18 @@ export class Room {
     const { left: roomLeft, top: roomTop } = this.room;
 
     // loop through doors
-    for (const linkID in this.doorLookup){
-      const doorInstances = this.doorLookup[linkID];
+    _.forEach(this.doorLookup, doorInstances => {
       doorInstances.forEach(doorInstance => {
-        let clear = false;
         const doorY = doorInstance.y - roomTop;
         const doorX = doorInstance.x - roomLeft;
         const doorTile: any = this.tiles[doorY][doorX];
 
         // what direction to head in
         const { xInc, yInc } = doorTile.clearDirection;
-        let x = xInc;
-        let y = yInc;
+        let [x, y] = [xInc, yInc];
 
         // walk in a direction and check for blocking walls
+        let clear = false;
         while (!clear) {
           const tileY = this.tiles[doorY+y] || [];
           const nextTile = tileY[doorX+x];
@@ -202,7 +199,7 @@ export class Room {
           }
         }
       });
-    }
+    });
   }
 
   tileAt(x: number, y: number): Tile | Wall | null {
