@@ -29,7 +29,8 @@ export class DungeonScene extends Phaser.Scene {
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
-  public pickupGroup: Phaser.GameObjects.Group;
+  // public pickupGroup: Phaser.GameObjects.Group;
+  public doorGroup: Phaser.GameObjects.Group;
 
   public player: Player;
   public background: Background;
@@ -43,7 +44,7 @@ export class DungeonScene extends Phaser.Scene {
 
   preload() {
     this.load.image("axan", "../assets/tilesets/16x16-crateria.png");
-    this.load.image("axan", "../assets/tilesets/player-atlas.png");
+    this.load.image("player", "../assets/tilesets/player-atlas.png");
     // this.load.image("axan", "../assets/tilesets/player.png");
     this.load.image("crateriaSprite", "../assets/tilesets/crateria.png");
     this.load.image("caves", "../assets/tilesets/caves.png");
@@ -57,7 +58,7 @@ export class DungeonScene extends Phaser.Scene {
     this.setupBackground();
     // push these into a room's constructor
     this.setupEnemyGroup();
-    this.setupPickupGroup();
+    this.setupDoorGroup();
     this.setupPickups();
     this.rooms.instantiateRooms();
     this.setupPlayer();
@@ -140,9 +141,20 @@ export class DungeonScene extends Phaser.Scene {
     // this.cameraConstrainTo(this.rooms.rooms[0]);
   }
   
-  setupPickupGroup() {
-    this.pickupGroup = this.add.group();
-    this.physics.add.overlap(this.pickupGroup as any, this.player, this.pickupGet);  
+  setupDoorGroup() {
+    this.doorGroup = this.add.group();
+    [
+      {
+        key: 'idle',
+        repeat: -1,
+        defaultTextureKey: 'axan',
+        frames: this.anims.generateFrameNames('axan', { start: 16, end: 16 })
+      }
+    ].forEach(anim => this.anims.create(anim));
+  }
+
+  doorShot = (proj: Phaser.GameObjects.Sprite, door: Phaser.GameObjects.Sprite) => {
+    door.destroy();
   }
 
   setupPickups() {
@@ -177,8 +189,9 @@ export class DungeonScene extends Phaser.Scene {
         if (proj.active && proj.getData('onCollide')) { proj.getData('onCollide')(proj, this); }
       }, undefined, this);
 
-    // projectile / enemy hit detection
-    this.physics.add.overlap( this.projectileGroup as any, this.enemyGroup as any, this.enemyShot, undefined, this);
+
+    this.physics.add.overlap(this.projectileGroup as any, this.enemyGroup as any, this.enemyShot, undefined, this);
+    this.physics.add.overlap(this.projectileGroup as any, this.doorGroup as any, this.doorShot, undefined, this);
 
     [
       {

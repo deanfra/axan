@@ -68,6 +68,7 @@ export class Room {
       this.groundLayer.setCollision(collisionArray, true);
       this.addEnemies();
       this.addPickups();
+      this.addDoors();
       this.isSetup = true;
     }
     
@@ -108,6 +109,25 @@ export class Room {
     this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
   }
 
+  addDoors(): void {
+    let door;
+
+    for(let key in this.doorLookup) {
+      door = this.doorLookup[key][0];
+
+      const worldX = this.scene.map.tileToWorldX(door.x);
+      const worldY = this.scene.map.tileToWorldY(door.y);
+
+      let DoorObject = this.scene.add.sprite((worldX+8), (worldY-8), "axan");
+      
+      this.scene.doorGroup.add(DoorObject);
+      this.scene.physics.world.enable(DoorObject, Phaser.Physics.Arcade.STATIC_BODY);
+      this.scene.physics.add.collider(DoorObject, this.scene.player);
+      
+      DoorObject.play("idle");
+    }
+  }
+
   addPickups() {
     const randomX = Phaser.Math.Between(this.room.x+2, this.room.x+this.room.width-2);
     const randomY = Phaser.Math.Between(this.room.y+2, this.room.y+this.room.height-2);
@@ -125,15 +145,13 @@ export class Room {
     PickupClass.setDepth(10);
     this.scene.physics.world.enable(PickupClass, Phaser.Physics.Arcade.STATIC_BODY);
     this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.pickupGet);
-    this.scene.physics.add.collider(PickupClass, this.scene.groundLayer);
     PickupClass.body.allowGravity = false;
-
     PickupClass.play(PickupClass.name === "smg" ? "ice" : "charge");
   }
 
   instantiatePlatforms() {
     const { tiles: tileMap, width: roomWidth, height: roomHeight } = this.room;
-    const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.7 });
+    const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.1 });
 
     for (let y = 1; y < (roomHeight-1); y++) {
       for (let x = 1; x < (roomWidth-1); x++) {

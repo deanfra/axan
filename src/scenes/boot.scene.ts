@@ -20,7 +20,7 @@ export class BootScene extends Phaser.Scene {
     this.load.image("crateria", crateria);
     this.load
       .atlas('player', playerSpriteSheet, playerSpriteAtlas)
-      .spritesheet('axan', axanTiles, { frameWidth: 64, frameHeight: 64 })
+      .spritesheet('axan', axanTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('crateriaSprite', crateriaSprite, { frameWidth: 256, frameHeight: 193 })
       .spritesheet('enemies', enemySprite, { frameWidth: 20, frameHeight: 20 })
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })
