@@ -118,7 +118,7 @@ export class DungeonScene extends Phaser.Scene {
     // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
     // player / enemy hit detection
-    this.physics.add.overlap(this.player, this.enemyGroup as any, this.enemyHit);
+    this.physics.add.overlap(this.player, this.enemyGroup, this.enemyHit);
     this.add.existing(this.player);
   }
 
@@ -189,7 +189,7 @@ export class DungeonScene extends Phaser.Scene {
       });
     // world / projectiles hit detection
     this.physics.add.collider(
-      this.projectileGroup as any,
+      this.projectileGroup,
       this.groundLayer,
       (projectile) => {
         if (projectile.active && projectile.getData('onCollide')) {
@@ -198,8 +198,8 @@ export class DungeonScene extends Phaser.Scene {
       }, undefined, this);
 
 
-    this.physics.add.overlap(this.projectileGroup as any, this.enemyGroup as any, this.enemyShot, undefined, this);
-    this.physics.add.overlap(this.projectileGroup as any, this.doorGroup as any, this.doorShot, undefined, this);
+    this.physics.add.overlap(this.projectileGroup, this.enemyGroup, this.enemyShot, undefined, this);
+    this.physics.add.overlap(this.projectileGroup, this.doorGroup, this.doorShot, undefined, this);
 
     [
       {
@@ -220,7 +220,8 @@ export class DungeonScene extends Phaser.Scene {
     this.killedEnemies = this.add.group();
 
     // world / enemy hit detection
-    this.physics.add.collider(this.enemyGroup as any, this.groundLayer);
+    this.physics.add.collider(this.enemyGroup, this.groundLayer);
+    this.physics.add.collider(this.enemyGroup, this.doorGroup);
     this.physics.add.collider(this.killedEnemies as any, this.groundLayer);
 
     this.anims.create({
