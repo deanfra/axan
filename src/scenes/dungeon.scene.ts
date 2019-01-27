@@ -144,14 +144,25 @@ export class DungeonScene extends Phaser.Scene {
   
   setupDoorGroup() {
     this.doorGroup = this.add.group();
+
     [
       {
         key: 'idle-vert',
         repeat: -1,
         defaultTextureKey: 'doors-vert',
+        frames: this.anims.generateFrameNames('doors-vert', { start: 1, end: 1 })
+      }, {
+        key: 'idle-vert-blank',
+        repeat: -1,
+        defaultTextureKey: 'doors-vert',
         frames: this.anims.generateFrameNames('doors-vert', { start: 0, end: 0 })
       }, {
         key: 'idle-horiz',
+        repeat: -1,
+        defaultTextureKey: 'doors-horiz',
+        frames: this.anims.generateFrameNames('doors-horiz', { start: 1, end: 1 })
+      }, {
+        key: 'idle-horiz-blank',
         repeat: -1,
         defaultTextureKey: 'doors-horiz',
         frames: this.anims.generateFrameNames('doors-horiz', { start: 0, end: 0 })
@@ -221,8 +232,7 @@ export class DungeonScene extends Phaser.Scene {
 
     // world / enemy hit detection
     this.physics.add.collider(this.enemyGroup, this.groundLayer);
-    this.physics.add.collider(this.enemyGroup, this.doorGroup);
-    this.physics.add.collider(this.killedEnemies as any, this.groundLayer);
+    this.physics.add.collider(this.killedEnemies, this.groundLayer);
 
     this.anims.create({
       key: 'piq',

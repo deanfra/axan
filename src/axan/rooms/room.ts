@@ -127,6 +127,7 @@ export class Room {
       this.scene.doorGroup.add(DoorGate)
       this.scene.physics.world.enable(DoorGate, Phaser.Physics.Arcade.STATIC_BODY);
       this.scene.physics.add.collider(DoorGate, this.scene.player);
+      this.scene.physics.add.collider(DoorGate, this.enemyGroup);
 
       DoorGate.play("idle-"+tilekey);
     });
