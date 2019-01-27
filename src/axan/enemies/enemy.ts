@@ -20,7 +20,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   constructor(scene: DungeonScene, x: number, y: number, public dir: number, key: string) {
     super(scene, x, y, key);
-
     this.scene.physics.world.enable(this);
   }
 

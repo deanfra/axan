@@ -22,7 +22,7 @@ export class Room {
   private enemyGroup: Phaser.GameObjects.Group;
   public tiles: Array<Array<Tile|Wall>>;
   public type: string = "default";
-  private doorLookup: {[key: number]: Array<DoorInstance>} = {};
+  private doorLookup: {[key: number]: Array<Tile|Wall>} = {};
   private isSetup: boolean;
 
   public readonly id: number;
@@ -52,32 +52,28 @@ export class Room {
     this.groundLayer = scene.groundLayer;
     this.platformLayer = scene.platformLayer;
     this.enemyGroup = scene.enemyGroup;
-
-    this.room.doors.forEach(door => {
-      this.doorLookup[door.linksTo] = this.doorLookup[door.linksTo] || [];
-      this.doorLookup[door.linksTo].push(door);
-    });
   }
 
   setup(): Room {
     console.log(this.type, this.width, this.height)
     if (!this.isSetup) {
       // Group doors up
-      this.instantiateWalls();
+      this.instantiateTiles();
       this.instantiatePlatforms();
+      this.clearDoorways();
       this.placeTiles();
       const collisionArray = _.range(22);
       this.groundLayer.setCollision(collisionArray, true);
       this.addEnemies();
       this.addPickups();
-      this.addDoors();
+      this.addDoorGate();
       this.isSetup = true;
     }
     
     return this;
   }
 
-  instantiateWalls(): void {
+  instantiateTiles(): void {
     const { tiles: tileMap, width: roomWidth, height: roomHeight } = this.room;
     this.tiles = [];
     for (let y = 0; y < roomHeight; y++) {
@@ -93,6 +89,12 @@ export class Room {
         }
       }
     }
+
+    this.room.doors.forEach(door => {
+      const doorTile = this.tileAt((door.x - this.room.left), (door.y-this.room.top));
+      this.doorLookup[door.linksTo] = this.doorLookup[door.linksTo] || [];
+      this.doorLookup[door.linksTo].push(doorTile);
+    });
   }
 
   placeTiles(): void {
@@ -111,19 +113,22 @@ export class Room {
     this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
   }
 
-  addDoors(): void {
-    let door;
+  addDoorGate(): void {
+    _.forEach(this.doorLookup, ([door]: Array<Door>) => {
+      const worldX = this.scene.map.tileToWorldX(this.room.left+door.x);
+      const worldY = this.scene.map.tileToWorldY(this.room.top+door.y);
+      const orientation = door.clearance.dir;
+      const tilekey = orientation === "n" || orientation === "s" ? "horiz" : "vert";
 
-    _.forEach(this.doorLookup, ([doorInstance]) => {
-      const worldX = this.scene.map.tileToWorldX(doorInstance.x);
-      const worldY = this.scene.map.tileToWorldY(doorInstance.y);
-
-      let DoorObject = this.scene.add.sprite((worldX+8), (worldY-8), "axan");
-      this.scene.doorGroup.add(DoorObject);
-      this.scene.physics.world.enable(DoorObject, Phaser.Physics.Arcade.STATIC_BODY);
-      this.scene.physics.add.collider(DoorObject, this.scene.player);
+      let DoorGate = this.scene.add.sprite((worldX+8), (worldY+8), "doors-"+tilekey);
+      const angle = { n: 0, e: 0, s: 180, w: 180 };
+      DoorGate.angle = angle[door.clearance.dir];
       
-      DoorObject.play("idle");
+      this.scene.doorGroup.add(DoorGate)
+      this.scene.physics.world.enable(DoorGate, Phaser.Physics.Arcade.STATIC_BODY);
+      this.scene.physics.add.collider(DoorGate, this.scene.player);
+
+      DoorGate.play("idle-"+tilekey);
     });
   }
 
@@ -141,15 +146,13 @@ export class Room {
       PickupClass.name = "pistol";
     }
 
-    PickupClass.setDepth(10);
     this.scene.physics.world.enable(PickupClass, Phaser.Physics.Arcade.STATIC_BODY);
     this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.pickupGet);
-    PickupClass.body.allowGravity = false;
     PickupClass.play(PickupClass.name === "smg" ? "ice" : "charge");
   }
 
   instantiatePlatforms() {
-    const { tiles: tileMap, width: roomWidth, height: roomHeight } = this.room;
+    const { width: roomWidth, height: roomHeight } = this.room;
     const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.1 });
 
     for (let y = 1; y < (roomHeight-1); y++) {
@@ -160,34 +163,28 @@ export class Room {
         }
       }
     }
-
-    this.clearDoorways();
   }
 
   clearDoorways() {
-    const { left: roomLeft, top: roomTop } = this.room;
-
     // loop through doors
-    _.forEach(this.doorLookup, doorInstances => {
-      doorInstances.forEach(doorInstance => {
-        const doorY = doorInstance.y - roomTop;
-        const doorX = doorInstance.x - roomLeft;
-        const doorTile: any = this.tiles[doorY][doorX];
+    _.forEach(this.doorLookup, doors => {
+      doors.forEach(door => {
+        const doorTile: any = this.tiles[door.y][door.x];
 
         // what direction to head in
-        const { xInc, yInc } = doorTile.clearDirection;
+        const { xInc, yInc } = doorTile.clearance;
         let [x, y] = [xInc, yInc];
 
         // walk in a direction and check for blocking walls
         let clear = false;
         while (!clear) {
-          const tileY = this.tiles[doorY+y] || [];
-          const nextTile = tileY[doorX+x];
+          const tileY = this.tiles[door.y+y] || [];
+          const nextTile = tileY[door.x+x];
           
           if (!nextTile) {
             // if we hit the edge of the room, step back and place wall
-            const lastY = (doorY+y)-yInc;
-            const lastX = (doorX+x)-xInc;
+            const lastY = (door.y+y)-yInc;
+            const lastX = (door.x+x)-xInc;
             this.tiles[lastY][lastX] = new Wall(lastX, lastY, this);
             clear = true;
           } else if (nextTile.constructor.name==="Wall") {

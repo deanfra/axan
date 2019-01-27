@@ -1,5 +1,7 @@
 import * as crateriaSprite from 'assets/tilesets/crateria.png';
 import * as crateria from 'assets/tilesets/crateria.png';
+import * as doorsTiles from 'assets/tilesets/doors.png';
+import * as doorsHorizTiles from 'assets/tilesets/doors-horiz.png';
 import * as caves from 'assets/tilesets/caves.png';
 import * as axanTiles from 'assets/tilesets/16x16-crateria.png';
 import * as enemySprite from 'assets/tilesets/enemies.png';
@@ -21,6 +23,8 @@ export class BootScene extends Phaser.Scene {
     this.load
       .atlas('player', playerSpriteSheet, playerSpriteAtlas)
       .spritesheet('axan', axanTiles, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })
+      .spritesheet('doors-horiz', doorsHorizTiles, { frameWidth: 48, frameHeight: 16 })
       .spritesheet('crateriaSprite', crateriaSprite, { frameWidth: 256, frameHeight: 193 })
       .spritesheet('enemies', enemySprite, { frameWidth: 20, frameHeight: 20 })
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })

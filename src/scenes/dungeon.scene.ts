@@ -146,10 +146,15 @@ export class DungeonScene extends Phaser.Scene {
     this.doorGroup = this.add.group();
     [
       {
-        key: 'idle',
+        key: 'idle-vert',
         repeat: -1,
-        defaultTextureKey: 'axan',
-        frames: this.anims.generateFrameNames('axan', { start: 16, end: 16 })
+        defaultTextureKey: 'doors-vert',
+        frames: this.anims.generateFrameNames('doors-vert', { start: 0, end: 0 })
+      }, {
+        key: 'idle-horiz',
+        repeat: -1,
+        defaultTextureKey: 'doors-horiz',
+        frames: this.anims.generateFrameNames('doors-horiz', { start: 0, end: 0 })
       }
     ].forEach(anim => this.anims.create(anim));
   }
@@ -186,8 +191,10 @@ export class DungeonScene extends Phaser.Scene {
     this.physics.add.collider(
       this.projectileGroup as any,
       this.groundLayer,
-      (proj) => {
-        if (proj.active && proj.getData('onCollide')) { proj.getData('onCollide')(proj, this); }
+      (projectile) => {
+        if (projectile.active && projectile.getData('onCollide')) {
+          projectile.getData('onCollide')(projectile, this);
+        }
       }, undefined, this);
 
 

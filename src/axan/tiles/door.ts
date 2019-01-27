@@ -2,11 +2,11 @@ import Tile from "./tile";
 import { Room } from "../rooms/room";
 
 export default class Door extends Tile {
-  clearDirection: { xInc: number, yInc: number };
+  clearance: { xInc?: number, yInc?: number, dir?: string };
 
   constructor(x: number, y: number, room: Room) {
     super(x, y, room)
-    this.clearDirection = this.determineClearance();
+    this.clearance = this.determineClearance();
   }
 
   placeTile(): void {
@@ -14,10 +14,10 @@ export default class Door extends Tile {
     return super.placeTile();
   }
 
-  determineClearance(): { xInc: number, yInc: number } {
-    return (this.x === 0) ? { xInc: 1, yInc: 0 } :
-           (this.x === (this.room.width-1)) ? { xInc: -1, yInc: 0 } :
-           (this.y === 0) ? { xInc: 0, yInc: 1 } :
-           { xInc: 0, yInc: -1 }
+  determineClearance(): { xInc: number, yInc: number, dir: string } {
+    return (this.x === 0) ? { xInc: 1, yInc: 0, dir: "e" } :
+           (this.x === (this.room.width-1)) ? { xInc: -1, yInc: 0, dir: "w" } :
+           (this.y === 0) ? { xInc: 0, yInc: 1, dir: "s" } :
+           { xInc: 0, yInc: -1, dir: "n" }
   }
 }
