@@ -1,7 +1,7 @@
 import Player from '../axan/player';
 import Background from '../axan/background';
 import { Room } from "../axan/rooms/";
-import Rooms from "../axan/level";
+import Level from "../axan/level";
 import RoomVisibility from "../axan/rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
@@ -35,7 +35,7 @@ export class DungeonScene extends Phaser.Scene {
 
   public player: Player;
   public background: Background;
-  public rooms: Rooms;
+  public level: Level;
   public roomVisibility: any;
   public activeRoom: Room;
 
@@ -53,7 +53,7 @@ export class DungeonScene extends Phaser.Scene {
 
   create(): void {
     console.log("Welcome to "+RandomPlanetName());
-    this.rooms = new Rooms(this);
+    this.level = new Level(this);
     this.makeTiles();
     this.setupRoomVisibility();
     this.setupBackground();
@@ -61,7 +61,7 @@ export class DungeonScene extends Phaser.Scene {
     this.setupEnemyGroup();
     this.setupDoorGroup();
     this.setupPickups();
-    this.rooms.instantiateRooms();
+    this.level.instantiateRooms();
     this.setupPlayer();
     this.setupCamera();
     // Push these into the room's setup function
@@ -90,8 +90,8 @@ export class DungeonScene extends Phaser.Scene {
     this.map = this.make.tilemap({
       tileWidth: 16,
       tileHeight: 16,
-      width: this.rooms.dungeonInstance.width,
-      height: this.rooms.dungeonInstance.height
+      width: this.level.dungeonInstance.width,
+      height: this.level.dungeonInstance.height
     });
 
     this.groundTileset = this.map.addTilesetImage("axan", "axan", 16, 16);
@@ -103,14 +103,13 @@ export class DungeonScene extends Phaser.Scene {
 
   setupRoomVisibility() {
     const tileArray = _.range(20);
-    this.outOfBoundsLayer.randomize(0, 0, this.rooms.dungeonInstance.width, this.rooms.dungeonInstance.height, tileArray)
+    this.outOfBoundsLayer.randomize(0, 0, this.level.dungeonInstance.width, this.level.dungeonInstance.height, tileArray)
     this.outOfBoundsLayer.setDepth(100);
     this.roomVisibility = new RoomVisibility(this.outOfBoundsLayer, this);
   }
 
   setupPlayer() {
-    const { centerX, bottom } = this.rooms.startRoom.room;
-    
+    const { centerX, bottom } = this.level.startRoom.room;
     const playerX = this.map.tileToWorldX(centerX);
     const playerY = this.map.tileToWorldY(bottom-1);
 
@@ -214,12 +213,12 @@ export class DungeonScene extends Phaser.Scene {
 
     [
       {
-        key: 'beam1',
+        key: 'beam-photon',
         defaultTextureKey: 'projectiles',
         frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
       },
       {
-        key: 'beam2',
+        key: 'beam-fire',
         defaultTextureKey: 'projectiles',
         frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
       },

@@ -24,7 +24,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   // factors
   runSpeed = 150;
-  knockback = 0;
 
   // timers
   jumpTimer = 0;
@@ -100,8 +99,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // dungeon XY (in grid units) to the corresponding room instance
     const playerTileX = this.scene.groundLayer.worldToTileX(this.x);
     const playerTileY = this.scene.groundLayer.worldToTileY(this.y);
-    const roomInstance = this.scene.rooms.dungeonInstance.getRoomAt(playerTileX, playerTileY);
-    return this.scene.rooms.byId(roomInstance.id);
+    const roomInstance = this.scene.level.dungeonInstance.getRoomAt(playerTileX, playerTileY);
+    return this.scene.level.byId(roomInstance.id);
   }
 
   animation() {
@@ -177,26 +176,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if (shoot) {
       this.hasMoved = true;
       if (this.gun.shootTimer > this.gun.cooldown) {
-        this.knockback = this.shoot();
-        if (!this.knockback) {
-          this.knockback = 0;
-        }
+        this.shoot();
       }
     } else {
       this.gun.unShoot();
-      this.knockback = 0;
     }
 
     if (left && !right) {
       this.hasMoved = true;
-      this.body.setVelocityX(-this.runSpeed + this.knockback);
+      this.body.setVelocityX(-this.runSpeed);
       this.flipX = true;
     } else if (right && !left) {
       this.hasMoved = true;
-      this.body.setVelocityX(this.runSpeed + this.knockback);
+      this.body.setVelocityX(this.runSpeed);
       this.flipX = false;
     } else {
-      this.body.setVelocityX(this.knockback);
+      this.body.setVelocityX(0);
     }
 
     if (jump) {
@@ -242,7 +237,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this.gun);
   }
 
-  shoot(): number {
-    return this.gun.shoot();
+  shoot() {
+    this.gun.shoot();
   }
 }
