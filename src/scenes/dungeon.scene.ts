@@ -63,6 +63,7 @@ export class DungeonScene extends Phaser.Scene {
     this.setupPickups();
     this.level.instantiateRooms();
     this.setupPlayer();
+    this.level.startRoom.setup();
     this.setupCamera();
     // Push these into the room's setup function
     this.setupProjectiles();

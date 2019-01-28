@@ -47,7 +47,6 @@ export default class Level {
       this.rooms.push(room);
     });
     this.startRoom = this.rooms[0];
-    this.startRoom.setup();
   }
 
   byId(id: number): Room {
