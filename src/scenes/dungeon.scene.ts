@@ -105,12 +105,15 @@ export class DungeonScene extends Phaser.Scene {
     const { centerX, bottom } = this.level.startRoom.room;
     const playerX = this.map.tileToWorldX(centerX);
     const playerY = this.map.tileToWorldY(bottom-1);
-
-    this.player = new Player(this, playerX, playerY, 'player', this.groundLayer);
+    this.player = new Player(this, playerX, playerY, 'player');
+    
     // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
     // player / enemy hit detection
     this.physics.add.overlap(this.player, this.enemyGroup, this.enemyHit);
+    // player / door gate hit detection
+    this.physics.add.collider(this.player, this.doorGateGroup);
+
     this.add.existing(this.player);
   }
 
@@ -136,6 +139,8 @@ export class DungeonScene extends Phaser.Scene {
   
   setupDoorGateGroup() {
     this.doorGateGroup = this.add.group();
+    // enemy / door gate hit detection
+    this.physics.add.collider(this.enemyGroup, this.doorGateGroup);
 
     [
       {

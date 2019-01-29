@@ -38,11 +38,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
   public isCrouching = false;
   public isRunning = false;
 
-  constructor(scene, x, y, key, layer) {
+  constructor(scene, x, y, key) {
     super(scene, x, y, key);
     this.setOrigin(0.5, .8);
     this.scene.physics.world.enable(this);
-    this.scene.physics.add.collider(this, layer);
+    
     this.setDepth(10);
 
     this.keys = scene.input.keyboard.addKeys({

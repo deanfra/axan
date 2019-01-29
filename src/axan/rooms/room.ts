@@ -210,8 +210,6 @@ export class Room {
       this.scene.player.y = this.scene.map.tileToWorldX(this.y + y + yOffset);
 
       this.doorGateLookup[previousRoom.id].shut();
-
-      console.log(xOffset, yOffset)
     }
   }
 }
