@@ -1,5 +1,6 @@
 import { RoomInstance, DoorInstance } from "../../interfaces/room-instance";
 import Door from "../tiles/door";
+import DoorGate from "../tiles/door-gate";
 import None from "../tiles/none";
 import Wall from "../tiles/wall";
 import Tile from "../tiles/tile";
@@ -18,11 +19,12 @@ export class Room {
   public readonly room: RoomInstance;
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public readonly platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  private isSetup: boolean;
   private enemyGroup: Phaser.GameObjects.Group;
   public tiles: Array<Array<Tile>>;
   public type: string = "default";
   private doorLookup: {[key: number]: Array<Door>} = {};
-  private isSetup: boolean;
+  private doorGateLookup: {[key: number]: DoorGate} = {};
 
   public readonly id: number;
   public readonly x: number;
@@ -113,22 +115,12 @@ export class Room {
   }
 
   addDoorGate(): void {
-    _.forEach(this.doorLookup, ([door]: Array<Door>) => {
+    _.forEach(this.doorLookup, ([door]: Array<Door>, id) => {
       const worldX = this.scene.map.tileToWorldX(this.room.left+door.x);
       const worldY = this.scene.map.tileToWorldY(this.room.top+door.y);
-      const orientation = door.clearance.dir;
-      const tilekey = orientation === "n" || orientation === "s" ? "horiz" : "vert";
 
-      let DoorGate = this.scene.add.sprite((worldX+8), (worldY+8), "doors-"+tilekey);
-      const angle = { n: 0, e: 0, s: 180, w: 180 };
-      DoorGate.angle = angle[door.clearance.dir];
-      
-      this.scene.doorGroup.add(DoorGate)
-      this.scene.physics.world.enable(DoorGate, Phaser.Physics.Arcade.STATIC_BODY);
-      this.scene.physics.add.collider(DoorGate, this.scene.player);
-      this.scene.physics.add.collider(DoorGate, this.enemyGroup);
-
-      DoorGate.play("idle-"+tilekey);
+      this.doorGateLookup[id] = new DoorGate(this.scene, (worldX + 8), (worldY + 8), door);
+      this.scene.doorGateGroup.add(this.doorGateLookup[id], true);
     });
   }
 
@@ -216,6 +208,10 @@ export class Room {
       // offset nesw based on door clearance
       this.scene.player.x = this.scene.map.tileToWorldX(this.x + x + xOffset);
       this.scene.player.y = this.scene.map.tileToWorldX(this.y + y + yOffset);
+
+      this.doorGateLookup[previousRoom.id].shut();
+
+      console.log(xOffset, yOffset)
     }
   }
 }

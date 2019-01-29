@@ -26,7 +26,7 @@ export class DungeonScene extends Phaser.Scene {
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
-  public doorGroup: Phaser.GameObjects.Group;
+  public doorGateGroup: Phaser.GameObjects.Group;
 
   public player: Player;
   public background: Background;
@@ -53,7 +53,7 @@ export class DungeonScene extends Phaser.Scene {
     this.setupRoomVisibility();
     this.setupBackground();
     this.setupEnemyGroup();
-    this.setupDoorGroup();
+    this.setupDoorGateGroup();
     this.setupPickupGroup();
     this.level.instantiateRooms();
     this.setupPlayer();
@@ -134,8 +134,8 @@ export class DungeonScene extends Phaser.Scene {
     // this.cameraConstrainTo(this.rooms.rooms[0]);
   }
   
-  setupDoorGroup() {
-    this.doorGroup = this.add.group();
+  setupDoorGateGroup() {
+    this.doorGateGroup = this.add.group();
 
     [
       {
@@ -162,8 +162,8 @@ export class DungeonScene extends Phaser.Scene {
     ].forEach(anim => this.anims.create(anim));
   }
 
-  doorShot = (proj: Phaser.GameObjects.Sprite, door: Phaser.GameObjects.Sprite) => {
-    door.destroy();
+  doorShot = (proj: Phaser.GameObjects.Sprite, doorGate: any) => {
+    doorGate.open();
   }
 
   setupPickupGroup() {
@@ -199,7 +199,7 @@ export class DungeonScene extends Phaser.Scene {
 
 
     this.physics.add.overlap(this.projectileGroup, this.enemyGroup, this.enemyShot, undefined, this);
-    this.physics.add.overlap(this.projectileGroup, this.doorGroup, this.doorShot, undefined, this);
+    this.physics.add.overlap(this.projectileGroup, this.doorGateGroup, this.doorShot, undefined, this);
 
     [
       {
