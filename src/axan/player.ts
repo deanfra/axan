@@ -217,6 +217,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
+  pickupGet = (pickup: Phaser.GameObjects.Sprite) => {
+    this.changeGun(pickup.name);
+    pickup.destroy();
+  }
+
   updateGun(time, delta): void {
     this.gun.update(time, delta);
   }

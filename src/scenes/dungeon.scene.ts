@@ -12,10 +12,6 @@ import * as _ from "lodash";
 // - Manage player
 // - Preload assets
 
-// Tasks
-// - Cleanup projectile code
-// - Cleanup pickup code
-
 export class DungeonScene extends Phaser.Scene {
   private camera: Phaser.Cameras.Scene2D.Camera;
   private cameraResizeNeeded: boolean;
@@ -30,7 +26,6 @@ export class DungeonScene extends Phaser.Scene {
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
-  // public pickupGroup: Phaser.GameObjects.Group;
   public doorGroup: Phaser.GameObjects.Group;
 
   public player: Player;
@@ -57,17 +52,14 @@ export class DungeonScene extends Phaser.Scene {
     this.makeTiles();
     this.setupRoomVisibility();
     this.setupBackground();
-    // push these into a room's constructor
     this.setupEnemyGroup();
     this.setupDoorGroup();
-    this.setupPickups();
+    this.setupPickupGroup();
     this.level.instantiateRooms();
     this.setupPlayer();
     this.level.startRoom.setup();
+    this.setupProjectileGroup();
     this.setupCamera();
-    // Push these into the room's setup function
-    this.setupProjectiles();
-
   }
 
   update(time: number, delta: number): void {
@@ -174,7 +166,7 @@ export class DungeonScene extends Phaser.Scene {
     door.destroy();
   }
 
-  setupPickups() {
+  setupPickupGroup() {
     [
       {
         key: 'charge',
@@ -190,14 +182,11 @@ export class DungeonScene extends Phaser.Scene {
         frames: this.anims.generateFrameNames('beams', { start: 2, end: 3 })
       }
     ].forEach(anim => this.anims.create(anim));
-
   }
 
-  setupProjectiles() {
-    this.projectileGroup =
-      this.add.group({
-        createCallback: proj => this.physics.world.enable(proj)
-      });
+  setupProjectileGroup() {
+    this.projectileGroup = this.add.group({ createCallback: proj => this.physics.world.enable(proj) });
+
     // world / projectiles hit detection
     this.physics.add.collider(
       this.projectileGroup,
@@ -284,11 +273,6 @@ export class DungeonScene extends Phaser.Scene {
         proj.destroy();
       }
     }
-  }
-
-  pickupGet = (pickup: Phaser.GameObjects.Sprite) => {
-    this.player.changeGun(pickup.name);
-    pickup.destroy();
   }
 
   cameraConstrainTo(room: Room) {

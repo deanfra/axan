@@ -6,7 +6,7 @@ export class Pistol extends Gun implements GunProps {
   private direction: string;
   id = 'PISTOL';
 
-  cooldown = 200;
+  cooldown = 300;
   shootTimer = 200;
   recoil = 200;
   damage = 3;

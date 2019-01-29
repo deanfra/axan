@@ -10,7 +10,6 @@ import { DungeonScene } from "scenes/dungeon.scene";
 import * as Cellular from "cellular-dungeon";
 import * as _ from "lodash";
 
-
 // The responsibility of a Room should be to:
 // - Place layout, enemies & items
 // - Retrieve room state
@@ -20,9 +19,9 @@ export class Room {
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public readonly platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private enemyGroup: Phaser.GameObjects.Group;
-  public tiles: Array<Array<Tile|Wall>>;
+  public tiles: Array<Array<Tile>>;
   public type: string = "default";
-  private doorLookup: {[key: number]: Array<Tile|Wall>} = {};
+  private doorLookup: {[key: number]: Array<Door>} = {};
   private isSetup: boolean;
 
   public readonly id: number;
@@ -91,7 +90,7 @@ export class Room {
     }
 
     this.room.doors.forEach(door => {
-      const doorTile = this.tileAt((door.x - this.room.left), (door.y-this.room.top));
+      const doorTile: any = this.tileAt((door.x - this.room.left), (door.y-this.room.top));
       this.doorLookup[door.linksTo] = this.doorLookup[door.linksTo] || [];
       this.doorLookup[door.linksTo].push(doorTile);
     });
@@ -148,7 +147,7 @@ export class Room {
     }
 
     this.scene.physics.world.enable(PickupClass, Phaser.Physics.Arcade.STATIC_BODY);
-    this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.pickupGet);
+    this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.player.pickupGet);
     PickupClass.play(PickupClass.name === "smg" ? "ice" : "charge");
   }
 
@@ -200,10 +199,23 @@ export class Room {
     });
   }
 
-  tileAt(x: number, y: number): Tile | Wall | null {
+  tileAt(x: number, y: number): Tile | null {
     if (!this.tiles[y] || y < 0 || y >= this.room.height || x < 0 || x >= this.room.width) {
       return null;
     }
     return this.tiles[y][x];
+  }
+
+  movePlayerIntoRoom(previousRoom) {
+    if (previousRoom){
+      const { x, y, clearance: c } = this.doorLookup[previousRoom.id][1];
+
+      const xOffset = (c.dir==="e") ? 2 : (c.dir==="w") ? -1 : 2;
+      const yOffset = (c.dir==="n") ? 0 : (c.dir==="s") ? 4 : 3;
+
+      // offset nesw based on door clearance
+      this.scene.player.x = this.scene.map.tileToWorldX(this.x + x + xOffset);
+      this.scene.player.y = this.scene.map.tileToWorldX(this.y + y + yOffset);
+    }
   }
 }

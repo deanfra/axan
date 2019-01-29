@@ -24,7 +24,6 @@ export class Smg extends Pistol implements GunProps {
   constructor(scene, x, y, key = 'guns', frame) {
     super(scene, x, y, key, frame);
   }
-
 /*  shoot() {
     const x = this.flipX ? this.x - 8 : this.x + 8;
 

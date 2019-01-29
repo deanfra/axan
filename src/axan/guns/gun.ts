@@ -104,7 +104,8 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
         delay: this.cooldown,
         callbackScope: this,
         callback() {
-          if (this.active && this.released) {
+          // if (this.active && this.released) {
+          if (this.active) {
             this.canShoot = true;
           }
         }
