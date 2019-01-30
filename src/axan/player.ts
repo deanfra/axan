@@ -111,7 +111,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
     // airborne
-    /*if (!this.body.onFloor()) {
+    if (!this.body.onFloor()) {
       if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
       } else if (up && (left || right)) {
@@ -126,7 +126,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         anim = 'jump-down';
       }
     // running
-    } else*/ if (this.body.velocity.x !== 0 && (left || right)) {
+    } else if (this.body.velocity.x !== 0 && (left || right)) {
       if (down) {
         tileSize = [16, 28];
         anim = 'run-aim-down';

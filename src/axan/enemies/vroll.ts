@@ -69,16 +69,18 @@ export class Vroll extends Enemy {
         delay: Phaser.Math.Between(500, 2000),
         callbackScope: this,
         callback: () => {
-          this.anims.play(this.animMad);
-          this.body.setAcceleration(10, 10).setVelocity(this.body.velocity.x, 5);
-          this.scene.time.addEvent({
-            delay: Phaser.Math.Between(2000, 3000),
-            callbackScope: this,
-            callback: (p) => {
-              this.anims.play(this.animWalk);
-              this.isMoving = false;
-            },
-          });
+          if (this.anims) {
+            this.anims.play(this.animMad);
+            this.body.setAcceleration(10, 10).setVelocity(this.body.velocity.x, 5);
+            this.scene.time.addEvent({
+              delay: Phaser.Math.Between(2000, 3000),
+              callbackScope: this,
+              callback: (p) => {
+                this.anims.play(this.animWalk);
+                this.isMoving = false;
+              },
+            });
+          }
         }
       });
 

@@ -193,36 +193,12 @@
             <key type="filename">jump-aim-up-fwd01.png</key>
             <key type="filename">jump-aim-up01.png</key>
             <key type="filename">jump-aim01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,11,16,21</rect>
-                <key>scale9Paddings</key>
-                <rect>8,11,16,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">jump01.png</key>
             <key type="filename">jump02.png</key>
             <key type="filename">jump03.png</key>
             <key type="filename">jump04.png</key>
             <key type="filename">jump05.png</key>
             <key type="filename">jump06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,11,14,23</rect>
-                <key>scale9Paddings</key>
-                <rect>7,11,14,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">run-aim-down01.png</key>
             <key type="filename">run-aim-down02.png</key>
             <key type="filename">run-aim-down03.png</key>
@@ -233,15 +209,25 @@
             <key type="filename">run-aim-down08.png</key>
             <key type="filename">run-aim-down09.png</key>
             <key type="filename">run-aim-down10.png</key>
+            <key type="filename">run01.png</key>
+            <key type="filename">run02.png</key>
+            <key type="filename">run03.png</key>
+            <key type="filename">run04.png</key>
+            <key type="filename">run05.png</key>
+            <key type="filename">run06.png</key>
+            <key type="filename">run07.png</key>
+            <key type="filename">run08.png</key>
+            <key type="filename">run09.png</key>
+            <key type="filename">run10.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,11,18,23</rect>
+                <rect>8,11,16,21</rect>
                 <key>scale9Paddings</key>
-                <rect>9,11,18,23</rect>
+                <rect>8,11,16,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -288,27 +274,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">run01.png</key>
-            <key type="filename">run02.png</key>
-            <key type="filename">run03.png</key>
-            <key type="filename">run04.png</key>
-            <key type="filename">run05.png</key>
-            <key type="filename">run06.png</key>
-            <key type="filename">run07.png</key>
-            <key type="filename">run08.png</key>
-            <key type="filename">run09.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,11,19,23</rect>
-                <key>scale9Paddings</key>
-                <rect>9,11,19,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">stand-aim-up01.png</key>
             <key type="filename">stand-aim-up02.png</key>
             <key type="filename">stand-aim-up03.png</key>
@@ -327,27 +292,24 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>jump01.png</filename>
-            <filename>jump02.png</filename>
-            <filename>jump03.png</filename>
-            <filename>jump04.png</filename>
-            <filename>jump05.png</filename>
-            <filename>jump06.png</filename>
-            <filename>run01.png</filename>
-            <filename>run02.png</filename>
-            <filename>run03.png</filename>
-            <filename>run04.png</filename>
-            <filename>run05.png</filename>
-            <filename>run06.png</filename>
-            <filename>run07.png</filename>
-            <filename>run08.png</filename>
-            <filename>run09.png</filename>
+            <filename>begin01.png</filename>
             <filename>breathe01.png</filename>
             <filename>breathe02.png</filename>
             <filename>breathe03.png</filename>
             <filename>breathe04.png</filename>
             <filename>crouch01.png</filename>
             <filename>crouch02.png</filename>
+            <filename>jump-aim-down-fwd01.png</filename>
+            <filename>jump-aim-down01.png</filename>
+            <filename>jump-aim-up-fwd01.png</filename>
+            <filename>jump-aim-up01.png</filename>
+            <filename>jump-aim01.png</filename>
+            <filename>jump01.png</filename>
+            <filename>jump02.png</filename>
+            <filename>jump03.png</filename>
+            <filename>jump04.png</filename>
+            <filename>jump05.png</filename>
+            <filename>jump06.png</filename>
             <filename>run-aim-down01.png</filename>
             <filename>run-aim-down02.png</filename>
             <filename>run-aim-down03.png</filename>
@@ -377,12 +339,16 @@
             <filename>run-aim07.png</filename>
             <filename>run-aim08.png</filename>
             <filename>run-aim09.png</filename>
-            <filename>jump-aim-down-fwd01.png</filename>
-            <filename>jump-aim-down01.png</filename>
-            <filename>jump-aim-up-fwd01.png</filename>
-            <filename>jump-aim-up01.png</filename>
-            <filename>jump-aim01.png</filename>
-            <filename>begin01.png</filename>
+            <filename>run01.png</filename>
+            <filename>run02.png</filename>
+            <filename>run03.png</filename>
+            <filename>run04.png</filename>
+            <filename>run05.png</filename>
+            <filename>run06.png</filename>
+            <filename>run07.png</filename>
+            <filename>run08.png</filename>
+            <filename>run09.png</filename>
+            <filename>run10.png</filename>
             <filename>stand-aim-up01.png</filename>
             <filename>stand-aim-up02.png</filename>
             <filename>stand-aim-up03.png</filename>
