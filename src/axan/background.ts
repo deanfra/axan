@@ -4,14 +4,14 @@ export default class Background extends Phaser.GameObjects.TileSprite {
   public scene: DungeonScene;
   public body: Phaser.Physics.Arcade.Body;
 
-  constructor(scene, layer) {
-    super(scene, 0, 0, 0, 0, "caves", 0);
+  constructor(scene, key, scrollFactor, depth) {
+    super(scene, 0, 0, 0, 0, key, 0);
     this.scene = scene;
-    this.setDepth(-1);
+    this.setDepth(depth);
     this.setAlpha(1);
     this.scene.add.existing(this);
     // Parallax
-    this.setScrollFactor(0.8, 0.8);
+    this.setScrollFactor(scrollFactor, scrollFactor);
   }
 
   setup() {

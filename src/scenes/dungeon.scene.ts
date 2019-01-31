@@ -29,7 +29,7 @@ export class DungeonScene extends Phaser.Scene {
   public doorGateGroup: Phaser.GameObjects.Group;
   
   public player: Player;
-  public background: Background;
+  public backgroundGroup: Phaser.GameObjects.Group;
   public level: Level;
   public roomVisibility: any;
   public activeRoom: Room;
@@ -43,9 +43,7 @@ export class DungeonScene extends Phaser.Scene {
   preload() {
     this.load.image("axan", "../assets/tilesets/16x16-crateria.png");
     this.load.image("player", "../assets/tilesets/player-atlas.png");
-    // this.load.image("axan", "../assets/tilesets/player.png");
     this.load.image("crateriaSprite", "../assets/tilesets/crateria.png");
-    this.load.image("caves", "../assets/tilesets/caves.png");
   }
 
   create(): void {
@@ -124,7 +122,10 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   setupBackground() {
-    this.background = new Background(this, this.groundLayer);
+    this.backgroundGroup = this.add.group();
+    this.backgroundGroup.add(new Background(this, "caves-front", 0.9, -1));
+    this.backgroundGroup.add(new Background(this, "caves-mid", 0.7, -2));
+    this.backgroundGroup.add(new Background(this, "caves-back", 0.5, -3));
   }
 
   setupCamera() {

@@ -1,4 +1,5 @@
 import { Room } from "./room";
+import Background from "../background";
 import { DungeonScene } from "../../scenes/dungeon.scene";
 
 export default class RoomVisibility {
@@ -21,7 +22,10 @@ export default class RoomVisibility {
       
       // this.scene.cameraConstrainTo(room);
       this.scene.activeRoom = room;
-      this.scene.background.setup();
+
+      this.scene.backgroundGroup.children.entries.forEach(
+        (background: Background) => background.setup(), this
+      );
     }
   }
 
