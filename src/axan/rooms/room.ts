@@ -209,7 +209,9 @@ export class Room {
       this.scene.player.x = this.scene.map.tileToWorldX(this.x + x + xOffset);
       this.scene.player.y = this.scene.map.tileToWorldX(this.y + y + yOffset);
 
-      this.doorGateLookup[previousRoom.id].shut();
+      _.forEach(this.doorGateLookup, doorGate => {
+        doorGate.shut()
+      })
     }
   }
 }
