@@ -229,6 +229,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   changeGun(gunName): void {
     this.gun.destroy();
     this.gun = GunFactory.createGun(gunName, this.scene, this.x, this.y);
+    this.scene.inventoryText.setText(this.gun.label + " BEAM");
     this.scene.add.existing(this.gun);
   }
 

@@ -4,6 +4,7 @@ import { GunProps } from './gun';
 export class Smg extends Pistol implements GunProps {
   static id = 'SMG';
   id = 'SMG';
+  label = "QUANTUM";
 
   cooldown = 75;
   shootTimer = 75;

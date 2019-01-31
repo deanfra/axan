@@ -10,6 +10,8 @@ export default class Background extends Phaser.GameObjects.TileSprite {
     this.setDepth(-1);
     this.setAlpha(1);
     this.scene.add.existing(this);
+    // Parallax
+    this.setScrollFactor(0.8, 0.8);
   }
 
   setup() {

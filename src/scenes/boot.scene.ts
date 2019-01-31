@@ -12,6 +12,9 @@ import * as projectiles from 'assets/tilesets/projectiles.png';
 import * as guns from 'assets/tilesets/guns.png';
 import * as beams from 'assets/tilesets/beams.png';
 
+import * as marioFontPng from 'assets/fonts/font.png';
+import * as marioFont from 'assets/fonts/font.fnt';
+
 export class BootScene extends Phaser.Scene {
   constructor() {
     super({ key: 'Boot' });
@@ -30,6 +33,7 @@ export class BootScene extends Phaser.Scene {
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('guns', guns, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
+      .bitmapFont('mario', marioFontPng, marioFont)
   }
 
   create() {

@@ -27,12 +27,14 @@ export class DungeonScene extends Phaser.Scene {
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
   public doorGateGroup: Phaser.GameObjects.Group;
-
+  
   public player: Player;
   public background: Background;
   public level: Level;
   public roomVisibility: any;
   public activeRoom: Room;
+  
+  public inventoryText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({ key: 'DungeonScene' });
@@ -60,6 +62,7 @@ export class DungeonScene extends Phaser.Scene {
     this.level.startRoom.setup();
     this.setupProjectileGroup();
     this.setupCamera();
+    this.setupInventory();
   }
 
   update(time: number, delta: number): void {
@@ -75,6 +78,7 @@ export class DungeonScene extends Phaser.Scene {
       // Do this here rather than the resize callback as it limits
       // how much we'll slow down the game
       this.cameras.main.setSize(window.innerWidth, window.innerHeight);
+      // this.inventoryText.setText(window.innerWidth.toString());
       this.cameraResizeNeeded = false;
     }
   }
@@ -97,7 +101,7 @@ export class DungeonScene extends Phaser.Scene {
   setupRoomVisibility() {
     const tileArray = _.range(20);
     this.outOfBoundsLayer.randomize(0, 0, this.level.dungeonInstance.width, this.level.dungeonInstance.height, tileArray)
-    this.outOfBoundsLayer.setDepth(100);
+    this.outOfBoundsLayer.setDepth(99);
     this.roomVisibility = new RoomVisibility(this.outOfBoundsLayer, this);
   }
 
@@ -105,6 +109,8 @@ export class DungeonScene extends Phaser.Scene {
     const { centerX, bottom } = this.level.startRoom.room;
     const playerX = this.map.tileToWorldX(centerX);
     const playerY = this.map.tileToWorldY(bottom-1);
+
+    // this.player = new Player(this, 130, 300, 'player');
     this.player = new Player(this, playerX, playerY, 'player');
     
     // player / world hit detection
@@ -280,7 +286,7 @@ export class DungeonScene extends Phaser.Scene {
     }
   }
 
-  cameraConstrainTo(room: Room) {
+  cameraConstrainTo(room: Room): void {
     // If my camera is already following a target
     // if (this.game.camera.target) {
     //   this.game.camera.follow(null);  // Unfollow the target  
@@ -295,5 +301,11 @@ export class DungeonScene extends Phaser.Scene {
     camera.setBounds(trX, trY, window.innerWidth, window.innerHeight);
     camera.stopFollow();
     camera.startFollow(this.player, true, 0.3, 0.3, 0, 40);
+  }
+
+  setupInventory(): void {
+    this.inventoryText = this.add.bitmapText((window.innerWidth/3)+15, ((window.innerHeight/3)*2)-15, 'mario', 'LASER BEAM', 3) as any;
+    this.inventoryText.setDepth(100);
+    this.inventoryText.setScrollFactor(0);
   }
 }

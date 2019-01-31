@@ -31,6 +31,7 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
   size: number;
   body: Phaser.Physics.Arcade.Body;
   scene: DungeonScene;
+  label: string;
   
   projectile: ProjectileConfig = {
     velocity: 600,
