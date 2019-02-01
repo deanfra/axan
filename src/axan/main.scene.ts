@@ -173,6 +173,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   doorShot = (proj: Phaser.GameObjects.Sprite, doorGate: any) => {
+    proj.destroy();
     doorGate.open();
   }
 

@@ -51,6 +51,7 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
       let x = this.x;
       const player = this.scene.player;
       const { up, down } = player.inputs;
+      const { velocity } = this.projectileConfig;
 
       if (!up && !down) {
         x = this.flipX ? this.x - 16 : this.x + 16;
@@ -60,27 +61,23 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
 
       if (up && player.isMoving) { // run - up
         projectile.angle = this.flipX ? 45 : -45;
-        projectile.body
-          .setVelocityY(-this.projectileConfig.velocity)
-        projectile.body
-          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
+        projectile.body.setVelocityY(-velocity)
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
       } else if (down && player.isMoving) { // run - down
-        // projectile.angle = this.flipX ? -45 : 45;
-        // projectile.body
-          // .setVelocityY(this.projectileConfig.velocity)
-        projectile.body
-          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
+        if (player.isJumping) {
+          projectile.angle = this.flipX ? -45 : 45;
+          projectile.body.setVelocityY(velocity)
+        }
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
+        
       } else if (up) {
         projectile.angle = 90;
-        projectile.body
-          .setVelocityY(-this.projectileConfig.velocity)
+        projectile.body.setVelocityY(-velocity)
       } else if (down && !player.body.onFloor()) {
         projectile.angle = 90;
-        projectile.body
-          .setVelocityY(this.projectileConfig.velocity)
+        projectile.body.setVelocityY(velocity)
       } else {
-        projectile.body
-          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
       }
 
       this.scene.time.addEvent({
