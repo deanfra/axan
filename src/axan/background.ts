@@ -25,17 +25,4 @@ export default class Background extends Phaser.GameObjects.TileSprite {
     this.x = this.scene.map.tileToWorldX(x + (height/2)); 
     this.y = this.scene.map.tileToWorldY(y + (width/2));
   }
-
-  parallaxUpdating() {
-    // Parallax background:
-    // 1. Create a Phaser.Group of sprites
-    // 2. Use array of like 9999 locationpoints(x, y)
-    // 3. Keep track of array index for head locations
-    // 4. For each frame, save value of head locations at index position in array
-    // 5. Update positions of the following sprites accordingly in .update()
-    // 6. index + 1(if larger than say 9999 then index = 0)
-
-    // const bg: any = this.add.image(300, 300, "crateria");
-    // OR - look at cratebox example
-  }
 }

@@ -1,4 +1,3 @@
-import * as crateriaSprite from 'assets/tilesets/crateria.png';
 import * as crateria from 'assets/tilesets/crateria.png';
 import * as doorsTiles from 'assets/tilesets/doors.png';
 import * as doorsHorizTiles from 'assets/tilesets/doors-horiz.png';
@@ -32,7 +31,6 @@ export default class BootScene extends Phaser.Scene {
       .spritesheet('axan', axanTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })
       .spritesheet('doors-horiz', doorsHorizTiles, { frameWidth: 48, frameHeight: 16 })
-      .spritesheet('crateriaSprite', crateriaSprite, { frameWidth: 256, frameHeight: 193 })
       .spritesheet('enemies', enemySprite, { frameWidth: 20, frameHeight: 20 })
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('guns', guns, { frameWidth: 16, frameHeight: 16 })

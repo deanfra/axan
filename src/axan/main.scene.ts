@@ -44,7 +44,6 @@ export default class MainScene extends Phaser.Scene {
   preload() {
     this.load.image("axan", "../assets/tilesets/16x16-crateria.png");
     this.load.image("player", "../assets/tilesets/player-atlas.png");
-    this.load.image("crateriaSprite", "../assets/tilesets/crateria.png");
   }
 
   create(): void {
