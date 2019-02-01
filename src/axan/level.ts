@@ -3,7 +3,7 @@ import { Room } from "./rooms/.";
 import RoomFactory from "./rooms/room-factory";
 import { RoomInstance } from "../interfaces/room-instance.js";
 import DungeonFactoryOutput from "../interfaces/dungeon-factory-output";
-import { DungeonScene } from "scenes/dungeon.scene";
+import MainScene from "axan/main.scene";
 
 // The resposibility of the Level object should be to
 // - Contain all room instances
@@ -20,7 +20,7 @@ export default class Level {
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public readonly rooms: Array<Room>;
 
-  constructor(scene: DungeonScene) {
+  constructor(scene: MainScene) {
     this.dungeonInstance = new Dungeon({
       width: 200,
       height: 100,

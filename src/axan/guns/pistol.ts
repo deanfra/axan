@@ -1,5 +1,5 @@
 import { Gun, GunProps } from "./gun";
-import { DungeonScene } from "scenes/dungeon.scene";
+import MainScene from "axan/main.scene";
 import ProjectileConfig from "../../interfaces/projectile-config"
 
 export class Pistol extends Gun implements GunProps {
@@ -23,7 +23,7 @@ export class Pistol extends Gun implements GunProps {
     velocity: 400
   };
 
-  scene: DungeonScene;
+  scene: MainScene;
 
   constructor(scene, x, y, key = "guns", frame = 1) {
     super(scene, x, y, key, frame);

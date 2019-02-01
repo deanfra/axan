@@ -1,12 +1,12 @@
 import ProjectileConfig from "../../interfaces/projectile-config"
-import { DungeonScene } from 'scenes/dungeon.scene';
+import MainScene from 'axan/main.scene';
 
 export default class Projectile extends Phaser.GameObjects.Sprite {
   gravity: boolean;
   key: string;
   size: number;
   velocity: number;
-  scene: DungeonScene;
+  scene: MainScene;
   damage: number = 0;
 
   constructor(scene, x, y, config: ProjectileConfig) {

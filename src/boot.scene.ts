@@ -17,7 +17,7 @@ import * as beams from 'assets/tilesets/beams.png';
 import * as marioFontPng from 'assets/fonts/font.png';
 import * as marioFont from 'assets/fonts/font.fnt';
 
-export class BootScene extends Phaser.Scene {
+export default class BootScene extends Phaser.Scene {
   constructor() {
     super({ key: 'Boot' });
   }
@@ -41,6 +41,6 @@ export class BootScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('DungeonScene');
+    this.scene.start('MainScene');
   }
 }

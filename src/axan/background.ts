@@ -1,7 +1,7 @@
-import { DungeonScene } from '../scenes/dungeon.scene';
+import MainScene from './main.scene';
 
 export default class Background extends Phaser.GameObjects.TileSprite {
-  public scene: DungeonScene;
+  public scene: MainScene;
   public body: Phaser.Physics.Arcade.Body;
 
   constructor(scene, key, scrollFactor, depth) {

@@ -1,10 +1,10 @@
 import { Room } from "./room";
 import Background from "../background";
-import { DungeonScene } from "../../scenes/dungeon.scene";
+import MainScene from "../main.scene";
 
 export default class RoomVisibility {
   shadowLayer: Phaser.Tilemaps.DynamicTilemapLayer;
-  scene: DungeonScene;
+  scene: MainScene;
 
   constructor(shadowLayer, scene) {
     this.shadowLayer = shadowLayer;

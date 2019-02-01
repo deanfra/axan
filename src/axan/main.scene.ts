@@ -1,8 +1,8 @@
-import Player from '../axan/player';
-import Background from '../axan/background';
-import { Room } from "../axan/rooms/";
-import Level from "../axan/level";
-import RoomVisibility from "../axan/rooms/room-visibility";
+import Player from './player';
+import Background from './background';
+import { Room } from "./rooms";
+import Level from "./level";
+import RoomVisibility from "./rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
 import Projectile from "axan/guns/projectile";
@@ -13,7 +13,7 @@ import * as _ from "lodash";
 // - Manage player
 // - Preload assets
 
-export class DungeonScene extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
   private camera: Phaser.Cameras.Scene2D.Camera;
   private cameraResizeNeeded: boolean;
   public map: Phaser.Tilemaps.Tilemap;
@@ -38,7 +38,7 @@ export class DungeonScene extends Phaser.Scene {
   public inventoryText: Phaser.GameObjects.BitmapText;
 
   constructor() {
-    super({ key: 'DungeonScene' });
+    super({ key: 'MainScene' });
   }
 
   preload() {
@@ -260,7 +260,7 @@ export class DungeonScene extends Phaser.Scene {
 
   enemyShot = (proj: Projectile, enemy: Enemy) => {
     if (enemy.canDamage || proj.getData('bypass')) {
-      const scene = this as DungeonScene;
+      const scene = this as MainScene;
       let fromRight = true;
       let shouldFlip = false;
       let multiplier = 1;

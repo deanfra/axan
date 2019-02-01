@@ -7,7 +7,7 @@ import Tile from "../tiles/tile";
 
 import { Piq } from "../enemies/piq";
 import { Vroll } from "../enemies/vroll";
-import { DungeonScene } from "scenes/dungeon.scene";
+import MainScene from "axan/main.scene";
 import * as Cellular from "cellular-dungeon";
 import * as _ from "lodash";
 
@@ -35,7 +35,7 @@ export class Room {
   public readonly top: number;
   public readonly right: number;
   public readonly bottom: number;
-  private readonly scene: DungeonScene;
+  private readonly scene: MainScene;
 
   constructor(roomInstance, scene) {
     this.room = roomInstance;

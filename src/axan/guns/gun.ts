@@ -1,4 +1,4 @@
-import { DungeonScene } from 'scenes/dungeon.scene';
+import MainScene from 'axan/main.scene';
 import Projectile from "./projectile";
 import ProjectileConfig from "../../interfaces/projectile-config"
 
@@ -23,7 +23,7 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
   damage: number;
   size: number;
   body: Phaser.Physics.Arcade.Body;
-  scene: DungeonScene;
+  scene: MainScene;
   label: string;
   
   projectileConfig: ProjectileConfig = {

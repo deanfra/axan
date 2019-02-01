@@ -1,4 +1,4 @@
-import { DungeonScene } from '../scenes/dungeon.scene';
+import MainScene from './main.scene';
 import { Gun, GunFactory } from './guns';
 import { Room } from "./rooms/";
 import createPlayerAnimations from './player-animations';
@@ -17,7 +17,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   private hasMoved: boolean;
   private keys: Keys;
   public body: Phaser.Physics.Arcade.Body;
-  public scene: DungeonScene;
+  public scene: MainScene;
   private gun: Gun;
 
   inputs: { [key: string]: boolean };

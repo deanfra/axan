@@ -1,7 +1,7 @@
 import 'phaser';
 
-import { BootScene } from 'scenes/boot.scene';
-import { DungeonScene } from './scenes/dungeon.scene';
+import BootScene from 'boot.scene';
+import MainScene from './axan/main.scene';
 
 const config: Opt<GameConfig> = {
   type: Phaser.WEBGL,
@@ -29,7 +29,7 @@ const config: Opt<GameConfig> = {
   },
   scene: [
     BootScene,
-    DungeonScene
+    MainScene
   ]
 };
 

@@ -1,7 +1,7 @@
-import { DungeonScene } from 'scenes/dungeon.scene';
+import MainScene from 'axan/main.scene';
 
 export class Enemy extends Phaser.GameObjects.Sprite {
-  scene: DungeonScene;
+  scene: MainScene;
   body: Phaser.Physics.Arcade.Body;
 
   baseVel: number;
@@ -18,7 +18,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   animMad: string;
   smoke: Phaser.GameObjects.Particles.ParticleEmitter;
 
-  constructor(scene: DungeonScene, x: number, y: number, public dir: number, key: string) {
+  constructor(scene: MainScene, x: number, y: number, public dir: number, key: string) {
     super(scene, x, y, key);
     this.scene.physics.world.enable(this);
   }
