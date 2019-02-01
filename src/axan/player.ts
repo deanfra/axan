@@ -77,7 +77,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.isCrouching = (this.body.onFloor() && this.inputs.down)
     this.isMoving = (this.body.velocity.x !== 0 && leftOrRight);
     this.isRunning = (this.body.onFloor() && this.isMoving)
-    this.isJumping = !this.body.onFloor();
 
     this.animation();
     this.controls(delta);
@@ -110,7 +109,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
     // airborne
-    if (this.body.onFloor() && this.body.velocity.x !== 0 && (left || right)) {
+    if (this.isRunning) {
+      this.isJumping = false;
+
       if (down) {
         anim = 'crouch-run';
       } else if (up) {
@@ -120,6 +121,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     // crouching
     } else if (this.body.onFloor() && this.body.velocity.x === 0) {
+      this.isJumping = false;
+
       if(down) {
         anim = 'crouch';
       } else if (up) {
@@ -129,7 +132,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       } else {
         anim = 'stand';
       }
-    } else if (!this.body.onFloor()) {
+    } else if (!this.body.onFloor() && this.isJumping) {
       if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
       } else if (up && (left || right)) {
@@ -190,15 +193,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     if (jump) {
       this.hasMoved = true;
-      // if (this.body.onFloor() && this.jumpTimer === 0) {
+      if (this.body.onFloor() && this.jumpTimer === 0) {
         this.jumpTimer = 1;
         this.body.setVelocityY(-150);
-      // } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
-      //   this.jumpTimer += delta;
-      //   this.body.setVelocityY(-160);
-      // } else if (this.body.onCeiling()) {
-      //   this.jumpTimer = 301;
-      // }
+        this.isJumping = true;
+      } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
+        this.jumpTimer += delta;
+        this.body.setVelocityY(-160);
+      } else if (this.body.onCeiling()) {
+        this.jumpTimer = 301;
+      }
     } else {
       this.jumpTimer = 0;
     }
