@@ -14,12 +14,13 @@ export class Smg extends Pistol implements GunProps {
   // pushBackAir = 60;
   angleSpread = 25;
 
-  projectile = {
-    velocity: 500,
-    size: 5,
+  projectileConfig = {
+    anim: 'beam-fire',
+    damage: this.damage,
     gravity: false,
     key: 'projectile',
-    anim: 'beam-fire'
+    size: 5,
+    velocity: 500,
   };
 
   constructor(scene, x, y, key = 'guns', frame) {

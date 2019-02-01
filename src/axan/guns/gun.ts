@@ -1,5 +1,6 @@
 import { DungeonScene } from 'scenes/dungeon.scene';
 import Projectile from "./projectile";
+import ProjectileConfig from "../../interfaces/projectile-config"
 
 export interface GunProps {
   id: string;
@@ -9,15 +10,6 @@ export interface GunProps {
   damage: number;
   size: number;
   canShoot: boolean;
-}
-
-export interface ProjectileConfig {
-  velocity: number;
-  size: number;
-  gravity: boolean;
-  amount?: number;
-  key: string;
-  anim?: string;
 }
 
 export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
@@ -34,7 +26,7 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
   scene: DungeonScene;
   label: string;
   
-  projectile: ProjectileConfig = {
+  projectileConfig: ProjectileConfig = {
     velocity: 600,
     size: 10,
     gravity: false,
@@ -64,40 +56,32 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
         x = this.flipX ? this.x - 16 : this.x + 16;
       }
 
-      const projectile = new Projectile(this.scene, x, this.y, this.projectile.key, this.damage)
-      
-      projectile.anims.play(this.projectile.anim);
+      const projectile = new Projectile(this.scene, x, this.y, this.projectileConfig)
 
-      // shoot direction
-      projectile.flipX = this.flipX;
       if (up && player.isMoving) {
         projectile.angle = this.flipX ? 45 : -45;
         projectile.body
-          .setVelocityY(-this.projectile.velocity)
+          .setVelocityY(-this.projectileConfig.velocity)
         projectile.body
-          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
       } else if (down && player.isMoving) {
         projectile.angle = this.flipX ? -45 : 45;
         projectile.body
-          .setVelocityY(this.projectile.velocity)
+          .setVelocityY(this.projectileConfig.velocity)
         projectile.body
-          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
       } else if (up) {
         projectile.angle = 90;
         projectile.body
-          .setVelocityY(-this.projectile.velocity)
+          .setVelocityY(-this.projectileConfig.velocity)
       } else if (down && !player.body.onFloor()) {
         projectile.angle = 90;
         projectile.body
-          .setVelocityY(this.projectile.velocity)
+          .setVelocityY(this.projectileConfig.velocity)
       } else {
         projectile.body
-          .setVelocityX(this.flipX ? -this.projectile.velocity : this.projectile.velocity)
+          .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
       }
-
-      projectile.body
-        .setSize(this.projectile.size, this.projectile.size)
-        .allowGravity = this.projectile.gravity;
 
       this.scene.time.addEvent({
         delay: this.cooldown,

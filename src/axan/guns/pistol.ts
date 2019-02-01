@@ -1,5 +1,6 @@
-import { Gun, GunProps, ProjectileConfig } from "./gun";
+import { Gun, GunProps } from "./gun";
 import { DungeonScene } from "scenes/dungeon.scene";
+import ProjectileConfig from "../../interfaces/projectile-config"
 
 export class Pistol extends Gun implements GunProps {
   static id = "PISTOL";
@@ -13,12 +14,13 @@ export class Pistol extends Gun implements GunProps {
   damage = 3;
   size = 10;
 
-  projectile: ProjectileConfig = {
-    velocity: 400,
-    size: 10,
+  projectileConfig: ProjectileConfig = {
+    anim: "beam-photon",
+    damage: this.damage,
     gravity: false,
     key: "projectile",
-    anim: "beam-photon"
+    size: 10,
+    velocity: 400
   };
 
   scene: DungeonScene;

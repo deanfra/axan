@@ -5,6 +5,7 @@ import Level from "../axan/level";
 import RoomVisibility from "../axan/rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
+import Projectile from "axan/guns/projectile";
 import * as _ from "lodash";
 
 // The responsibility of the Dungeon (main) should be to:
@@ -65,18 +66,16 @@ export class DungeonScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     this.player.update(time, delta);
-    this.enemyGroup.children.entries.forEach(
-      enemy => enemy.update(time, delta), this
-    );
-    this.killedEnemies.children.entries.forEach(
-      enemy => enemy.update(time, delta), this
-    );
+
+    this.enemyGroup.children.entries.concat(this.killedEnemies.children.entries)
+      .forEach(
+        enemy => enemy.update(time, delta), this
+      );
 
     if (this.cameraResizeNeeded) {
       // Do this here rather than the resize callback as it limits
       // how much we'll slow down the game
       this.cameras.main.setSize(window.innerWidth, window.innerHeight);
-      // this.inventoryText.setText(window.innerWidth.toString());
       this.cameraResizeNeeded = false;
     }
   }
@@ -197,15 +196,15 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   setupProjectileGroup() {
-    this.projectileGroup = this.add.group({ createCallback: proj => this.physics.world.enable(proj) });
+    this.projectileGroup = this.add.group();
 
     // world / projectiles hit detection
     this.physics.add.collider(
       this.projectileGroup,
       this.groundLayer,
-      (projectile) => {
-        if (projectile.active && projectile.getData('onCollide')) {
-          projectile.getData('onCollide')(projectile, this);
+      (projectile: Projectile) => {
+        if (projectile.active) {
+          projectile.projectileCollide();
         }
       }, undefined, this);
 
@@ -259,7 +258,7 @@ export class DungeonScene extends Phaser.Scene {
     // console.log('x - enemy hit')
   }
 
-  enemyShot = (proj: Phaser.GameObjects.Sprite, enemy: Enemy) => {
+  enemyShot = (proj: Projectile, enemy: Enemy) => {
     if (enemy.canDamage || proj.getData('bypass')) {
       const scene = this as DungeonScene;
       let fromRight = true;
@@ -273,11 +272,12 @@ export class DungeonScene extends Phaser.Scene {
       } else if (!fromRight && enemy.body.velocity.x < 0 && proj.getData('flip')) {
         shouldFlip = true;
       }
+
       if (proj.getData('force')) {
         multiplier = proj.getData('force');
       }
 
-      enemy.damage(proj.getData('damage'), fromRight, multiplier, shouldFlip);
+      enemy.damage(proj.damage, fromRight, multiplier, shouldFlip);
 
       if (proj.getData('onEnemy')) {
         proj.getData('onEnemy')(proj, enemy, scene);
