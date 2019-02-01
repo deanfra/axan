@@ -51,7 +51,13 @@ export default function (scene): void {
       key: 'crouch',
       frameRate: 20,
       repeat: 0,
-      frames: scene.anims.generateFrameNames('player', { start: 0, end: 3, prefix: 'crouch', zeroPad: 2 })
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 2, prefix: 'crouch', zeroPad: 2 })
+    },
+    {
+      key: 'crouch-run',
+      frameRate: 20,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 0, end: 9, prefix: 'crouch-run', zeroPad: 2 })
     },
     {
       key: 'jump-up',

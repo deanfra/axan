@@ -231,6 +231,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">crouch-run-01.png</key>
+            <key type="filename">crouch-run-02.png</key>
+            <key type="filename">crouch-run-03.png</key>
+            <key type="filename">crouch-run-04.png</key>
+            <key type="filename">crouch-run-05.png</key>
+            <key type="filename">crouch-run-06.png</key>
+            <key type="filename">crouch-run-07.png</key>
+            <key type="filename">crouch-run-08.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,16,15</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,16,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">run-aim-up01.png</key>
             <key type="filename">run-aim-up02.png</key>
             <key type="filename">run-aim-up03.png</key>
@@ -352,6 +372,14 @@
             <filename>stand-aim-up01.png</filename>
             <filename>stand-aim-up02.png</filename>
             <filename>stand-aim-up03.png</filename>
+            <filename>crouch-run-01.png</filename>
+            <filename>crouch-run-02.png</filename>
+            <filename>crouch-run-03.png</filename>
+            <filename>crouch-run-04.png</filename>
+            <filename>crouch-run-05.png</filename>
+            <filename>crouch-run-06.png</filename>
+            <filename>crouch-run-07.png</filename>
+            <filename>crouch-run-08.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

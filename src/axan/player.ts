@@ -107,11 +107,29 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // Run on every second frame, prevents crazy jitters
     const {left, right, up, down} = this.inputs;
     let anim: string;
-    let tileSize: Array<number> = [16, 43];
     this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
     // airborne
-    if (!this.body.onFloor()) {
+    if (this.body.onFloor() && this.body.velocity.x !== 0 && (left || right)) {
+      if (down) {
+        anim = 'crouch-run';
+      } else if (up) {
+        anim = 'run-aim-up';
+      } else {
+        anim = 'run';
+      }
+    // crouching
+    } else if (this.body.onFloor() && this.body.velocity.x === 0) {
+      if(down) {
+        anim = 'crouch';
+      } else if (up) {
+        anim = 'stand-aim-up';
+      } else if (!this.hasMoved) {
+        anim = 'begin';
+      } else {
+        anim = 'stand';
+      }
+    } else if (!this.body.onFloor()) {
       if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
       } else if (up && (left || right)) {
@@ -125,31 +143,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       } else if (this.body.velocity.y > 80) {
         anim = 'jump-down';
       }
-    // running
-    } else if (this.body.velocity.x !== 0 && (left || right)) {
-      if (down) {
-        tileSize = [16, 28];
-        anim = 'run-aim-down';
-      } else if (up) {
-        tileSize = [16, 54];
-        anim = 'run-aim-up';
-      } else {
-        anim = 'run';
-      }
-    // crouching
-    } else if (this.body.velocity.x === 0) {
-      if(down) {
-        tileSize = [16, 28];
-        anim = 'crouch';
-      } else if (up) {
-        tileSize = [16, 54];
-        anim = 'stand-aim-up';
-      } else if (!this.hasMoved) {
-        anim = 'begin';
-      } else {
-        anim = 'stand';
-      }
-    }
+      // running
+    } 
     
 
     if (anim && this.anims.getCurrentKey() !== anim) {
@@ -160,10 +155,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
         console.error("Error playing "+ anim);
       }
     }
-    if(down) {
-      tileSize = [16, 28];
-    }
-    this.setSizeWithOffset(tileSize[0], tileSize[1]);
+
+    let tileYSize: number = (down) ? 30 : (up) ? 54 : 43;
+    this.setSizeWithOffset(16, tileYSize[1]);
   }
 
   controls(delta: number): void {

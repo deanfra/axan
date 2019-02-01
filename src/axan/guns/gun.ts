@@ -58,16 +58,16 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
 
       const projectile = new Projectile(this.scene, x, this.y, this.projectileConfig)
 
-      if (up && player.isMoving) {
+      if (up && player.isMoving) { // run - up
         projectile.angle = this.flipX ? 45 : -45;
         projectile.body
           .setVelocityY(-this.projectileConfig.velocity)
         projectile.body
           .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
-      } else if (down && player.isMoving) {
-        projectile.angle = this.flipX ? -45 : 45;
-        projectile.body
-          .setVelocityY(this.projectileConfig.velocity)
+      } else if (down && player.isMoving) { // run - down
+        // projectile.angle = this.flipX ? -45 : 45;
+        // projectile.body
+          // .setVelocityY(this.projectileConfig.velocity)
         projectile.body
           .setVelocityX(this.flipX ? -this.projectileConfig.velocity : this.projectileConfig.velocity)
       } else if (up) {
