@@ -277,7 +277,8 @@ export class DungeonScene extends Phaser.Scene {
         multiplier = proj.getData('force');
       }
 
-      enemy.damage(proj.getData('dmg'), fromRight, multiplier, shouldFlip);
+      enemy.damage(proj.getData('damage'), fromRight, multiplier, shouldFlip);
+
       if (proj.getData('onEnemy')) {
         proj.getData('onEnemy')(proj, enemy, scene);
       }

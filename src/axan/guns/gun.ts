@@ -1,4 +1,5 @@
 import { DungeonScene } from 'scenes/dungeon.scene';
+import Projectile from "./projectile";
 
 export interface GunProps {
   id: string;
@@ -51,6 +52,9 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
   
   shoot() {
     if (this.canShoot) {
+      this.canShoot = false;
+      this.released = false;
+
       // refactor
       let x = this.x;
       const player = this.scene.player;
@@ -60,14 +64,8 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
         x = this.flipX ? this.x - 16 : this.x + 16;
       }
 
-      this.canShoot = false;
-      this.released = false;
-
-      const projectile =
-        this.scene.projectileGroup.create(x, this.y, 'projectiles', this.projectile.key)
-          .setData('dmg', this.damage)
-          .setData('onCollide', this.projectileCollide) as Phaser.GameObjects.Sprite;
-
+      const projectile = new Projectile(this.scene, x, this.y, this.projectile.key, this.damage)
+      
       projectile.anims.play(this.projectile.anim);
 
       // shoot direction
