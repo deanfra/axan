@@ -231,14 +231,14 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">crouch-run-01.png</key>
-            <key type="filename">crouch-run-02.png</key>
-            <key type="filename">crouch-run-03.png</key>
-            <key type="filename">crouch-run-04.png</key>
-            <key type="filename">crouch-run-05.png</key>
-            <key type="filename">crouch-run-06.png</key>
-            <key type="filename">crouch-run-07.png</key>
-            <key type="filename">crouch-run-08.png</key>
+            <key type="filename">crouch-run01.png</key>
+            <key type="filename">crouch-run02.png</key>
+            <key type="filename">crouch-run03.png</key>
+            <key type="filename">crouch-run04.png</key>
+            <key type="filename">crouch-run05.png</key>
+            <key type="filename">crouch-run06.png</key>
+            <key type="filename">crouch-run07.png</key>
+            <key type="filename">crouch-run08.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -372,14 +372,14 @@
             <filename>stand-aim-up01.png</filename>
             <filename>stand-aim-up02.png</filename>
             <filename>stand-aim-up03.png</filename>
-            <filename>crouch-run-01.png</filename>
-            <filename>crouch-run-02.png</filename>
-            <filename>crouch-run-03.png</filename>
-            <filename>crouch-run-04.png</filename>
-            <filename>crouch-run-05.png</filename>
-            <filename>crouch-run-06.png</filename>
-            <filename>crouch-run-07.png</filename>
-            <filename>crouch-run-08.png</filename>
+            <filename>crouch-run01.png</filename>
+            <filename>crouch-run02.png</filename>
+            <filename>crouch-run03.png</filename>
+            <filename>crouch-run04.png</filename>
+            <filename>crouch-run05.png</filename>
+            <filename>crouch-run06.png</filename>
+            <filename>crouch-run07.png</filename>
+            <filename>crouch-run08.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
