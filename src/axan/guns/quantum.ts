@@ -1,9 +1,9 @@
-import { Pistol } from './pistol';
+import { Laser } from './laser';
 import { GunProps } from './gun';
 
-export class Smg extends Pistol implements GunProps {
-  static id = 'SMG';
-  id = 'SMG';
+export class Quantum extends Laser implements GunProps {
+  static id = 'QUANTUM';
+  id = 'QUANTUM';
   label = "QUANTUM";
 
   cooldown = 75;

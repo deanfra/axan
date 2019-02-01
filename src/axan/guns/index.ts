@@ -1,6 +1,6 @@
 import { Gun } from './gun';
-import { Pistol } from './pistol';
-import { Smg } from './smg';
+import { Laser } from './laser';
+import { Quantum } from './quantum';
 // import { Shotgun } from './shotgun';
 // import { DualPistol } from './dualpistol';
 // import { Minigun } from './minigun';
@@ -13,13 +13,13 @@ import { Smg } from './smg';
 // import { Flamethrower } from './flamethrower';
 // import { LaserGun } from './lasergun';
 
-export const DefaultGun = Pistol;
+export const DefaultGun = Laser;
 
 export const guns: Array<typeof Gun> = [
-  Pistol,
+  Laser,
   // Revolver,
-  // DualPistol,
-  Smg,
+  // DualLaser,
+  Quantum,
   // Shotgun,
   // Minigun,
   // GrenadeLauncher,
@@ -33,8 +33,8 @@ export const guns: Array<typeof Gun> = [
 
 export * from './gun';
 export * from './gun-factory';
-export * from './pistol';
-export * from './smg';
+export * from './laser';
+export * from './quantum';
 // export * from './minigun';
 // export * from './shotgun';
 // export * from './dualpistol';

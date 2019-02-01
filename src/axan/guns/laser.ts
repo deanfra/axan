@@ -2,10 +2,10 @@ import { Gun, GunProps } from "./gun";
 import MainScene from "axan/main.scene";
 import ProjectileConfig from "../../interfaces/projectile-config"
 
-export class Pistol extends Gun implements GunProps {
-  static id = "PISTOL";
+export class Laser extends Gun implements GunProps {
+  static id = "LASER";
   private direction: string;
-  id = "PISTOL";
+  id = "LASER";
   label = "LASER";
 
   cooldown = 300;

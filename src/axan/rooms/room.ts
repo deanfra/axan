@@ -130,17 +130,17 @@ export class Room {
     const worldX = this.scene.map.tileToWorldX(randomX);
     const worldY = this.scene.map.tileToWorldY(randomY);
 
-    let PickupClass = this.scene.add.sprite(worldX, worldY, 'beams');
+    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beams');
 
     if(Math.random() * 2 > 1) {
-      PickupClass.name = "smg";
+      BeamPickupClass.name = "QUANTUM";
     } else {
-      PickupClass.name = "pistol";
+      BeamPickupClass.name = "LASER";
     }
 
-    this.scene.physics.world.enable(PickupClass, Phaser.Physics.Arcade.STATIC_BODY);
-    this.scene.physics.add.overlap(PickupClass, this.scene.player, this.scene.player.pickupGet);
-    PickupClass.play(PickupClass.name === "smg" ? "ice" : "charge");
+    this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
+    this.scene.physics.add.overlap(BeamPickupClass, this.scene.player, this.scene.player.pickupGet);
+    BeamPickupClass.play(BeamPickupClass.name === "QUANTUM" ? "ice" : "charge");
   }
 
   instantiatePlatforms() {

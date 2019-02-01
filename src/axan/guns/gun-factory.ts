@@ -1,10 +1,10 @@
 import { guns, Gun, DefaultGun } from '.';
-import { Smg } from './smg';
-import { Pistol } from './pistol';
+import { Quantum } from './quantum';
+import { Laser } from './laser';
 
 const gunLib: {[key:string]: any} = {
-  smg: Smg,
-  pistol: Pistol
+  QUANTUM: Quantum,
+  LASER: Laser
 }
 
 export class GunFactory {
@@ -17,7 +17,7 @@ export class GunFactory {
   }
 
   static createDefaultGun(scene, x, y): Gun {
-    return this.createGun('pistol', scene, x, y);
+    return this.createGun('LASER', scene, x, y);
   }
 
   static getRandomGun(): typeof Gun {
