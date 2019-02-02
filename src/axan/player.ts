@@ -108,10 +108,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     let anim: string;
     this.animTimer = (this.animTimer === 3) ? 0 : this.animTimer+1;
 
-    // airborne
     if (this.isRunning) {
+      // run
       this.isJumping = false;
-
       if (down) {
         anim = 'crouch-run';
       } else if (up) {
@@ -119,10 +118,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
       } else {
         anim = 'run';
       }
-    // crouching
     } else if (this.body.onFloor() && this.body.velocity.x === 0) {
+      // crouching
       this.isJumping = false;
-
       if(down) {
         anim = 'crouch';
       } else if (up) {
@@ -133,6 +131,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         anim = 'stand';
       }
     } else if (!this.body.onFloor() && this.isJumping) {
+      // airborne
       if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
       } else if (up && (left || right)) {
@@ -146,12 +145,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
       } else if (this.body.velocity.y > 80) {
         anim = 'jump-down';
       }
-      // running
     } 
-    
 
     if (anim && this.anims.getCurrentKey() !== anim) {
-      // console.log(anim)
       try {
         this.anims.play(anim);
       } catch {
@@ -236,7 +232,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.gun.preDestroy();
       this.gun.destroy();
     }
-    this.gun = GunFactory.createDefaultGun(this.scene, x + 16, y);
+
+    this.gun = GunFactory.createGun(this.scene.inventory.activeBeam, this.scene, x + 16, y);
     this.scene.physics.world.enable(this);
     this.scene.add.existing(this.gun);
   }

@@ -2,6 +2,7 @@ import Player from './player';
 import Background from './background';
 import { Room } from "./rooms";
 import Level from "./level";
+import Inventory from "./inventory";
 import RoomVisibility from "./rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
@@ -35,10 +36,12 @@ export default class MainScene extends Phaser.Scene {
   public roomVisibility: any;
   public activeRoom: Room;
   
+  public inventory: Inventory;
   public inventoryText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({ key: 'MainScene' });
+    this.inventory = new Inventory();
   }
 
   preload() {
