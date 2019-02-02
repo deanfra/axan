@@ -126,8 +126,10 @@ export class Room {
   }
 
   addPickups() {
-    const randomX = Phaser.Math.Between(this.room.x+2, this.room.x+this.room.width-2);
-    const randomY = Phaser.Math.Between(this.room.y+2, this.room.y+this.room.height-2);
+    const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.constructor.name === "None")) || {};
+    const randomX = randNoneTile.x + this.room.x;
+    const randomY = randNoneTile.y + this.room.y;
+
     const worldX = this.scene.map.tileToWorldX(randomX);
     const worldY = this.scene.map.tileToWorldY(randomY);
 

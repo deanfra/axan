@@ -8,6 +8,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   vel: number;
   baseHealth = 6;
   health = 6;
+  damage = 0;
   isFirst = true;
   falling = false;
   killAt: number = 0;
@@ -50,7 +51,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   }
 
-  damage(amount: number = 0, fromRight: boolean, multiplier = 2, flip = false): void {
+  hurt(amount: number = 0, fromRight: boolean, multiplier = 2, flip = false): void {
     this.canDamage = false;
     this.health -= amount;
     this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));

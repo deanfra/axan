@@ -1,7 +1,9 @@
 import MainScene from './main.scene';
 import { Beam, BeamFactory } from './beams';
 import { Room } from "./rooms/";
+import Inventory from "./inventory";
 import createPlayerAnimations from './player-animations';
+import { Enemy } from './enemies';
 
 interface Keys {
   up: Phaser.Input.Keyboard.Key;
@@ -13,8 +15,10 @@ interface Keys {
 }
 
 export default class Player extends Phaser.GameObjects.Sprite {
+  private inventory: Inventory;
   // input keys
-  private hasMoved: boolean;
+  private hasMoved: boolean = false;
+  private canMove: boolean = true;
   private keys: Keys;
   public body: Phaser.Physics.Arcade.Body;
   public scene: MainScene;
@@ -37,11 +41,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
   public isMoving = false;
   public isCrouching = false;
   public isRunning = false;
-
+  
+  hurtCooldown = 300;
+  canHurt = true;
+  
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
     this.setOrigin(0.5, .8);
     this.scene.physics.world.enable(this);
+    this.inventory = scene.inventory;
     
     this.setDepth(10);
 
@@ -162,6 +170,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
   controls(delta: number): void {
     const { left, right, up, down, shoot, jump } = this.inputs;
 
+    if(!this.canMove) {
+      return;
+    }
+
     if (this.body.onCeiling() && this.body.onFloor()) {
       console.log('----------------- JAMMED')
     }
@@ -242,4 +254,33 @@ export default class Player extends Phaser.GameObjects.Sprite {
   shoot() {
     this.beam.shoot();
   }
+
+  die() {
+    this.canMove = false;
+    this.body.stop();
+  }
+
+  enemyHurtPlayer = (player, enemy: Enemy) => {
+    if (this.canHurt) {
+      this.canHurt = false;
+      this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));
+      this.inventory.hurt(enemy.damage);
+      this.scene.healthText.setText(this.inventory.health.toString());
+
+      if (this.inventory.health < 1) {
+        this.die();
+      }
+
+      this.scene.time.addEvent({
+        delay: this.hurtCooldown,
+        callbackScope: this,
+        callback() {
+          this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+          this.canHurt = true;
+        }
+      });
+
+    }
+  }
+
 }

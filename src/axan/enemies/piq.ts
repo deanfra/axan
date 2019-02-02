@@ -7,6 +7,7 @@ export class Piq extends Enemy {
   baseVel: number = 40;
   vel: number = 40;
   health = 6;
+  damage = 10;
   isFirst = true;
   falling = false;
   killAt: number = 0;

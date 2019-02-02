@@ -10,6 +10,7 @@ export class Vroll extends Enemy {
 
   baseHealth = 6;
   health = 6;
+  damage = 5;
   // isFirst = true;
   canDamage = true;
   isMoving = false;

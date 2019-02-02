@@ -38,6 +38,7 @@ export default class MainScene extends Phaser.Scene {
   
   public inventory: Inventory;
   public inventoryText: Phaser.GameObjects.BitmapText;
+  public healthText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -63,7 +64,7 @@ export default class MainScene extends Phaser.Scene {
     this.level.startRoom.setup();
     this.setupProjectileGroup();
     this.setupCamera();
-    this.setupInventory();
+    this.setupHUD();
   }
 
   update(time: number, delta: number): void {
@@ -115,7 +116,7 @@ export default class MainScene extends Phaser.Scene {
     // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
     // player / enemy hit detection
-    this.physics.add.overlap(this.player, this.enemyGroup, this.enemyHit);
+    this.physics.add.overlap(this.player, this.enemyGroup, this.player.enemyHurtPlayer);
     // player / door gate hit detection
     this.physics.add.collider(this.player, this.doorGateGroup);
 
@@ -276,10 +277,6 @@ export default class MainScene extends Phaser.Scene {
     });
   }
 
-  enemyHit = (enemy, player) => {
-    // console.log('x - enemy hit')
-  }
-
   enemyShot = (proj: Projectile, enemy: Enemy) => {
     if (enemy.canDamage || proj.getData('bypass')) {
       const scene = this as MainScene;
@@ -299,7 +296,7 @@ export default class MainScene extends Phaser.Scene {
         multiplier = proj.getData('force');
       }
 
-      enemy.damage(proj.damage, fromRight, multiplier, shouldFlip);
+      enemy.hurt(proj.damage, fromRight, multiplier, shouldFlip);
 
       if (proj.getData('onEnemy')) {
         proj.getData('onEnemy')(proj, enemy, scene);
@@ -327,8 +324,13 @@ export default class MainScene extends Phaser.Scene {
     camera.startFollow(this.player, true, 0.3, 0.3, 0, 40);
   }
 
-  setupInventory(): void {
-    this.inventoryText = this.add.bitmapText((window.innerWidth/3)+15, ((window.innerHeight/3)*2)-15, 'mario', 'LASER BEAM', 3) as any;
+  setupHUD(): void {
+    const screenLeft = (window.innerWidth / 3);
+    const screenTop = (window.innerHeight / 3);
+    this.healthText = this.add.bitmapText((screenLeft * 2) - 15, (screenTop * 2) - 15, 'mario-font', this.inventory.health.toString(), 3, 2);
+    this.healthText.setDepth(100);
+    this.healthText.setScrollFactor(0);
+    this.inventoryText = this.add.bitmapText(screenLeft + 15, (screenTop * 2)-15, 'mario-font', 'LASER BEAM', 3);
     this.inventoryText.setDepth(100);
     this.inventoryText.setScrollFactor(0);
   }
