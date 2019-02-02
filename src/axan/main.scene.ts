@@ -181,21 +181,26 @@ export default class MainScene extends Phaser.Scene {
   }
 
   setupPickupGroup() {
+    const repeat = -1;
+    const frameRate = 15;
     [
       {
         key: 'charge',
-        repeat: -1,
-        frameRate: 15,
-        defaultTextureKey: 'beams-pickups',
-        frames: this.anims.generateFrameNames('beams-pickups', { start: 0, end: 1 })
+        frames: this.anims.generateFrameNames('beam-pickups', { start: 0, end: 1 })
+      }, {
+        key: 'spazer',
+        frames: this.anims.generateFrameNames('beam-pickups', { start: 2, end: 3 })
+      }, {
+        key: 'wave',
+        frames: this.anims.generateFrameNames('beam-pickups', { start: 4, end: 5 })
       }, {
         key: 'ice',
-        repeat: -1,
-        frameRate: 15,
-        defaultTextureKey: 'beams-pickups',
-        frames: this.anims.generateFrameNames('beams-pickups', { start: 2, end: 3 })
+        frames: this.anims.generateFrameNames('beam-pickups', { start: 6, end: 7 })
+      }, {
+        key: 'plasma',
+        frames: this.anims.generateFrameNames('beam-pickups', { start: 8, end: 9 })
       }
-    ].forEach(anim => this.anims.create(anim));
+    ].forEach(anim => this.anims.create(_.merge(anim, { repeat, frameRate })));
   }
 
   setupProjectileGroup() {
@@ -218,13 +223,27 @@ export default class MainScene extends Phaser.Scene {
     [
       {
         key: 'beam-photon',
-        defaultTextureKey: 'projectiles',
         frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
       },
       {
-        key: 'beam-fire',
-        defaultTextureKey: 'projectiles',
+        key: 'beam-pulse',
         frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
+      },
+      {
+        key: 'beam-rang',
+        frames: this.anims.generateFrameNames('projectiles', { start: 2, end: 2 })
+      },
+      {
+        key: 'beam-orb',
+        frames: this.anims.generateFrameNames('projectiles', { start: 3, end: 3 })
+      },
+      {
+        key: 'beam-ice',
+        frames: this.anims.generateFrameNames('projectiles', { start: 4, end: 4 })
+      },
+      {
+        key: 'beam-fire',
+        frames: this.anims.generateFrameNames('projectiles', { start: 5, end: 5 })
       },
     ].forEach(anim => this.anims.create(anim))
   }

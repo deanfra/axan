@@ -30,8 +30,8 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
     velocity: 600,
     size: 10,
     gravity: false,
-    key: 'projectile',
-    anim: 'beam2'
+    key: '',
+    anim: ''
   };
 
   shootTimer: number;

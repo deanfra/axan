@@ -6,8 +6,9 @@ export default class Inventory {
   health: 100;
 
   addBeam(beam: Beam) {
-    if(this.beams.indexOf(beam.id) === -1){
-      this.beams.push(beam.id);
+    if(this.beams.indexOf(beam.name) === -1){
+      this.beams.push(beam.name);
     }
+    console.log(this.beams)
   }
 }

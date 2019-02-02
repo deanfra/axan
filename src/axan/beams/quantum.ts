@@ -15,7 +15,7 @@ export class Quantum extends Laser implements BeamProps {
   angleSpread = 25;
 
   projectileConfig = {
-    anim: 'beam-fire',
+    anim: 'beam-pulse',
     damage: this.damage,
     gravity: false,
     key: 'projectile',

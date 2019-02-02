@@ -1,11 +1,18 @@
-import { beams, Beam, DefaultBeam } from '.';
-import { Quantum } from './quantum';
-import { Laser } from './laser';
+import { Beam, DefaultBeam } from '.';
+import { Quantum } from "./quantum";
+import { Laser } from "./laser";
+import { Rang } from "./rang";
+import { Ice } from "./ice";
+import { Fire } from "./fire";
 
 const beamLib: {[key:string]: any} = {
   QUANTUM: Quantum,
-  LASER: Laser
+  LASER: Laser,
+  RANG: Rang,
+  ICE: Ice,
+  FIRE: Fire
 }
+
 
 export class BeamFactory {
   static defaultBeam = DefaultBeam;

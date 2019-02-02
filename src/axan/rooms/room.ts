@@ -4,6 +4,7 @@ import DoorGate from "../tiles/door-gate";
 import None from "../tiles/none";
 import Wall from "../tiles/wall";
 import Tile from "../tiles/tile";
+import { Beam } from "../beams";
 
 import { Piq } from "../enemies/piq";
 import { Vroll } from "../enemies/vroll";
@@ -130,17 +131,23 @@ export class Room {
     const worldX = this.scene.map.tileToWorldX(randomX);
     const worldY = this.scene.map.tileToWorldY(randomY);
 
-    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beams-pickups');
+    // Difference will filter out beams in inventory
+    const pickupArray = _.difference(["QUANTUM", "RANG", "ICE", "FIRE"], this.scene.inventory.beams);
+    const randPickup = _.sample(pickupArray);
+    const pickupFrame = {
+      "QUANTUM": "plasma",
+      "RANG": "wave",
+      "ICE": "ice",
+      "FIRE": "spazer",
+      "LASER": "charge",
+    }[randPickup];
 
-    if(Math.random() * 2 > 1) {
-      BeamPickupClass.name = "QUANTUM";
-    } else {
-      BeamPickupClass.name = "LASER";
-    }
-
+    
+    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beam-pickups');
+    BeamPickupClass.name = randPickup;
     this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
     this.scene.physics.add.overlap(BeamPickupClass, this.scene.player, this.scene.player.pickupGet);
-    BeamPickupClass.play(BeamPickupClass.name === "QUANTUM" ? "ice" : "charge");
+    BeamPickupClass.play(pickupFrame);
   }
 
   instantiatePlatforms() {

@@ -34,7 +34,7 @@ export default class BootScene extends Phaser.Scene {
       .spritesheet('enemies', enemySprite, { frameWidth: 20, frameHeight: 20 })
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
-      .spritesheet('beams-pickups', beamPickups, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet('beam-pickups', beamPickups, { frameWidth: 16, frameHeight: 16 })
       .bitmapFont('mario', marioFontPng, marioFont)
   }
 

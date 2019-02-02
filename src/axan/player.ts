@@ -211,7 +211,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  pickupGet = (pickup: Phaser.GameObjects.Sprite) => {
+  pickupGet = (pickup: Beam) => {
+    this.scene.inventory.addBeam(pickup);
     this.changeBeam(pickup.name);
     pickup.destroy();
   }
