@@ -130,7 +130,7 @@ export class Room {
     const worldX = this.scene.map.tileToWorldX(randomX);
     const worldY = this.scene.map.tileToWorldY(randomY);
 
-    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beams');
+    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beams-pickups');
 
     if(Math.random() * 2 > 1) {
       BeamPickupClass.name = "QUANTUM";

@@ -2,7 +2,7 @@ import MainScene from 'axan/main.scene';
 import Projectile from "./projectile";
 import ProjectileConfig from "../../interfaces/projectile-config"
 
-export interface GunProps {
+export interface BeamProps {
   id: string;
   sfx: string;
   cooldown: number;
@@ -12,7 +12,7 @@ export interface GunProps {
   canShoot: boolean;
 }
 
-export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
+export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
   public static id: string;
   id: string;
   sfx: string;
@@ -37,7 +37,7 @@ export class Gun extends Phaser.GameObjects.Sprite implements GunProps {
   shootTimer: number;
 
   // TODO: lots of shared code can go in this class
-  constructor(scene, x, y, key = 'guns', frame?) {
+  constructor(scene, x, y, key = 'beams', frame?) {
     super(scene, x, y, key, frame);
     this.scene.physics.world.enable(this as Phaser.GameObjects.Sprite);
   }

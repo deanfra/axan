@@ -1,5 +1,5 @@
 import MainScene from './main.scene';
-import { Gun, GunFactory } from './guns';
+import { Beam, BeamFactory } from './beams';
 import { Room } from "./rooms/";
 import createPlayerAnimations from './player-animations';
 
@@ -18,7 +18,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   private keys: Keys;
   public body: Phaser.Physics.Arcade.Body;
   public scene: MainScene;
-  private gun: Gun;
+  private beam: Beam;
 
   inputs: { [key: string]: boolean };
 
@@ -55,7 +55,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }) as Keys;
 
     createPlayerAnimations(this.scene)
-    this.resetGun(this.x, this.y);
+    this.resetBeam(this.x, this.y);
   }
 
   update(time: number, delta: number): void {
@@ -80,7 +80,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.animation();
     this.controls(delta);
-    this.updateGun(time, delta);
+    this.updateBeam(time, delta);
 
     const playerRoom = this.getCurrentRoom();
     this.scene.roomVisibility.checkActiveRoom(playerRoom);
@@ -168,11 +168,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     if (shoot) {
       this.hasMoved = true;
-      if (this.gun.shootTimer > this.gun.cooldown) {
+      if (this.beam.shootTimer > this.beam.cooldown) {
         this.shoot();
       }
     } else {
-      this.gun.unShoot();
+      this.beam.unShoot();
     }
 
     if (left && !right) {
@@ -212,33 +212,33 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   pickupGet = (pickup: Phaser.GameObjects.Sprite) => {
-    this.changeGun(pickup.name);
+    this.changeBeam(pickup.name);
     pickup.destroy();
   }
 
-  updateGun(time, delta): void {
-    this.gun.update(time, delta);
+  updateBeam(time, delta): void {
+    this.beam.update(time, delta);
   }
 
-  changeGun(gunName): void {
-    this.gun.destroy();
-    this.gun = GunFactory.createGun(gunName, this.scene, this.x, this.y);
-    this.scene.inventoryText.setText(this.gun.label + " BEAM");
-    this.scene.add.existing(this.gun);
+  changeBeam(beamName): void {
+    this.beam.destroy();
+    this.beam = BeamFactory.createBeam(beamName, this.scene, this.x, this.y);
+    this.scene.inventoryText.setText(this.beam.label + " BEAM");
+    this.scene.add.existing(this.beam);
   }
 
-  resetGun(x, y): void {
-    if (this.gun) {
-      this.gun.preDestroy();
-      this.gun.destroy();
+  resetBeam(x, y): void {
+    if (this.beam) {
+      this.beam.preDestroy();
+      this.beam.destroy();
     }
 
-    this.gun = GunFactory.createGun(this.scene.inventory.activeBeam, this.scene, x + 16, y);
+    this.beam = BeamFactory.createBeam(this.scene.inventory.activeBeam, this.scene, x + 16, y);
     this.scene.physics.world.enable(this);
-    this.scene.add.existing(this.gun);
+    this.scene.add.existing(this.beam);
   }
 
   shoot() {
-    this.gun.shoot();
+    this.beam.shoot();
   }
 }

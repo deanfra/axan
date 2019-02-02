@@ -1,40 +1,40 @@
-import { Gun } from './gun';
+import { Beam } from './beam';
 import { Laser } from './laser';
 import { Quantum } from './quantum';
-// import { Shotgun } from './shotgun';
+// import { Shotbeam } from './shotbeam';
 // import { DualPistol } from './dualpistol';
-// import { Minigun } from './minigun';
+// import { Minibeam } from './minibeam';
 // import { GrenadeLauncher } from './grenadelauncher';
 // import { RocketLauncher } from './rocketlauncher';
 // import { Revolver } from './revolver';
 // import { FryingPan } from './fryingpan';
 // import { Mines } from './mines';
-// import { DiscGun } from './discgun';
+// import { DiscBeam } from './discbeam';
 // import { Flamethrower } from './flamethrower';
-// import { LaserGun } from './lasergun';
+// import { LaserBeam } from './laserbeam';
 
-export const DefaultGun = Laser;
+export const DefaultBeam = Laser;
 
-export const guns: Array<typeof Gun> = [
+export const beams: Array<typeof Beam> = [
   Laser,
   // Revolver,
   // DualLaser,
   Quantum,
-  // Shotgun,
-  // Minigun,
+  // Shotbeam,
+  // Minibeam,
   // GrenadeLauncher,
   // RocketLauncher,
   // FryingPan,
   // Mines,
-  // DiscGun,
+  // DiscBeam,
   // Flamethrower,
-  // LaserGun
+  // LaserBeam
 ];
 
-export * from './gun';
-export * from './gun-factory';
+export * from './beam';
+export * from './beam-factory';
 export * from './laser';
 export * from './quantum';
-// export * from './minigun';
-// export * from './shotgun';
+// export * from './minibeam';
+// export * from './shotbeam';
 // export * from './dualpistol';

@@ -1,8 +1,8 @@
-import { Gun, GunProps } from "./gun";
+import { Beam, BeamProps } from "./beam";
 import MainScene from "axan/main.scene";
 import ProjectileConfig from "../../interfaces/projectile-config"
 
-export class Laser extends Gun implements GunProps {
+export class Laser extends Beam implements BeamProps {
   static id = "LASER";
   private direction: string;
   id = "LASER";
@@ -25,7 +25,7 @@ export class Laser extends Gun implements GunProps {
 
   scene: MainScene;
 
-  constructor(scene, x, y, key = "guns", frame = 1) {
+  constructor(scene, x, y, key = "beams", frame = 1) {
     super(scene, x, y, key, frame);
     this.body.setSize(this.size, this.size).allowGravity = false;
   }

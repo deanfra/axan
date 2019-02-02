@@ -6,7 +6,7 @@ import Inventory from "./inventory";
 import RoomVisibility from "./rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
-import Projectile from "axan/guns/projectile";
+import Projectile from "axan/beams/projectile";
 import * as _ from "lodash";
 
 // The responsibility of the Dungeon (main) should be to:
@@ -186,14 +186,14 @@ export default class MainScene extends Phaser.Scene {
         key: 'charge',
         repeat: -1,
         frameRate: 15,
-        defaultTextureKey: 'beams',
-        frames: this.anims.generateFrameNames('beams', { start: 0, end: 1 })
+        defaultTextureKey: 'beams-pickups',
+        frames: this.anims.generateFrameNames('beams-pickups', { start: 0, end: 1 })
       }, {
         key: 'ice',
         repeat: -1,
         frameRate: 15,
-        defaultTextureKey: 'beams',
-        frames: this.anims.generateFrameNames('beams', { start: 2, end: 3 })
+        defaultTextureKey: 'beams-pickups',
+        frames: this.anims.generateFrameNames('beams-pickups', { start: 2, end: 3 })
       }
     ].forEach(anim => this.anims.create(anim));
   }

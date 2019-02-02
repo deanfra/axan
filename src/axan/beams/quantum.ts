@@ -1,7 +1,7 @@
 import { Laser } from './laser';
-import { GunProps } from './gun';
+import { BeamProps } from './beam';
 
-export class Quantum extends Laser implements GunProps {
+export class Quantum extends Laser implements BeamProps {
   static id = 'QUANTUM';
   id = 'QUANTUM';
   label = "QUANTUM";
@@ -23,7 +23,7 @@ export class Quantum extends Laser implements GunProps {
     velocity: 500,
   };
 
-  constructor(scene, x, y, key = 'guns', frame) {
+  constructor(scene, x, y, key = 'beams', frame) {
     super(scene, x, y, key, frame);
   }
 /*  shoot() {
