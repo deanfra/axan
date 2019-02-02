@@ -60,23 +60,24 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
       const projectile = new Projectile(this.scene, x, this.y, this.projectileConfig)
 
       if (up && player.isMoving) { // run - up
-        projectile.angle = this.flipX ? 45 : -45;
+        projectile.angle = this.flipX ? -135 : -45;
         projectile.body.setVelocityY(-velocity)
         projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
       } else if (down && player.isMoving) { // run - down
         if (player.isJumping) {
-          projectile.angle = this.flipX ? -45 : 45;
+          projectile.angle = this.flipX ? 135 : 45;
           projectile.body.setVelocityY(velocity)
         }
         projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
         
       } else if (up) {
-        projectile.angle = 90;
+        projectile.angle = -90;
         projectile.body.setVelocityY(-velocity)
       } else if (down && !player.body.onFloor()) {
         projectile.angle = 90;
         projectile.body.setVelocityY(velocity)
       } else {
+        projectile.angle = this.flipX ? 180 : 0;
         projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
       }
 
