@@ -47,17 +47,11 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
       this.canShoot = false;
       this.released = false;
 
-      // refactor
-      let x = this.x;
       const player = this.scene.player;
       const { up, down } = player.inputs;
       const { velocity } = this.projectileConfig;
 
-      if (!up && !down) {
-        x = this.flipX ? this.x - 16 : this.x + 16;
-      }
-
-      const projectile = new Projectile(this.scene, x, this.y, this.projectileConfig)
+      const projectile = new Projectile(this.scene, this.x, this.y, this.projectileConfig)
 
       if (up && player.isMoving) { // run - up
         projectile.angle = this.flipX ? -135 : -45;
@@ -104,7 +98,6 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
         }
       });
 
-      // this.body.setAngularVelocity(this.flipX ? this.recoil : -this.recoil);
       this.shootTimer = 0;
     } else {
       this.scene.time.addEvent({
@@ -144,13 +137,16 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
       // Standing aim up
       this.y = player.y - 50;
       this.x = player.x;
-    } else if (down && player.isMoving) {
-      // Run aim down
-      this.y = player.y - 20;
+    } else if (down && player.isMoving && !player.body.onFloor()) {
+      this.y = player.y;
       this.x = this.flipX ? player.x - 14 : player.x + 14;
     } else if (down && !player.body.onFloor()) {
       this.y = player.y;
-      this.x = player.x;
+      this.x = this.flipX ? player.x - 5 : player.x;
+    } else if (down) {
+      // crouch
+      this.y = player.y - 15;
+      this.x = this.flipX ? player.x - 14 : player.x + 14;
     } else {
       this.x = player.x;
     }

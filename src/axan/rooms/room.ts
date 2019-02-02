@@ -142,12 +142,13 @@ export class Room {
       "LASER": "charge",
     }[randPickup];
 
-    
-    let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beam-pickups');
-    BeamPickupClass.name = randPickup;
-    this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
-    this.scene.physics.add.overlap(BeamPickupClass, this.scene.player, this.scene.player.pickupGet);
-    BeamPickupClass.play(pickupFrame);
+    if (pickupArray.length>0) {
+      let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beam-pickups');
+      BeamPickupClass.name = randPickup;
+      this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
+      this.scene.physics.add.overlap(BeamPickupClass, this.scene.player, this.scene.player.pickupGet);
+      BeamPickupClass.play(pickupFrame);
+    }
   }
 
   instantiatePlatforms() {
