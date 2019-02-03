@@ -77,6 +77,7 @@ export class Vroll extends Enemy {
               delay: Phaser.Math.Between(2000, 3000),
               callbackScope: this,
               callback: (p) => {
+                if (this.isDead) { return }
                 this.anims.play(this.animWalk);
                 this.isMoving = false;
               },

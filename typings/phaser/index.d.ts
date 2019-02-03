@@ -13180,11 +13180,12 @@ declare namespace Phaser {
              * Note: This method will only be available if the Bitmap Text Game Object has been built into Phaser.
              * @param x The x position of the Game Object.
              * @param y The y position of the Game Object.
-             * @param font [description]
-             * @param text [description]
-             * @param size [description]
+             * @param font [The key of the font to use from the Bitmap Font cache.]
+             * @param text [The string, or array of strings, to be set as the content of this Bitmap Text.]
+             * @param size [The font size of this Bitmap Text.]
+             * @param align [The alignment of the text in a multi-line BitmapText object]
              */
-            bitmapText(x: number, y: number, font: string, text?: string | string[], size?: number): Phaser.GameObjects.BitmapText;
+            bitmapText(x: number, y: number, font: string, text?: string | string[], size?: number, align?: number): Phaser.GameObjects.BitmapText;
 
             /**
              * Creates a new Blitter Game Object and adds it to the Scene.

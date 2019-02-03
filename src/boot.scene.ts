@@ -12,6 +12,7 @@ import * as playerSpriteAtlas from 'assets/tilesets/player-atlas.json';
 import * as projectiles from 'assets/tilesets/projectiles.png';
 import * as beams from 'assets/tilesets/beams.png';
 import * as beamPickups from 'assets/tilesets/beam-pickups.png';
+import * as miscPickups from 'assets/tilesets/misc-pickups.png';
 
 import * as marioFontPng from 'assets/fonts/font.png';
 import * as marioFont from 'assets/fonts/font.fnt';
@@ -35,6 +36,7 @@ export default class BootScene extends Phaser.Scene {
       .spritesheet('projectiles', projectiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beam-pickups', beamPickups, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet('misc-pickups', miscPickups, { frameWidth: 16, frameHeight: 16 })
       .bitmapFont('mario-font', marioFontPng, marioFont)
   }
 

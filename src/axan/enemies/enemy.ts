@@ -81,21 +81,43 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   die(fromRight, multiplier = 1) {
+    const scene = this.scene;
     this.isDead = true;
     this.body.allowGravity = false;
-    this.scene.enemyGroup.remove(this);
+    scene.enemyGroup.remove(this);
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
 
-    this.scene.killedEnemies.add(this);
+    scene.killedEnemies.add(this);
     // this.body.setAngularVelocity(Phaser.Math.Between(100, 1000));
-    this.scene.time.addEvent({
+    scene.time.addEvent({
       delay: 300,
       callbackScope: this,
       callback: () => {
         // remove smoke emitter
-        this.scene.killedEnemies.remove(this);
-        this.scene.physics.world.disable(this);
+        scene.killedEnemies.remove(this);
+        scene.physics.world.disable(this);
+
+        // extract to pickup class
+        const healthPickup = scene.add.sprite(this.x, this.y, "misc-pickups");
+        healthPickup.play("health-large");
+        scene.physics.world.enable(healthPickup, Phaser.Physics.Arcade.STATIC_BODY);
+        scene.physics.add.overlap(healthPickup, scene.player, () => {
+          scene.inventory.heal(20);
+          scene.healthText.setText(scene.inventory.health.toString());
+          healthPickup.destroy();
+        });
+
+        scene.time.addEvent({
+          delay: 5000,
+          callbackScope: this,
+          callback: () => {
+            if (healthPickup) {
+              healthPickup.destroy();
+            }
+          }
+      });
+
         this.destroy();
       }
     });

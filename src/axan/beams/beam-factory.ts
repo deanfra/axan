@@ -15,15 +15,8 @@ const beamLib: {[key:string]: any} = {
 
 
 export class BeamFactory {
-  static defaultBeam = DefaultBeam;
-
   static createBeam(beamName, scene, x, y): Beam {
     const BeamClass = beamLib[beamName];
     return new BeamClass(scene, x, y);
   }
-
-  static createDefaultBeam(scene, x, y): Beam {
-    return this.createBeam('LASER', scene, x, y);
-  }
-
 }

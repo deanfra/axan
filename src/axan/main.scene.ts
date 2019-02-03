@@ -186,6 +186,11 @@ export default class MainScene extends Phaser.Scene {
     const frameRate = 15;
     [
       {
+        key: 'health-large',
+        frameRate: 7,
+        yoyo: true,
+        frames: this.anims.generateFrameNames('misc-pickups', { start: 0, end: 2 })
+      }, {
         key: 'charge',
         frames: this.anims.generateFrameNames('beam-pickups', { start: 0, end: 1 })
       }, {
@@ -201,7 +206,7 @@ export default class MainScene extends Phaser.Scene {
         key: 'plasma',
         frames: this.anims.generateFrameNames('beam-pickups', { start: 8, end: 9 })
       }
-    ].forEach(anim => this.anims.create(_.merge(anim, { repeat, frameRate })));
+    ].forEach(anim => this.anims.create(_.merge({ repeat, frameRate }, anim)));
   }
 
   setupProjectileGroup() {
