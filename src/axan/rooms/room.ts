@@ -109,8 +109,10 @@ export class Room {
   }
 
   addEnemies(): void {
-    const worldX = this.scene.map.tileToWorldX(this.room.x + (this.room.width/2));
-    const worldY = this.scene.map.tileToWorldY(this.room.y + (this.room.height/2));
+    const x = _.sample(_.range(this.room.x + 1, this.room.x+this.room.width-1));
+    const y = _.sample(_.range(this.room.y + 1, this.room.y+this.room.height-1));
+    const worldX = this.scene.map.tileToWorldX(x);
+    const worldY = this.scene.map.tileToWorldY(y);
     const EnemyClass = _.sample([Vroll, Piq, Jumper]);
     this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, _.sample([1,2])), true);
   }

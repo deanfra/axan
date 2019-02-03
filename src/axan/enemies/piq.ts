@@ -15,4 +15,12 @@ export class Piq extends Enemy {
     super(scene, x, y, dir, 'enemies');
   }
 
+  firstUpdate(): void {
+    this.anims.play(this.animWalk);
+    this.vel = this.dir === 1 ? -this.baseVel : this.baseVel;
+    this.body.setVelocityX(this.vel).setBounceY(0.2);
+    this.isFirst = false;
+    this.body.setSize(20, 20);
+  }
+
 }

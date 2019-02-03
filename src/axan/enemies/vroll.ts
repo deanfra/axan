@@ -23,7 +23,8 @@ export class Vroll extends Enemy {
 
   firstUpdate(): void {
     this.anims.play(this.animFly);
-    this.body.setBounce(1, 1.5).setSize(16, 12).allowGravity = false;
+    this.body.setBounce(1, 1.5).allowGravity = false;
+    this.body.setSize(20, 20);
     this.isFirst = false;
   }
 

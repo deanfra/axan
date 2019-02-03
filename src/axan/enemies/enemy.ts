@@ -24,10 +24,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   firstUpdate(): void {
-    this.anims.play(this.animWalk);
-    this.vel = this.dir === 1 ? -this.baseVel : this.baseVel;
-    this.body.setVelocityX(this.vel).setBounceY(0.2);
-    this.isFirst = false;
   }
 
   update(time: number, delta: number) {
