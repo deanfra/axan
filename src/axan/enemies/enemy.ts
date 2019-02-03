@@ -14,7 +14,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   killAt: number = 0;
   isDead = false;
   canDamage = true;
-  isMad = false;
   animWalk: string;
   animMad: string;
   smoke: Phaser.GameObjects.Particles.ParticleEmitter;

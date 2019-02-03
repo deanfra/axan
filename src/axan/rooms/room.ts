@@ -6,6 +6,7 @@ import Wall from "../tiles/wall";
 import Tile from "../tiles/tile";
 import { Beam } from "../beams";
 
+import { Jumper } from "../enemies/jumper";
 import { Piq } from "../enemies/piq";
 import { Vroll } from "../enemies/vroll";
 import MainScene from "axan/main.scene";
@@ -110,9 +111,8 @@ export class Room {
   addEnemies(): void {
     const worldX = this.scene.map.tileToWorldX(this.room.x + (this.room.width/2));
     const worldY = this.scene.map.tileToWorldY(this.room.y + (this.room.height/2));
-    const EnemyClass = (Math.random()*2>1) ? Vroll : Piq;
-
-    this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, Math.floor(Math.random() * 2)), true);
+    const EnemyClass = _.sample([Vroll, Piq, Jumper]);
+    this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, _.sample([1,2])), true);
   }
 
   addDoorGate(): void {

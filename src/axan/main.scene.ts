@@ -262,24 +262,32 @@ export default class MainScene extends Phaser.Scene {
     this.physics.add.collider(this.enemyGroup, this.groundLayer);
     this.physics.add.collider(this.killedEnemies, this.groundLayer);
 
-    this.anims.create({
+    [{
       key: 'piq',
       frameRate: 15,
       repeat: -1,
-      frames: this.anims.generateFrameNames('enemies', { start: 0, end: 3 })
-    });
-    this.anims.create({
+      frames: this.anims.generateFrameNames('enemies', { start: 0, end: 4, prefix: 'piq', zeroPad: 2 })
+    }, {
+      key: 'jumper-idle',
+      frameRate: 4,
+      repeat: -1,
+      frames: this.anims.generateFrameNames('enemies', { start: 0, end: 4, prefix: 'jumper-idle', zeroPad: 2 })
+    }, {
+      key: 'jumper-jump',
+      frameRate: 4,
+      repeat: 0,
+      frames: this.anims.generateFrameNames('enemies', { start: 1, end: 1, prefix: 'jumper-jump', zeroPad: 2 })
+    }, {
       key: 'vroll',
       frameRate: 4,
       repeat: -1,
-      frames: this.anims.generateFrameNames('enemies', { start: 4, end: 5 })
-    });
-    this.anims.create({
+      frames: this.anims.generateFrameNames('enemies', { start: 0, end: 2, prefix: 'vroll-idle', zeroPad: 2 })
+    }, {
       key: 'vroll-down',
       frameRate: 4,
       repeat: -1,
-      frames: this.anims.generateFrameNames('enemies', { start: 6, end: 7 })
-    });
+      frames: this.anims.generateFrameNames('enemies', { start: 0, end: 2, prefix: 'vroll-attack', zeroPad: 2 })
+    }].forEach(anim => this.anims.create(anim))
   }
 
   enemyShot = (proj: Projectile, enemy: Enemy) => {

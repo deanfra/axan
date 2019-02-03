@@ -11,15 +11,10 @@ export class Vroll extends Enemy {
   baseHealth = 6;
   health = 6;
   damage = 5;
-  // isFirst = true;
-  canDamage = true;
   isMoving = false;
-  animWalk: string = 'vroll';
-  animMad: string = 'vroll-down';
-
+  animFly: string = 'vroll';
+  animAttack: string = 'vroll-down';
   smoke: Phaser.GameObjects.Particles.ParticleEmitter;
-
-  // goingToPit = false;
   moveEvent: Phaser.Time.TimerEvent;
 
   constructor(scene, x, y, public dir) {
@@ -27,7 +22,7 @@ export class Vroll extends Enemy {
   }
 
   firstUpdate(): void {
-    this.anims.play(this.animWalk);
+    this.anims.play(this.animFly);
     this.body.setBounce(1, 1.5).setSize(16, 12).allowGravity = false;
     this.isFirst = false;
   }
@@ -71,14 +66,14 @@ export class Vroll extends Enemy {
         callbackScope: this,
         callback: () => {
           if (this.anims) {
-            this.anims.play(this.animMad);
+            this.anims.play(this.animAttack);
             this.body.setAcceleration(10, 10).setVelocity(this.body.velocity.x, 5);
             this.scene.time.addEvent({
               delay: Phaser.Math.Between(2000, 3000),
               callbackScope: this,
               callback: (p) => {
                 if (this.isDead) { return }
-                this.anims.play(this.animWalk);
+                this.anims.play(this.animFly);
                 this.isMoving = false;
               },
             });
