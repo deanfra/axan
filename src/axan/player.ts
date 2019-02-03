@@ -28,6 +28,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   // factors
   runSpeed = 150;
+  knockbackX = 0;
+  knockbackY = 0;
 
   // timers
   jumpTimer = 0;
@@ -42,7 +44,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   public isCrouching = false;
   public isRunning = false;
   
-  hurtCooldown = 300;
+  hurtCooldown = 900;
   canHurt = true;
   
   constructor(scene, x, y, key) {
@@ -189,14 +191,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     if (left && !right) {
       this.hasMoved = true;
-      this.body.setVelocityX(-this.runSpeed);
+      this.body.setVelocityX(-this.runSpeed + this.knockbackX);
       this.flipX = true;
     } else if (right && !left) {
       this.hasMoved = true;
-      this.body.setVelocityX(this.runSpeed);
+      this.body.setVelocityX(this.runSpeed + this.knockbackX);
       this.flipX = false;
     } else {
-      this.body.setVelocityX(0);
+      this.body.setVelocityX(0 + this.knockbackX);
     }
 
     if (jump) {
@@ -212,6 +214,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.jumpTimer = 301;
       }
     } else {
+      this.body.setVelocityY(this.body.velocity.y + this.knockbackY);
       this.jumpTimer = 0;
     }
   }
@@ -219,7 +222,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   jump(): void {
     if (this.body.onFloor() && this.jumpTimer === 0) {
       this.jumpTimer = 1;
-      this.body.setVelocityY(-150);
+      this.body.setVelocityY(-350 + this.knockbackY);
     }
   }
 
@@ -266,6 +269,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));
       this.inventory.hurt(enemy.damage);
       this.scene.healthText.setText(this.inventory.health.toString());
+      this.hurtKnockback(enemy);
 
       if (this.inventory.health < 1) {
         this.die();
@@ -281,6 +285,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
       });
 
     }
+  }
+
+  hurtKnockback(enemy) {
+    const fromLeft = (enemy.x - this.x) > 1;
+    const fromBottom = (enemy.y - this.y) > 1;
+
+    this.knockbackX = (fromLeft) ? -300 : 300;
+    this.knockbackY = (fromBottom) ? -70 : 50;
+
+    this.scene.time.addEvent({
+      delay: 80,
+      callbackScope: this,
+      callback() {
+        this.knockbackX = 0;
+        this.knockbackY = 0;
+      }
+    });
+
   }
 
 }
