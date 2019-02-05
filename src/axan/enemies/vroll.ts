@@ -33,7 +33,7 @@ export class Vroll extends Enemy {
       this.firstUpdate();
     }
 
-    if (this.isDead) {
+    if (this.isDead || this.isFrozen) {
       return;
     }
 
@@ -42,11 +42,11 @@ export class Vroll extends Enemy {
 
       let x = 200;
       let y = 240;
-      const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y);
-      // distance to room ceiling
-      const distanceToCiel = Phaser.Math.Distance.Between(this.x, this.y, 120, 400) - 180;
 
-      if (distanceToPlayer < distanceToCiel && this.y < 170) {
+      const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.scene.player.x, this.scene.player.y);
+      const distanceToCeiling = Phaser.Math.Distance.Between(this.x, this.y, 120, 400) - 180;
+
+      if (distanceToPlayer < distanceToCeiling && this.y < 170) {
         // go to player
         x = this.scene.player.x;
         y = this.scene.player.y - 16;
@@ -66,19 +66,19 @@ export class Vroll extends Enemy {
         delay: Phaser.Math.Between(500, 2000),
         callbackScope: this,
         callback: () => {
-          if (this.anims) {
-            this.anims.play(this.animAttack);
-            this.body.setAcceleration(10, 10).setVelocity(this.body.velocity.x, 5);
-            this.scene.time.addEvent({
-              delay: Phaser.Math.Between(2000, 3000),
-              callbackScope: this,
-              callback: (p) => {
-                if (this.isDead) { return }
-                this.anims.play(this.animFly);
-                this.isMoving = false;
-              },
-            });
-          }
+          if (this.isDead || this.isFrozen) { return }
+
+          this.anims.play(this.animAttack);
+          this.body.setAcceleration(10, 10).setVelocity(this.body.velocity.x, 5);
+          this.scene.time.addEvent({
+            delay: Phaser.Math.Between(2000, 3000),
+            callbackScope: this,
+            callback: (p) => {
+              if (this.isDead || this.isFrozen) { return }
+              this.anims.play(this.animFly);
+              this.isMoving = false;
+            },
+          });
         }
       });
 

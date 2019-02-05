@@ -316,7 +316,7 @@ export default class MainScene extends Phaser.Scene {
       enemy.hurt(projectile.damage, fromRight, multiplier, shouldFlip);
 
       if (projectile.effects.indexOf("ice") >= 0) {
-        if (enemy.health < projectile.damage) {
+        if (enemy.health <= projectile.damage) {
           enemy.freeze();
         }
       }

@@ -80,6 +80,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.isFrozen = true;
     this.anims.stop();
     this.body.gravity.y = -600;
+    this.body.setAcceleration(0, 0);
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
     this.setTint(Phaser.Display.Color.GetColor(0, 185, 255));
@@ -121,7 +122,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
               healthPickup.destroy();
             }
           }
-      });
+        });
 
         this.destroy();
       }
