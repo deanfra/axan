@@ -2,6 +2,8 @@ import ProjectileConfig from "../../interfaces/projectile-config"
 import MainScene from 'axan/main.scene';
 
 export default class Projectile extends Phaser.GameObjects.Sprite {
+  public effects: Array<string> = [];
+  
   gravity: boolean;
   key: string;
   size: number;

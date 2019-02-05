@@ -27,7 +27,7 @@ export class Jumper extends Enemy {
   }
 
   jump(scene) {
-    if (this.isDead) { return }
+    if (this.isDead || this.isFrozen) { return }
 
     const playerX = scene.player.x;
     const velX = (playerX > this.x) ? 150 : -150;
@@ -41,10 +41,10 @@ export class Jumper extends Enemy {
   }
 
   stopJump(){
-    if (this.isDead) { return }
+    if (this.isDead || this.isFrozen) { return }
+    this.body.setVelocityX(0);
     this.isJumping = false;
     this.anims.play(this.animIdle);
-    this.body.setVelocityX(0);
   }
 
   firstUpdate(): void {
@@ -61,7 +61,7 @@ export class Jumper extends Enemy {
       this.stopJump();
     }
 
-    if (this.isDead) {
+    if (this.isDead || this.isFrozen) {
       return;
     }
   }

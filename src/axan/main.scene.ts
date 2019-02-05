@@ -292,6 +292,7 @@ export default class MainScene extends Phaser.Scene {
     }].forEach(anim => this.anims.create(anim))
   }
 
+  // refactor into enemy.ts
   enemyShot = (projectile: Projectile, enemy: Enemy) => {
     if (enemy.canDamage || projectile.getData('bypass')) {
       const scene = this as MainScene;
@@ -301,6 +302,7 @@ export default class MainScene extends Phaser.Scene {
       if (projectile.x < enemy.x) {
         fromRight = false;
       }
+
       if (fromRight && enemy.body.velocity.x > 0 && projectile.getData('flip')) {
         shouldFlip = true;
       } else if (!fromRight && enemy.body.velocity.x < 0 && projectile.getData('flip')) {
@@ -312,6 +314,12 @@ export default class MainScene extends Phaser.Scene {
       }
 
       enemy.hurt(projectile.damage, fromRight, multiplier, shouldFlip);
+
+      if (projectile.effects.indexOf("ice") >= 0) {
+        if (enemy.health < projectile.damage) {
+          enemy.freeze();
+        }
+      }
 
       if (projectile.getData('onEnemy')) {
         projectile.getData('onEnemy')(projectile, enemy, scene);

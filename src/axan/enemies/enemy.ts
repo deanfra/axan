@@ -4,12 +4,14 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   scene: MainScene;
   body: Phaser.Physics.Arcade.Body;
 
+  public health = 6;
+
   baseVel: number;
   vel: number;
   baseHealth = 6;
-  health = 6;
   damage = 0;
   isFirst = true;
+  isFrozen = false;
   falling = false;
   killAt: number = 0;
   isDead = false;
@@ -31,7 +33,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
       this.firstUpdate();
     }
 
-    if (this.isDead) {
+    if (this.isDead || this.isFrozen) {
       return;
     }
 
@@ -43,7 +45,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     this.falling = this.body.velocity.y > 50;
-
   }
 
   hurt(amount: number = 0, fromRight: boolean, multiplier = 2, flip = false): void {
@@ -55,7 +56,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
       this.flip();
     }
     if (this.health <= 0) {
-      this.die(fromRight, multiplier);
+      this.die(fromRight);
     } else {
       this.scene.tweens.add({
         targets: this,
@@ -63,7 +64,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         scaleY: .9,
         yoyo: true,
         onComplete: () => {
-          this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+          // this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
           this.setScale(1, 1);
           this.canDamage = true;
         }
@@ -75,7 +76,16 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setVelocityX(-this.body.velocity.x);
   }
 
-  die(fromRight, multiplier = 1) {
+  freeze(): void {
+    this.isFrozen = true;
+    this.anims.stop();
+    this.body.gravity.y = -600;
+    this.body.setVelocityX(0);
+    this.body.setVelocityY(0);
+    this.setTint(Phaser.Display.Color.GetColor(0, 185, 255));
+  }
+
+  die(fromRight) {
     const scene = this.scene;
     this.isDead = true;
     this.body.allowGravity = false;
