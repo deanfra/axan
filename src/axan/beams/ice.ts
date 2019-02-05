@@ -14,6 +14,8 @@ export class Ice extends Beam implements BeamProps {
   damage = 3;
   size = 10;
 
+  iceEmitter: Phaser.GameObjects.Particles.ParticleEmitterManager;
+
   projectileConfig: ProjectileConfig = {
     anim: "beam-ice",
     damage: this.damage,
@@ -27,7 +29,30 @@ export class Ice extends Beam implements BeamProps {
 
   constructor(scene, x, y, key = "beams", frame = 1) {
     super(scene, x, y, key, frame);
+    this.iceEmitter = scene.add.particles('projectiles');
     this.body.setSize(this.size, this.size).allowGravity = false;
   }
 
+  shoot() {
+    const projectile = super.shoot();
+    this.particleEffect(projectile);
+
+    return projectile;
+  }
+
+  particleEffect(projectile) {
+    projectile.emitterManager = this.iceEmitter;
+    projectile.emitter = this.iceEmitter
+      .createEmitter({
+        frame: 'ice01',
+        follow: projectile,
+        lifespan: 400,
+        frequency: 30,
+        angle: { min: 80, max: 100 },
+        alpha: { start: 1, end: .5 },
+        scale: { start: 0.5, end: 0.1 },
+        speed: { min: 50, max: 100 },
+        quantity: { min: 1, max: 5 },
+      });
+  }
 }

@@ -51,7 +51,7 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
       const { up, down } = player.inputs;
       const { velocity } = this.projectileConfig;
 
-      const projectile = new Projectile(this.scene, this.x, this.y, this.projectileConfig)
+      const projectile = new Projectile(this.scene, this.x, this.y, this.projectileConfig);
 
       if (up && player.isMoving) { // run - up
         projectile.angle = this.flipX ? -135 : -45;
@@ -99,6 +99,8 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
       });
 
       this.shootTimer = 0;
+
+      return projectile;
     } else {
       this.scene.time.addEvent({
         delay: this.cooldown,

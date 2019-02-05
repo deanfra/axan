@@ -2,8 +2,6 @@ import { Enemy } from './enemy';
 
 export class Jumper extends Enemy {
 
-  // BUG: enemy 'patrols' doors on the floor
-
   baseVel: number = 40;
   vel: number = 40;
   health = 10;

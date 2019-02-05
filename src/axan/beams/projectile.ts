@@ -8,6 +8,8 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
   velocity: number;
   scene: MainScene;
   damage: number = 0;
+  emitterManager: Phaser.GameObjects.Particles.ParticleEmitterManager;
+  emitter: Phaser.GameObjects.Particles.ParticleEmitter;
 
   constructor(scene, x, y, config: ProjectileConfig) {
     super(scene, x, y, "projectile", config.key);
@@ -23,6 +25,17 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
   }
 
   projectileCollide = () => {
+    if (this.emitter) {
+      this.emitter.on = false;
+
+      this.scene.time.addEvent({
+        delay: 2000,
+        callbackScope: this,
+        callback: () => {
+          this.emitterManager.emitters.remove(this.emitter);
+        }
+      });
+    }
     this.destroy();
   }
 }

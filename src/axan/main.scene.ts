@@ -29,16 +29,18 @@ export default class MainScene extends Phaser.Scene {
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
   public doorGateGroup: Phaser.GameObjects.Group;
+  public backgroundGroup: Phaser.GameObjects.Group;
   
   public player: Player;
-  public backgroundGroup: Phaser.GameObjects.Group;
   public level: Level;
   public roomVisibility: any;
   public activeRoom: Room;
-  
   public inventory: Inventory;
+  private levelName: string = RandomPlanetName();
+  
   public inventoryText: Phaser.GameObjects.BitmapText;
   public healthText: Phaser.GameObjects.BitmapText;
+  public nameText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -51,7 +53,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    console.log("Welcome to "+RandomPlanetName());
+    console.log("Welcome to " + this.levelName);
     this.level = new Level(this);
     this.makeTiles();
     this.setupRoomVisibility();
@@ -176,8 +178,8 @@ export default class MainScene extends Phaser.Scene {
     ].forEach(anim => this.anims.create(anim));
   }
 
-  doorShot = (proj: Phaser.GameObjects.Sprite, doorGate: any) => {
-    proj.destroy();
+  doorShot = (projectile: Projectile, doorGate: any) => {
+    projectile.projectileCollide();
     doorGate.open();
   }
 
@@ -229,27 +231,27 @@ export default class MainScene extends Phaser.Scene {
     [
       {
         key: 'beam-photon',
-        frames: this.anims.generateFrameNames('projectiles', { start: 0, end: 0 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "photon", zeroPad: 2 })
       },
       {
         key: 'beam-pulse',
-        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "pulse", zeroPad: 2 })
       },
       {
         key: 'beam-rang',
-        frames: this.anims.generateFrameNames('projectiles', { start: 2, end: 2 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "rang", zeroPad: 2 })
       },
       {
         key: 'beam-orb',
-        frames: this.anims.generateFrameNames('projectiles', { start: 3, end: 3 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "orb", zeroPad: 2 })
       },
       {
         key: 'beam-ice',
-        frames: this.anims.generateFrameNames('projectiles', { start: 4, end: 4 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "ice", zeroPad: 2 })
       },
       {
         key: 'beam-fire',
-        frames: this.anims.generateFrameNames('projectiles', { start: 5, end: 5 })
+        frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "fire", zeroPad: 2 })
       },
     ].forEach(anim => this.anims.create(anim))
   }
@@ -290,34 +292,32 @@ export default class MainScene extends Phaser.Scene {
     }].forEach(anim => this.anims.create(anim))
   }
 
-  enemyShot = (proj: Projectile, enemy: Enemy) => {
-    if (enemy.canDamage || proj.getData('bypass')) {
+  enemyShot = (projectile: Projectile, enemy: Enemy) => {
+    if (enemy.canDamage || projectile.getData('bypass')) {
       const scene = this as MainScene;
       let fromRight = true;
       let shouldFlip = false;
       let multiplier = 1;
-      if (proj.x < enemy.x) {
+      if (projectile.x < enemy.x) {
         fromRight = false;
       }
-      if (fromRight && enemy.body.velocity.x > 0 && proj.getData('flip')) {
+      if (fromRight && enemy.body.velocity.x > 0 && projectile.getData('flip')) {
         shouldFlip = true;
-      } else if (!fromRight && enemy.body.velocity.x < 0 && proj.getData('flip')) {
+      } else if (!fromRight && enemy.body.velocity.x < 0 && projectile.getData('flip')) {
         shouldFlip = true;
       }
 
-      if (proj.getData('force')) {
-        multiplier = proj.getData('force');
+      if (projectile.getData('force')) {
+        multiplier = projectile.getData('force');
       }
 
-      enemy.hurt(proj.damage, fromRight, multiplier, shouldFlip);
+      enemy.hurt(projectile.damage, fromRight, multiplier, shouldFlip);
 
-      if (proj.getData('onEnemy')) {
-        proj.getData('onEnemy')(proj, enemy, scene);
-      }
-      if (!proj.getData('melee')) {
-        proj.destroy();
+      if (projectile.getData('onEnemy')) {
+        projectile.getData('onEnemy')(projectile, enemy, scene);
       }
     }
+    projectile.projectileCollide();
   }
 
   cameraConstrainTo(room: Room): void {
@@ -343,8 +343,13 @@ export default class MainScene extends Phaser.Scene {
     this.healthText = this.add.bitmapText((screenLeft * 2) - 15, (screenTop * 2) - 15, 'mario-font', this.inventory.health.toString(), 3, 2);
     this.healthText.setDepth(100);
     this.healthText.setScrollFactor(0);
+
     this.inventoryText = this.add.bitmapText(screenLeft + 15, (screenTop * 2)-15, 'mario-font', 'LASER BEAM', 3);
     this.inventoryText.setDepth(100);
     this.inventoryText.setScrollFactor(0);
+
+    this.nameText = this.add.bitmapText(screenLeft + 15, screenTop + 15, 'mario-font', this.levelName.toUpperCase(), 3);
+    this.nameText.setDepth(100);
+    this.nameText.setScrollFactor(0);
   }
 }
