@@ -48,7 +48,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("axan", "../assets/tilesets/16x16-crateria.png");
+    this.load.image("axan", "../assets/tilesets/16x16-creotur.png");
     this.load.image("player", "../assets/tilesets/player-atlas.png");
   }
 
@@ -95,7 +95,7 @@ export default class MainScene extends Phaser.Scene {
 
     this.groundTileset = this.map.addTilesetImage("axan", "axan", 16, 16);
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
-    this.outOfBoundsTileset = this.map.addTilesetImage("crateria", "crateria", 16, 16);
+    this.outOfBoundsTileset = this.map.addTilesetImage("creotur", "creotur", 16, 16);
     this.outOfBoundsLayer = this.map.createBlankDynamicLayer("outOfBoundsLayer", this.outOfBoundsTileset);
     this.platformLayer = this.map.createBlankDynamicLayer("platformLayer", this.groundTileset);
   }

@@ -1,10 +1,10 @@
-import * as crateria from 'assets/tilesets/crateria.png';
+import * as creotur from 'assets/tilesets/creotur.png';
 import * as doorsTiles from 'assets/tilesets/doors.png';
 import * as doorsHorizTiles from 'assets/tilesets/doors-horiz.png';
 import * as cavesFront from 'assets/tilesets/caves-front.png';
 import * as cavesMid from 'assets/tilesets/caves-mid.png';
 import * as cavesBack from 'assets/tilesets/caves-back.png';
-import * as axanTiles from 'assets/tilesets/16x16-crateria.png';
+import * as axanTiles from 'assets/tilesets/16x16-creotur.png';
 
 import * as playerSpriteSheet from 'assets/tilesets/player-atlas.png';
 import * as playerSpriteAtlas from 'assets/tilesets/player-atlas.json';
@@ -29,7 +29,7 @@ export default class BootScene extends Phaser.Scene {
     this.load.image("caves-front", cavesFront);
     this.load.image("caves-mid", cavesMid);
     this.load.image("caves-back", cavesBack);
-    this.load.image("crateria", crateria);
+    this.load.image("creotur", creotur);
     this.load
       .atlas('player', playerSpriteSheet, playerSpriteAtlas)
       .atlas('enemies', enemySpriteSheet, enemySpriteAtlas)
