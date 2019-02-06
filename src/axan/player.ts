@@ -12,6 +12,7 @@ interface Keys {
   right: Phaser.Input.Keyboard.Key;
   space: Phaser.Input.Keyboard.Key;
   x: Phaser.Input.Keyboard.Key;
+  z: Phaser.Input.Keyboard.Key;
 }
 
 export default class Player extends Phaser.GameObjects.Sprite {
@@ -35,6 +36,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   jumpTimer = 0;
   shootTimer = 0;
   animTimer = 0;
+  switchWeaponTimer = 0;
 
   // states
   isShooting = false;
@@ -62,6 +64,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
       x: Phaser.Input.Keyboard.KeyCodes.X,
+      z: Phaser.Input.Keyboard.KeyCodes.Z,
     }) as Keys;
 
     createPlayerAnimations(this.scene)
@@ -75,7 +78,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       left: this.keys.left.isDown,
       right: this.keys.right.isDown,
       jump: this.keys.space.isDown,
-      shoot: this.keys.x.isDown
+      shoot: this.keys.x.isDown,
+      cycleWeapon: this.keys.z.isDown,
     };
 
     if (this.body.onFloor() && this.isFalling) {
@@ -170,7 +174,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   controls(delta: number): void {
-    const { left, right, up, down, shoot, jump } = this.inputs;
+    const { left, right, up, down, shoot, jump, cycleWeapon } = this.inputs;
 
     if(!this.canMove) {
       return;
@@ -187,6 +191,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     } else {
       this.beam.unShoot();
+    }
+
+    if(cycleWeapon) {
+      this.nextBeam();
     }
 
     if (left && !right) {
@@ -232,6 +240,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
     pickup.destroy();
   }
 
+  nextBeam() {
+    if (this.switchWeaponTimer === 0) {
+      const nextBeam = this.scene.inventory.nextBeam();
+      this.changeBeam(nextBeam);
+      this.switchWeaponTimer = 1;
+      
+      this.scene.time.addEvent({
+        delay: 300,
+        callbackScope: this,
+        callback() {
+          this.switchWeaponTimer = 0;
+        }
+      });
+    }
+  }
+
   updateBeam(time, delta): void {
     this.beam.update(time, delta);
   }
@@ -239,6 +263,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   changeBeam(beamName): void {
     this.beam.destroy();
     this.beam = BeamFactory.createBeam(beamName, this.scene, this.x, this.y);
+    this.scene.inventory.activeBeam = this.beam.label;
     this.scene.inventoryText.setText(this.beam.label + " BEAM");
     this.scene.add.existing(this.beam);
   }
@@ -275,11 +300,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.die();
       }
 
+      // Red tint timer
+      this.scene.time.addEvent({
+        delay: 200,
+        callbackScope: this,
+        callback() {
+          this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+        }
+      });
+      // Invincible timer
       this.scene.time.addEvent({
         delay: this.hurtCooldown,
         callbackScope: this,
         callback() {
-          this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
           this.canHurt = true;
         }
       });

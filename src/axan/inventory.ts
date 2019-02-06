@@ -10,7 +10,12 @@ export default class Inventory {
     if(this.beams.indexOf(beam.name) === -1){
       this.beams.push(beam.name);
     }
-    console.log(this.beams)
+  }
+
+  nextBeam() {
+    const activeIndex = this.beams.indexOf(this.activeBeam);
+    const nextBeam = this.beams[activeIndex+1];
+    return (nextBeam) ? nextBeam : this.beams[0];
   }
 
   heal(amount: number = 0) {
