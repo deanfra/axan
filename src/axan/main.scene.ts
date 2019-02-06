@@ -296,12 +296,9 @@ export default class MainScene extends Phaser.Scene {
   enemyShot = (projectile: Projectile, enemy: Enemy) => {
     if (enemy.canDamage || projectile.getData('bypass')) {
       const scene = this as MainScene;
-      let fromRight = true;
+      let fromRight = projectile.x > enemy.x;
       let shouldFlip = false;
       let multiplier = 1;
-      if (projectile.x < enemy.x) {
-        fromRight = false;
-      }
 
       if (fromRight && enemy.body.velocity.x > 0 && projectile.getData('flip')) {
         shouldFlip = true;
@@ -313,7 +310,7 @@ export default class MainScene extends Phaser.Scene {
         multiplier = projectile.getData('force');
       }
 
-      enemy.hurt(projectile.damage, fromRight, multiplier, shouldFlip);
+      enemy.hurt(projectile.damage, multiplier, shouldFlip);
 
       if (projectile.effects.indexOf("ice") >= 0) {
         if (enemy.health <= projectile.damage) {

@@ -19,6 +19,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   animWalk: string;
   animMad: string;
   smoke: Phaser.GameObjects.Particles.ParticleEmitter;
+  frozenMask: Phaser.GameObjects.Sprite;
 
   constructor(scene: MainScene, x: number, y: number, public dir: number, key: string) {
     super(scene, x, y, key);
@@ -47,7 +48,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.falling = this.body.velocity.y > 50;
   }
 
-  hurt(amount: number = 0, fromRight: boolean, multiplier = 2, flip = false): void {
+  hurt(amount: number = 0, multiplier = 2, flip = false): void {
     this.canDamage = false;
     this.health -= amount;
     this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));
@@ -56,7 +57,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
       this.flip();
     }
     if (this.health <= 0) {
-      this.die(fromRight);
+      this.die();
     } else {
       this.scene.tweens.add({
         targets: this,
@@ -64,7 +65,9 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         scaleY: .9,
         yoyo: true,
         onComplete: () => {
-          // this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+          if (!this.isFrozen) {
+            this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+          }
           this.setScale(1, 1);
           this.canDamage = true;
         }
@@ -77,16 +80,34 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   freeze(): void {
-    this.isFrozen = true;
     this.anims.stop();
+    this.setFrozenMask();
+    this.isFrozen = true;
+    
     this.body.gravity.y = -600;
     this.body.setAcceleration(0, 0);
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
+
     this.setTint(Phaser.Display.Color.GetColor(0, 185, 255));
   }
 
-  die(fromRight) {
+  setFrozenMask() {
+    // TODO: unfreeze
+    if(!this.isFrozen) {
+      this.frozenMask = this.scene.add.sprite(this.x, this.y, 'beams', 1);
+      this.scene.physics.world.enable(this.frozenMask, Phaser.Physics.Arcade.STATIC_BODY);
+      this.scene.physics.add.collider(this.scene.player, this.frozenMask);
+      this.frozenMask.body.width = this.body.width;
+      this.frozenMask.body.height = this.body.height;
+    }
+  }
+
+  die() {
+    if (this.frozenMask) {
+      this.frozenMask.destroy();
+    }
+
     const scene = this.scene;
     this.isDead = true;
     this.body.allowGravity = false;
@@ -95,7 +116,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setVelocityY(0);
 
     scene.killedEnemies.add(this);
-    // this.body.setAngularVelocity(Phaser.Math.Between(100, 1000));
+
     scene.time.addEvent({
       delay: 300,
       callbackScope: this,

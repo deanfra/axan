@@ -264,7 +264,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   enemyHurtPlayer = (player, enemy: Enemy) => {
-    if (this.canHurt) {
+    if (this.canHurt && !enemy.isFrozen) {
       this.canHurt = false;
       this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));
       this.inventory.hurt(enemy.damage);

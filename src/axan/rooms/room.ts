@@ -147,6 +147,7 @@ export class Room {
     }[randPickup];
 
     if (pickupArray.length>0) {
+      // Extract Pickups into a class
       let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beam-pickups');
       BeamPickupClass.name = randPickup;
       this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
