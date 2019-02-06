@@ -1,10 +1,11 @@
-import * as creotur from 'assets/tilesets/creotur.png';
 import * as doorsTiles from 'assets/tilesets/doors.png';
 import * as doorsHorizTiles from 'assets/tilesets/doors-horiz.png';
-import * as cavesFront from 'assets/tilesets/caves-front.png';
-import * as cavesMid from 'assets/tilesets/caves-mid.png';
-import * as cavesBack from 'assets/tilesets/caves-back.png';
-import * as axanTiles from 'assets/tilesets/16x16-creotur.png';
+
+import * as creoturBgFront from 'assets/tilesets/creotur-bg-front.png';
+import * as creoturBgMid from 'assets/tilesets/creotur-bg-mid.png';
+import * as creoturBgBack from 'assets/tilesets/creotur-bg-back.png';
+import * as creoturOutOfBounds from 'assets/tilesets/creotur-out-of-bounds.png';
+import * as creoturGroundTiles from 'assets/tilesets/creotur-ground-tiles.png';
 
 import * as playerSpriteSheet from 'assets/tilesets/player-atlas.png';
 import * as playerSpriteAtlas from 'assets/tilesets/player-atlas.json';
@@ -26,21 +27,22 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("caves-front", cavesFront);
-    this.load.image("caves-mid", cavesMid);
-    this.load.image("caves-back", cavesBack);
-    this.load.image("creotur", creotur);
+    this.load.image("creotur-bg-front", creoturBgFront);
+    this.load.image("creotur-bg-mid", creoturBgMid);
+    this.load.image("creotur-bg-back", creoturBgBack);
+    this.load.image("creotur-out-of-bounds", creoturOutOfBounds);
+
     this.load
       .atlas('player', playerSpriteSheet, playerSpriteAtlas)
       .atlas('enemies', enemySpriteSheet, enemySpriteAtlas)
       .atlas('projectiles', projectileSpriteSheet, projectileAtlas)
-      .spritesheet('axan', axanTiles, { frameWidth: 16, frameHeight: 16 })
+      .bitmapFont('mario-font', marioFontPng, marioFont)
+      .spritesheet("creotur-ground", creoturGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })
       .spritesheet('doors-horiz', doorsHorizTiles, { frameWidth: 48, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beam-pickups', beamPickups, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('misc-pickups', miscPickups, { frameWidth: 16, frameHeight: 16 })
-      .bitmapFont('mario-font', marioFontPng, marioFont)
   }
 
   create() {

@@ -48,7 +48,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("axan", "../assets/tilesets/16x16-creotur.png");
+    this.load.image("creotur-ground", "../assets/tilesets/creotur-ground-tiles.png");
     this.load.image("player", "../assets/tilesets/player-atlas.png");
   }
 
@@ -93,9 +93,9 @@ export default class MainScene extends Phaser.Scene {
       height: this.level.dungeonInstance.height
     });
 
-    this.groundTileset = this.map.addTilesetImage("axan", "axan", 16, 16);
+    this.groundTileset = this.map.addTilesetImage("creotur-ground", "creotur-ground", 16, 16);
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
-    this.outOfBoundsTileset = this.map.addTilesetImage("creotur", "creotur", 16, 16);
+    this.outOfBoundsTileset = this.map.addTilesetImage("creotur-out-of-bounds", "creotur-out-of-bounds", 16, 16);
     this.outOfBoundsLayer = this.map.createBlankDynamicLayer("outOfBoundsLayer", this.outOfBoundsTileset);
     this.platformLayer = this.map.createBlankDynamicLayer("platformLayer", this.groundTileset);
   }
@@ -127,9 +127,9 @@ export default class MainScene extends Phaser.Scene {
 
   setupBackground() {
     this.backgroundGroup = this.add.group();
-    this.backgroundGroup.add(new Background(this, "caves-front", 0.9, -1));
-    this.backgroundGroup.add(new Background(this, "caves-mid", 0.7, -2));
-    this.backgroundGroup.add(new Background(this, "caves-back", 0.5, -3));
+    this.backgroundGroup.add(new Background(this, "creotur-bg-front", 0.9, -1));
+    this.backgroundGroup.add(new Background(this, "creotur-bg-mid", 0.7, -2));
+    this.backgroundGroup.add(new Background(this, "creotur-bg-back", 0.5, -3));
   }
 
   setupCamera() {
