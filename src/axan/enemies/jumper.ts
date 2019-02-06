@@ -13,7 +13,6 @@ export class Jumper extends Enemy {
 
   constructor(scene, x, y, dir) {
     super(scene, x, y, dir, 'enemies');
-    this.jumpTimer(scene);
   }
 
   jumpTimer(scene) {
@@ -27,7 +26,7 @@ export class Jumper extends Enemy {
   }
 
   jump(scene) {
-    if (this.isDead || this.isFrozen) { return }
+    if (this.isDead || this.isFrozen || this.isJumping) { return }
 
     const playerX = scene.player.x;
     const velX = (playerX > this.x) ? 150 : -150;
@@ -50,6 +49,7 @@ export class Jumper extends Enemy {
   firstUpdate(): void {
     this.anims.play(this.animIdle);
     this.isFirst = false;
+    this.jumpTimer(this.scene);
   }
 
   update(time: number, delta: number) {

@@ -80,34 +80,54 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   freeze(): void {
+    if (this.isFrozen || this.isDead) { return }
+
     this.anims.stop();
-    this.setFrozenMask();
-    this.isFrozen = true;
-    
     this.body.gravity.y = -600;
     this.body.setAcceleration(0, 0);
     this.body.setVelocityX(0);
     this.body.setVelocityY(0);
+    this.setFrozenMask();
+    this.isFrozen = true;
 
     this.setTint(Phaser.Display.Color.GetColor(0, 185, 255));
+
+    this.scene.time.addEvent({
+      delay: 6000,
+      callbackScope: this,
+      callback: () => { this.unfreeze(); }
+    });
+  }
+
+  unfreeze(): void {
+    if (!this.isFrozen || this.isDead) { return }
+
+    this.isFrozen = false;
+    this.removeFrozenMask();
+    this.body.gravity.y = 0;
+    this.isFirst = true;
+    this.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
   }
 
   setFrozenMask() {
-    // TODO: unfreeze
-    if(!this.isFrozen) {
-      this.frozenMask = this.scene.add.sprite(this.x, this.y, 'beams', 1);
-      this.scene.physics.world.enable(this.frozenMask, Phaser.Physics.Arcade.STATIC_BODY);
-      this.scene.physics.add.collider(this.scene.player, this.frozenMask);
-      this.frozenMask.body.width = this.body.width;
-      this.frozenMask.body.height = this.body.height;
+    if (this.isFrozen) { return }
+
+    this.frozenMask = this.scene.add.sprite(this.x-4, this.y-4, 'beams', 1);
+    this.scene.physics.world.enable(this.frozenMask, Phaser.Physics.Arcade.STATIC_BODY);
+    this.scene.physics.add.collider(this.scene.player, this.frozenMask);
+    this.frozenMask.body.width = this.body.width+2;
+    this.frozenMask.body.height = this.body.height+2;
+  }
+
+  removeFrozenMask() {
+    if (this.frozenMask) {
+      this.frozenMask.destroy();
     }
   }
 
   die() {
-    if (this.frozenMask) {
-      this.frozenMask.destroy();
-    }
-
+    this.removeFrozenMask();
+    
     const scene = this.scene;
     this.isDead = true;
     this.body.allowGravity = false;
