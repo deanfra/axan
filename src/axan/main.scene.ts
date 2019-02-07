@@ -37,6 +37,8 @@ export default class MainScene extends Phaser.Scene {
   public activeRoom: Room;
   public inventory: Inventory;
   private levelName: string = RandomPlanetName();
+  // private levelPrefix: string = "suophus";
+  // private levelPrefix: string = "lahiri";
   private levelPrefix: string = "creotur";
   
   public inventoryText: Phaser.GameObjects.BitmapText;
@@ -49,7 +51,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("creotur-ground", "../assets/tilesets/creotur-ground-tiles.png");
     this.load.image("player", "../assets/tilesets/player-atlas.png");
   }
 
