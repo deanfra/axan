@@ -20,6 +20,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   animMad: string;
   smoke: Phaser.GameObjects.Particles.ParticleEmitter;
   frozenMask: Phaser.GameObjects.Sprite;
+  deathBang: Phaser.GameObjects.Sprite;
 
   constructor(scene: MainScene, x: number, y: number, public dir: number, key: string) {
     super(scene, x, y, key);
@@ -125,6 +126,11 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     }
   }
 
+  addDeathBang() {
+    this.deathBang = this.scene.add.sprite(this.x, this.y, 'effects');
+    this.deathBang.play("enemy-death")
+  }
+
   die() {
     this.removeFrozenMask();
     
@@ -137,6 +143,8 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
     scene.killedEnemies.add(this);
 
+    this.addDeathBang();
+
     scene.time.addEvent({
       delay: 300,
       callbackScope: this,
@@ -144,6 +152,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         // remove smoke emitter
         scene.killedEnemies.remove(this);
         scene.physics.world.disable(this);
+        this.deathBang.destroy();
 
         // extract to pickup class
         const healthPickup = scene.add.sprite(this.x, this.y, "misc-pickups");

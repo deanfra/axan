@@ -25,6 +25,8 @@ import * as enemySpriteSheet from 'assets/tilesets/enemy-atlas.png';
 import * as enemySpriteAtlas from 'assets/tilesets/enemy-atlas.json';
 import * as projectileAtlas from 'assets/tilesets/projectile-atlas.json';
 import * as projectileSpriteSheet from 'assets/tilesets/projectile-atlas.png';
+import * as effectsAtlas from 'assets/tilesets/effects-atlas.json';
+import * as effectsSpriteSheet from 'assets/tilesets/effects-atlas.png';
 
 import * as beams from 'assets/tilesets/beams.png';
 import * as beamPickups from 'assets/tilesets/beam-pickups.png';
@@ -58,6 +60,7 @@ export default class BootScene extends Phaser.Scene {
       .atlas('player', playerSpriteSheet, playerSpriteAtlas)
       .atlas('enemies', enemySpriteSheet, enemySpriteAtlas)
       .atlas('projectiles', projectileSpriteSheet, projectileAtlas)
+      .atlas('effects', effectsSpriteSheet, effectsAtlas)
       .bitmapFont('mario-font', marioFontPng, marioFont)
       .spritesheet("creotur-ground", creoturGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet("lahiri-ground", lahiriGroundTiles, { frameWidth: 16, frameHeight: 16 })

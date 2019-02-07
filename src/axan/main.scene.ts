@@ -254,7 +254,12 @@ export default class MainScene extends Phaser.Scene {
       {
         key: 'beam-fire',
         frames: this.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "fire", zeroPad: 2 })
-      },
+      }, {
+        key: 'beam-impact',
+        frameRate: 20,
+        repeat: 0,
+        frames: this.anims.generateFrameNames('effects', { start: 0, end: 5, prefix: 'beam-impact' })
+      }
     ].forEach(anim => this.anims.create(anim))
   }
 
@@ -291,6 +296,11 @@ export default class MainScene extends Phaser.Scene {
       frameRate: 4,
       repeat: -1,
       frames: this.anims.generateFrameNames('enemies', { start: 0, end: 2, prefix: 'vroll-attack', zeroPad: 2 })
+    }, {
+      key: 'enemy-death',
+      frameRate: 20,
+      repeat: 0,
+      frames: this.anims.generateFrameNames('effects', { start: 0, end: 6, prefix: 'enemy-death', zeroPad: 2 })
     }].forEach(anim => this.anims.create(anim))
   }
 
