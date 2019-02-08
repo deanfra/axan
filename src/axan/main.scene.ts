@@ -190,10 +190,14 @@ export default class MainScene extends Phaser.Scene {
     const frameRate = 15;
     [
       {
-        key: 'health-large',
+        key: 'health-pickup',
         frameRate: 7,
         yoyo: true,
-        frames: this.anims.generateFrameNames('misc-pickups', { start: 0, end: 2 })
+        frames: this.anims.generateFrameNames('pickups', { start: 1, end: 3, prefix: "health-pickup" })
+      }, {
+        key: 'boot-pickup',
+        frameRate: 7,
+        frames: this.anims.generateFrameNames('pickups', { start: 1, end: 2, prefix: "boot-pickup" })
       }, {
         key: 'charge',
         frames: this.anims.generateFrameNames('beam-pickups', { start: 0, end: 1 })
