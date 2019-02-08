@@ -1,10 +1,21 @@
 import BeamPickup from "./pickups/beam-pickup";
+import SuitPickup from "./pickups/suit-pickup";
 
 export default class Inventory {
   activeBeam: string = "LASER";
   beams: string[] = ["LASER"];
+  suit: string[] = [];
+  
   health: number = 100;
   maxHealth: number = 100;
+  hiJump: boolean = false;
+
+  suitUpgrade(suitPickup: SuitPickup) {
+    this.suit.push(suitPickup.name);
+    if(suitPickup.name === "HIJUMPBOOTS") {
+      this.hiJump = true;
+    }
+  }
 
   addBeam(beam: BeamPickup) {
     if(this.beams.indexOf(beam.name) === -1){

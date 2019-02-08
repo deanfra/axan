@@ -1,4 +1,4 @@
-import { Beam, DefaultBeam } from '.';
+import { Beam } from '.';
 import { Quantum } from "./quantum";
 import { Laser } from "./laser";
 import { Rang } from "./rang";
@@ -12,7 +12,6 @@ const beamLib: {[key:string]: any} = {
   ICE: Ice,
   FIRE: Fire
 }
-
 
 export class BeamFactory {
   static createBeam(beamName, scene, x, y): Beam {

@@ -199,7 +199,7 @@ export default class MainScene extends Phaser.Scene {
         yoyo: true,
         frames: this.anims.generateFrameNames('pickups', { start: 1, end: 3, prefix: "health-pickup" })
       }, {
-        key: 'boot-pickup',
+        key: 'hi-jump-boots',
         frameRate: 7,
         frames: this.anims.generateFrameNames('pickups', { start: 1, end: 2, prefix: "boot-pickup" })
       }, {

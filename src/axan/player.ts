@@ -1,6 +1,7 @@
 import MainScene from './main.scene';
 import Pickup from './pickups/pickup';
 import BeamPickup from './pickups/beam-pickup';
+import SuitPickup from './pickups/suit-pickup';
 import { Beam, BeamFactory } from './beams';
 import { Room } from "./rooms/";
 import Inventory from "./inventory";
@@ -221,16 +222,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     if (jump) {
+      const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
+      const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
       this.hasMoved = true;
       if (this.body.onFloor() && this.jumpTimer === 0) {
         this.jumpTimer = 1;
-        this.body.setVelocityY(-150);
+        this.body.setVelocityY(-150 + hiJumpVelocity);
         this.isJumping = true;
-      } else if (this.jumpTimer > 0 && this.jumpTimer < 301 && !this.body.onCeiling()) {
+      } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
         this.jumpTimer += delta;
-        this.body.setVelocityY(-160);
+        this.body.setVelocityY(-160 + hiJumpVelocity);
       } else if (this.body.onCeiling()) {
-        this.jumpTimer = 301;
+        this.jumpTimer = (301 + hiJumpTimer);
       }
     } else {
       this.body.setVelocityY(this.body.velocity.y + this.knockbackY);
@@ -238,17 +241,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  jump(): void {
-    if (this.body.onFloor() && this.jumpTimer === 0) {
-      this.jumpTimer = 1;
-      this.body.setVelocityY(-350 + this.knockbackY);
-    }
-  }
-
   pickupGet(pickup: Pickup): void {
     if (pickup instanceof BeamPickup) {
       this.scene.inventory.addBeam(pickup);
       this.changeBeam(pickup.name);
+    } else if (pickup instanceof SuitPickup) {
+      this.scene.inventory.suitUpgrade(pickup);
     }
     pickup.destroy();
   }

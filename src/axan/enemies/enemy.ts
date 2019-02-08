@@ -156,7 +156,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
         // extract to pickup class
         const healthPickup = scene.add.sprite(this.x, this.y, "misc-pickups");
-        healthPickup.play("health-large");
+        healthPickup.play("health-pickup");
         scene.physics.world.enable(healthPickup, Phaser.Physics.Arcade.STATIC_BODY);
         scene.physics.add.overlap(healthPickup, scene.player, () => {
           scene.inventory.heal(20);

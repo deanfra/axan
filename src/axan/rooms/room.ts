@@ -5,7 +5,9 @@ import None from "../tiles/none";
 import Wall from "../tiles/wall";
 import Tile from "../tiles/tile";
 import { Beam } from "../beams";
+import PickupFactory from "../pickups/pickup-factory";
 import BeamPickup from "../pickups/beam-pickup";
+import Pickup from "../pickups/pickup";
 
 import { Jumper } from "../enemies/jumper";
 import { Piq } from "../enemies/piq";
@@ -136,23 +138,11 @@ export class Room {
     const worldX = this.scene.map.tileToWorldX(randomX);
     const worldY = this.scene.map.tileToWorldY(randomY);
 
-    // Difference will filter out beams in inventory
-    const pickupArray = _.difference(["QUANTUM", "RANG", "ICE", "FIRE"], this.scene.inventory.beams);
-    const randPickup = _.sample(pickupArray);
-    const pickupFrame = {
-      "QUANTUM": "plasma",
-      "RANG": "wave",
-      "ICE": "ice",
-      "FIRE": "spazer",
-      "LASER": "charge",
-    }[randPickup];
+    const randPickup: Pickup | null = PickupFactory.randPickup(this.scene, worldX, worldY);
 
-    if (pickupArray.length>0) {
-      let beamPickup = new BeamPickup(this.scene, worldX, worldY, 'beam-pickups')
-      this.scene.pickupGroup.add(beamPickup, true);
-      this.scene.physics.world.enable(beamPickup, Phaser.Physics.Arcade.STATIC_BODY);
-      beamPickup.name = randPickup;
-      beamPickup.play(pickupFrame);
+    if (randPickup) {
+      this.scene.pickupGroup.add(randPickup, true);
+      this.scene.physics.world.enable(randPickup, Phaser.Physics.Arcade.STATIC_BODY);
     }
   }
 
