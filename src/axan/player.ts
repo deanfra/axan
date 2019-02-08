@@ -1,4 +1,6 @@
 import MainScene from './main.scene';
+import Pickup from './pickups/pickup';
+import BeamPickup from './pickups/beam-pickup';
 import { Beam, BeamFactory } from './beams';
 import { Room } from "./rooms/";
 import Inventory from "./inventory";
@@ -66,6 +68,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
       x: Phaser.Input.Keyboard.KeyCodes.X,
       z: Phaser.Input.Keyboard.KeyCodes.Z,
     }) as Keys;
+
+    // world / pickups hit detection
+    this.scene.physics.add.overlap(
+      this.scene.pickupGroup,
+      this,
+      (pickup: Pickup) => {
+        this.pickupGet(pickup);
+      }, undefined, this);
+
 
     createPlayerAnimations(this.scene)
     this.resetBeam(this.x, this.y);
@@ -234,9 +245,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  pickupGet = (pickup: Beam) => {
-    this.scene.inventory.addBeam(pickup);
-    this.changeBeam(pickup.name);
+  pickupGet(pickup: Pickup): void {
+    if (pickup instanceof BeamPickup) {
+      this.scene.inventory.addBeam(pickup);
+      this.changeBeam(pickup.name);
+    }
     pickup.destroy();
   }
 

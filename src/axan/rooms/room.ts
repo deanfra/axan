@@ -5,6 +5,7 @@ import None from "../tiles/none";
 import Wall from "../tiles/wall";
 import Tile from "../tiles/tile";
 import { Beam } from "../beams";
+import BeamPickup from "../pickups/beam-pickup";
 
 import { Jumper } from "../enemies/jumper";
 import { Piq } from "../enemies/piq";
@@ -147,12 +148,11 @@ export class Room {
     }[randPickup];
 
     if (pickupArray.length>0) {
-      // Extract Pickups into a class
-      let BeamPickupClass = this.scene.add.sprite(worldX, worldY, 'beam-pickups');
-      BeamPickupClass.name = randPickup;
-      this.scene.physics.world.enable(BeamPickupClass, Phaser.Physics.Arcade.STATIC_BODY);
-      this.scene.physics.add.overlap(BeamPickupClass, this.scene.player, this.scene.player.pickupGet);
-      BeamPickupClass.play(pickupFrame);
+      let beamPickup = new BeamPickup(this.scene, worldX, worldY, 'beam-pickups')
+      this.scene.pickupGroup.add(beamPickup, true);
+      this.scene.physics.world.enable(beamPickup, Phaser.Physics.Arcade.STATIC_BODY);
+      beamPickup.name = randPickup;
+      beamPickup.play(pickupFrame);
     }
   }
 

@@ -1,6 +1,7 @@
 import MainScene from 'axan/main.scene';
 import Projectile from "./projectile";
 import ProjectileConfig from "../../interfaces/projectile-config"
+import Pickup from "../pickups/pickup";
 
 export interface BeamProps {
   id: string;
@@ -12,7 +13,7 @@ export interface BeamProps {
   canShoot: boolean;
 }
 
-export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
+export class Beam extends Pickup implements BeamProps {
   public static id: string;
   id: string;
   sfx: string;
@@ -41,7 +42,7 @@ export class Beam extends Phaser.GameObjects.Sprite implements BeamProps {
     super(scene, x, y, key, frame);
     this.scene.physics.world.enable(this as Phaser.GameObjects.Sprite);
   }
-  
+      
   shoot() {
     if (this.canShoot) {
       this.canShoot = false;

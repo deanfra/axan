@@ -25,6 +25,7 @@ export default class MainScene extends Phaser.Scene {
   private outOfBoundsTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
 
+  public pickupGroup: Phaser.GameObjects.Group;
   public projectileGroup: Phaser.GameObjects.Group;
   public enemyGroup: Phaser.GameObjects.Group;
   public killedEnemies: Phaser.GameObjects.Group;
@@ -37,9 +38,9 @@ export default class MainScene extends Phaser.Scene {
   public activeRoom: Room;
   public inventory: Inventory;
   private levelName: string = RandomPlanetName();
-  // private levelPrefix: string = "suophus";
+  private levelPrefix: string = "suophus";
   // private levelPrefix: string = "lahiri";
-  private levelPrefix: string = "creotur";
+  // private levelPrefix: string = "creotur";
   
   public inventoryText: Phaser.GameObjects.BitmapText;
   public healthText: Phaser.GameObjects.BitmapText;
@@ -186,8 +187,11 @@ export default class MainScene extends Phaser.Scene {
   }
 
   setupPickupGroup() {
+    this.pickupGroup = this.add.group();
+
     const repeat = -1;
     const frameRate = 15;
+
     [
       {
         key: 'health-pickup',

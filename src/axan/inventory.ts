@@ -1,4 +1,4 @@
-import { Beam } from "./beams";
+import BeamPickup from "./pickups/beam-pickup";
 
 export default class Inventory {
   activeBeam: string = "LASER";
@@ -6,7 +6,7 @@ export default class Inventory {
   health: number = 100;
   maxHealth: number = 100;
 
-  addBeam(beam: Beam) {
+  addBeam(beam: BeamPickup) {
     if(this.beams.indexOf(beam.name) === -1){
       this.beams.push(beam.name);
     }
