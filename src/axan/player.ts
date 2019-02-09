@@ -128,7 +128,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     return this.scene.level.byId(roomInstance.id);
   }
 
-  animation() {
+  animation(): void {
     // Run on every second frame, prevents crazy jitters
     const {left, right, up, down} = this.inputs;
     let anim: string;
@@ -188,9 +188,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   controls(delta: number): void {
     const { left, right, up, down, shoot, jump, cycleWeapon } = this.inputs;
 
-    if(!this.canMove) {
-      return;
-    }
+    if(!this.canMove) { return; }
 
     if (this.body.onCeiling() && this.body.onFloor()) {
       console.log('----------------- JAMMED')
@@ -222,24 +220,51 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     if (jump) {
-      const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
-      const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
-      this.hasMoved = true;
-      if (this.body.onFloor() && this.jumpTimer === 0) {
-        this.jumpTimer = 1;
-        this.body.setVelocityY(-150 + hiJumpVelocity);
-        this.isJumping = true;
-      } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
-        this.jumpTimer += delta;
-        this.body.setVelocityY(-160 + hiJumpVelocity);
-      } else if (this.body.onCeiling()) {
-        this.jumpTimer = (301 + hiJumpTimer);
-      }
+      this.jump(delta);
     } else {
       this.body.setVelocityY(this.body.velocity.y + this.knockbackY);
       this.jumpTimer = 0;
     }
   }
+
+  jump(delta: number): void {
+    const { left, right, up, down, shoot } = this.inputs;
+
+    const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
+    const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
+
+    // Floor jump
+    if (this.body.onFloor() && this.jumpTimer === 0) {
+      this.jumpTimer = 1;
+      this.body.setVelocityY(-150 + hiJumpVelocity);
+      this.isJumping = true;
+
+    // Jump rising
+    } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
+      this.jumpTimer += delta;
+      this.body.setVelocityY(-160 + hiJumpVelocity);
+
+    // Jump fall
+    } else if (this.body.onCeiling()) {
+      this.jumpTimer = (301 + hiJumpTimer);
+    }
+  }
+
+  wallJump(delta: number) {
+
+  }
+  
+
+
+      // this.scene.time.addEvent({
+      //   delay: 80,
+      //   callbackScope: this,
+      //   callback() {
+      //     this.knockbackX = 0;
+      //     this.knockbackY = 0;
+      //   }
+      // });
+
 
   pickupGet(pickup: Pickup): void {
     if (pickup instanceof BeamPickup) {
@@ -330,7 +355,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  hurtKnockback(enemy) {
+  hurtKnockback(enemy): void {
     const fromLeft = (enemy.x - this.x) > 1;
     const fromBottom = (enemy.y - this.y) > 1;
 
