@@ -3,6 +3,7 @@ import Background from './background';
 import { Room } from "./rooms";
 import Level from "./level";
 import Inventory from "./inventory";
+import HUD from "./hud";
 import RoomVisibility from "./rooms/room-visibility";
 import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
@@ -19,24 +20,28 @@ export default class MainScene extends Phaser.Scene {
   private cameraResizeNeeded: boolean;
   public map: Phaser.Tilemaps.Tilemap;
 
-  private groundTileset: Phaser.Tilemaps.Tileset;
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
-  public platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
-  private outOfBoundsTileset: Phaser.Tilemaps.Tileset;
+  private groundTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  private outOfBoundsTileset: Phaser.Tilemaps.Tileset;
+  public platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
 
+  public backgroundGroup: Phaser.GameObjects.Group;
+  public doorGateGroup: Phaser.GameObjects.Group;
+  public enemyGroup: Phaser.GameObjects.Group;
+  public hudGroup: Phaser.GameObjects.Group;
+  public killedEnemies: Phaser.GameObjects.Group;
   public pickupGroup: Phaser.GameObjects.Group;
   public projectileGroup: Phaser.GameObjects.Group;
-  public enemyGroup: Phaser.GameObjects.Group;
-  public killedEnemies: Phaser.GameObjects.Group;
-  public doorGateGroup: Phaser.GameObjects.Group;
-  public backgroundGroup: Phaser.GameObjects.Group;
   
   public player: Player;
   public level: Level;
   public roomVisibility: any;
   public activeRoom: Room;
+
   public inventory: Inventory;
+  public hud: HUD;
+
   private levelName: string = RandomPlanetName();
   private levelPrefix: string = "suophus";
   // private levelPrefix: string = "lahiri";
@@ -48,7 +53,6 @@ export default class MainScene extends Phaser.Scene {
 
   constructor() {
     super({ key: 'MainScene' });
-    this.inventory = new Inventory(this);
   }
 
   preload() {
@@ -58,6 +62,7 @@ export default class MainScene extends Phaser.Scene {
   create(): void {
     console.log("Welcome to " + this.levelName);
     this.level = new Level(this);
+    this.inventory = new Inventory(this);
     this.makeTiles();
     this.setupRoomVisibility();
     this.setupBackground();
@@ -69,7 +74,7 @@ export default class MainScene extends Phaser.Scene {
     this.level.startRoom.setup();
     this.setupProjectileGroup();
     this.setupCamera();
-    this.setupHUD();
+    this.hud = new HUD(this);
   }
 
   update(time: number, delta: number): void {
@@ -368,21 +373,5 @@ export default class MainScene extends Phaser.Scene {
     camera.setBounds(trX, trY, window.innerWidth, window.innerHeight);
     camera.stopFollow();
     camera.startFollow(this.player, true, 0.3, 0.3, 0, 40);
-  }
-
-  setupHUD(): void {
-    const screenLeft = (window.innerWidth / 3);
-    const screenTop = (window.innerHeight / 3);
-    this.healthText = this.add.bitmapText((screenLeft * 2) - 15, (screenTop * 2) - 15, 'mario-font', this.inventory.health.toString(), 3, 2);
-    this.healthText.setDepth(100);
-    this.healthText.setScrollFactor(0);
-
-    this.inventoryText = this.add.bitmapText(screenLeft + 15, (screenTop * 2)-15, 'mario-font', 'LASER BEAM', 3);
-    this.inventoryText.setDepth(100);
-    this.inventoryText.setScrollFactor(0);
-
-    this.nameText = this.add.bitmapText(screenLeft + 15, screenTop + 15, 'mario-font', this.levelName.toUpperCase(), 3);
-    this.nameText.setDepth(100);
-    this.nameText.setScrollFactor(0);
   }
 }
