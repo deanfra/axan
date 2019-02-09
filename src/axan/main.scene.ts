@@ -203,6 +203,14 @@ export default class MainScene extends Phaser.Scene {
         frameRate: 7,
         frames: this.anims.generateFrameNames('pickups', { start: 1, end: 2, prefix: "boot-pickup" })
       }, {
+        key: 'health-upgrade',
+        frameRate: 7,
+        frames: this.anims.generateFrameNames('pickups', { start: 1, end: 2, prefix: "globe" })
+      }, {
+        key: 'health-upgrade-2',
+        frameRate: 7,
+        frames: this.anims.generateFrameNames('pickups', { start: 1, end: 2, prefix: "globe-steel" })
+      }, {
         key: 'charge',
         frames: this.anims.generateFrameNames('beam-pickups', { start: 0, end: 1 })
       }, {

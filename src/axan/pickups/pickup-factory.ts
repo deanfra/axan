@@ -4,7 +4,7 @@ import BeamPickup from "../pickups/beam-pickup";
 import * as _ from "lodash";
 
 const beamLib: Array<string> = ["QUANTUM", "LASER", "RANG", "ICE", "FIRE"];
-const suitLib: Array<string> = ["HIJUMPBOOTS"];
+const suitLib: Array<string> = ["HIJUMPBOOTS", "HEALTHTANK"];
 
 export default class PickupFactory {
 
@@ -14,6 +14,7 @@ export default class PickupFactory {
     const pickupArray = _.difference(beamLib.concat(suitLib), inventoryItems);
     const randPickup = _.sample(pickupArray);
     const pickupFrame = {
+      "HEALTHTANK": "health-upgrade",
       "HIJUMPBOOTS": "hi-jump-boots",
       "QUANTUM": "plasma",
       "RANG": "wave",

@@ -11,9 +11,12 @@ export default class Inventory {
   hiJump: boolean = false;
 
   suitUpgrade(suitPickup: SuitPickup) {
-    this.suit.push(suitPickup.name);
     if(suitPickup.name === "HIJUMPBOOTS") {
       this.hiJump = true;
+      this.suit.push(suitPickup.name);
+    } else if(suitPickup.name === "HEALTHTANK") {
+      this.maxHealth += 100;
+      this.health += 100;
     }
   }
 

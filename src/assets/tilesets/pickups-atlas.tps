@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.11.1</string>
+        <string>4.12.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -151,7 +151,7 @@
         <key>autoAliasEnabled</key>
         <false/>
         <key>trimSpriteNames</key>
-        <false/>
+        <true/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -183,6 +183,10 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">pickups-frames/boot-pickup1.png</key>
             <key type="filename">pickups-frames/boot-pickup2.png</key>
+            <key type="filename">pickups-frames/globe-steel1.png</key>
+            <key type="filename">pickups-frames/globe-steel2.png</key>
+            <key type="filename">pickups-frames/globe1.png</key>
+            <key type="filename">pickups-frames/globe2.png</key>
             <key type="filename">pickups-frames/health-pickup1.png</key>
             <key type="filename">pickups-frames/health-pickup2.png</key>
             <key type="filename">pickups-frames/health-pickup3.png</key>
@@ -206,6 +210,10 @@
             <filename>pickups-frames/health-pickup1.png</filename>
             <filename>pickups-frames/health-pickup2.png</filename>
             <filename>pickups-frames/health-pickup3.png</filename>
+            <filename>pickups-frames/globe-steel1.png</filename>
+            <filename>pickups-frames/globe-steel2.png</filename>
+            <filename>pickups-frames/globe1.png</filename>
+            <filename>pickups-frames/globe2.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
