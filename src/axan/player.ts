@@ -304,7 +304,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.canHurt = false;
       this.setTint(Phaser.Display.Color.GetColor(255, 0, 0));
       this.inventory.hurt(enemy.damage);
-      this.scene.healthText.setText(this.inventory.health.toString());
       this.hurtKnockback(enemy);
 
       if (this.inventory.health < 1) {

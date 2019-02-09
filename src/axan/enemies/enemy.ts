@@ -160,7 +160,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         scene.physics.world.enable(healthPickup, Phaser.Physics.Arcade.STATIC_BODY);
         scene.physics.add.overlap(healthPickup, scene.player, () => {
           scene.inventory.heal(20);
-          scene.healthText.setText(scene.inventory.health.toString());
           healthPickup.destroy();
         });
 

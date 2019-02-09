@@ -1,7 +1,10 @@
 import BeamPickup from "./pickups/beam-pickup";
 import SuitPickup from "./pickups/suit-pickup";
+import MainScene from "./main.scene";
 
 export default class Inventory {
+  scene: MainScene;
+  
   activeBeam: string = "LASER";
   beams: string[] = ["LASER"];
   suit: string[] = [];
@@ -10,13 +13,17 @@ export default class Inventory {
   maxHealth: number = 100;
   hiJump: boolean = false;
 
+  constructor(scene) {
+    this.scene = scene;
+  }
+
   suitUpgrade(suitPickup: SuitPickup) {
     if(suitPickup.name === "HIJUMPBOOTS") {
       this.hiJump = true;
       this.suit.push(suitPickup.name);
     } else if(suitPickup.name === "HEALTHTANK") {
       this.maxHealth += 100;
-      this.health += 100;
+      this.heal(100);
     }
   }
 
@@ -38,6 +45,7 @@ export default class Inventory {
     } else {
       this.health = this.maxHealth;
     }
+    this.scene.healthText.setText(this.health.toString());
   }
 
   hurt(amount: number = 0) {
@@ -46,5 +54,7 @@ export default class Inventory {
     } else {
       this.health = 0;
     }
+
+    this.scene.healthText.setText(this.health.toString());
   }
 }

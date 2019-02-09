@@ -48,7 +48,7 @@ export default class MainScene extends Phaser.Scene {
 
   constructor() {
     super({ key: 'MainScene' });
-    this.inventory = new Inventory();
+    this.inventory = new Inventory(this);
   }
 
   preload() {
