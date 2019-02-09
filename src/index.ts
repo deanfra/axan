@@ -11,6 +11,13 @@ const config: Opt<GameConfig> = {
   height: window.innerHeight,
   zoom: 2,
   render: { pixelArt: true },
+  // autoRound: true,
+  scale: {
+    mode: Phaser.DOM.RESIZE,
+    parent: "game",
+    width: "100%",
+    height: "100%"
+  },
   input: {
     gamepad: true
   },
@@ -34,7 +41,3 @@ const config: Opt<GameConfig> = {
 };
 
 const game = new Phaser.Game(config);
-
-window.addEventListener("resize", () => {
-  game.resize(window.innerWidth, window.innerHeight);
-});

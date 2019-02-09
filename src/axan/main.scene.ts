@@ -10,14 +10,12 @@ import { Enemy } from "axan/enemies";
 import Projectile from "axan/beams/projectile";
 import * as _ from "lodash";
 
-// The responsibility of the Dungeon (main) should be to:
+// The responsibility of Main should be to:
 // - Manage camera
 // - Manage player
 // - Preload assets
 
 export default class MainScene extends Phaser.Scene {
-  private camera: Phaser.Cameras.Scene2D.Camera;
-  private cameraResizeNeeded: boolean;
   public map: Phaser.Tilemaps.Tilemap;
 
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
@@ -84,13 +82,6 @@ export default class MainScene extends Phaser.Scene {
       .forEach(
         enemy => enemy.update(time, delta), this
       );
-
-    if (this.cameraResizeNeeded) {
-      // Do this here rather than the resize callback as it limits
-      // how much we'll slow down the game
-      this.cameras.main.setSize(window.innerWidth, window.innerHeight);
-      this.cameraResizeNeeded = false;
-    }
   }
 
   makeTiles() {
@@ -143,17 +134,13 @@ export default class MainScene extends Phaser.Scene {
   setupCamera() {
     // + Extract to camera class
     // Constrain the camera so that it isn't allowed to move outside the width/height of tilemap
+
     const camera = this.cameras.main;
     camera.setRoundPixels(true);
     camera.setZoom(3);
 
-    window.addEventListener("resize", () => {
-      this.cameraResizeNeeded = true;
-    });
-
     camera.startFollow(this.player, true, 0.3, 0.3, 0, 40);
     camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-    // this.cameraConstrainTo(this.rooms.rooms[0]);
   }
   
   setupDoorGateGroup() {

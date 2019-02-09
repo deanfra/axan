@@ -8552,6 +8552,7 @@ declare namespace Phaser {
     }
 
     namespace DOM {
+        const RESIZE: any;
         /**
          * Adds the given element to the DOM. If a parent is provided the element is added as a child of the parent, providing it was able to access it.
          * If no parent was given or falls back to using `document.body`.
