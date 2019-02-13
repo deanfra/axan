@@ -14,6 +14,7 @@ interface Keys {
   left: Phaser.Input.Keyboard.Key;
   right: Phaser.Input.Keyboard.Key;
   space: Phaser.Input.Keyboard.Key;
+  c: Phaser.Input.Keyboard.Key;
   x: Phaser.Input.Keyboard.Key;
   z: Phaser.Input.Keyboard.Key;
 }
@@ -28,29 +29,29 @@ export default class Player extends Phaser.GameObjects.Sprite {
   public scene: MainScene;
   private beam: Beam;
 
-  inputs: { [key: string]: boolean };
+  public inputs: { [key: string]: boolean };
 
   // factors
-  runSpeed = 150;
-  knockbackX = 0;
-  knockbackY = 0;
+  private runSpeed = 150;
+  private dashSpeed = 0;
+  private knockbackX = 0;
+  private knockbackY = 0;
 
   // timers
-  jumpTimer = 0;
-  shootTimer = 0;
-  animTimer = 0;
-  switchWeaponTimer = 0;
+  private jumpTimer = 0;
+  private animTimer = 0;
+  private switchWeaponTimer = 0;
+  private hurtCooldown = 900;
 
   // states
-  isShooting = false;
-  isJumping = false;
-  isFalling = false;
+  public isJumping = false;
+  private isFalling = false;
   public isMoving = false;
   public isCrouching = false;
   public isRunning = false;
+  private isDashing = false;
+  private canHurt = true;
   
-  hurtCooldown = 900;
-  canHurt = true;
   
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
@@ -66,6 +67,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       left: Phaser.Input.Keyboard.KeyCodes.LEFT,
       right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+      c: Phaser.Input.Keyboard.KeyCodes.C,
       x: Phaser.Input.Keyboard.KeyCodes.X,
       z: Phaser.Input.Keyboard.KeyCodes.Z,
     }) as Keys;
@@ -90,6 +92,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       left: this.keys.left.isDown,
       right: this.keys.right.isDown,
       jump: this.keys.space.isDown,
+      dash: this.keys.c.isDown,
       shoot: this.keys.x.isDown,
       cycleWeapon: this.keys.z.isDown,
     };
@@ -186,7 +189,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   controls(delta: number): void {
-    const { left, right, up, down, shoot, jump, cycleWeapon } = this.inputs;
+    const { left, right, up, down, shoot, jump, cycleWeapon, dash } = this.inputs;
 
     if(!this.canMove) { return; }
 
@@ -203,17 +206,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.beam.unShoot();
     }
 
+    this.dashSpeed = (dash) ? 150 : 0;
+
     if(cycleWeapon) {
       this.nextBeam();
     }
 
     if (left && !right) {
       this.hasMoved = true;
-      this.body.setVelocityX(-this.runSpeed + this.knockbackX);
+      this.body.setVelocityX(-this.runSpeed + this.knockbackX + -this.dashSpeed);
       this.flipX = true;
     } else if (right && !left) {
       this.hasMoved = true;
-      this.body.setVelocityX(this.runSpeed + this.knockbackX);
+      this.body.setVelocityX(this.runSpeed + this.knockbackX + this.dashSpeed);
       this.flipX = false;
     } else {
       this.body.setVelocityX(0 + this.knockbackX);
@@ -228,7 +233,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   jump(delta: number): void {
-    const { left, right, up, down, shoot } = this.inputs;
+    // const { left, right, up, down, shoot } = this.inputs;
 
     const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
     const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
