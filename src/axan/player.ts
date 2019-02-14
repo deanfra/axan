@@ -190,12 +190,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   controls(delta: number): void {
     const { left, right, up, down, shoot, jump, cycleWeapon, dash } = this.inputs;
+    
+    if (!this.canMove) { return; }
+    if (cycleWeapon) { this.nextBeam(); }
+    if (this.body.onCeiling() && this.body.onFloor()) { console.log('JAMMED') }
 
-    if(!this.canMove) { return; }
-
-    if (this.body.onCeiling() && this.body.onFloor()) {
-      console.log('----------------- JAMMED')
-    }
+    this.dashSpeed = (dash) ? 150 : 0;
 
     if (shoot) {
       this.hasMoved = true;
@@ -204,12 +204,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     } else {
       this.beam.unShoot();
-    }
-
-    this.dashSpeed = (dash) ? 150 : 0;
-
-    if(cycleWeapon) {
-      this.nextBeam();
     }
 
     if (left && !right) {
@@ -233,43 +227,39 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   jump(delta: number): void {
-    // const { left, right, up, down, shoot } = this.inputs;
-
     const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
     const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
 
-    // Floor jump
     if (this.body.onFloor() && this.jumpTimer === 0) {
-      this.jumpTimer = 1;
-      this.body.setVelocityY(-150 + hiJumpVelocity);
-      this.isJumping = true;
-
-    // Jump rising
+      this.jumpStart();
     } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
-      this.jumpTimer += delta;
-      this.body.setVelocityY(-160 + hiJumpVelocity);
-
-    // Jump fall
+      this.jumpContinue(delta);
     } else if (this.body.onCeiling()) {
-      this.jumpTimer = (301 + hiJumpTimer);
+      this.jumpEnd();
     }
+  }
+
+  jumpStart() {
+    const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
+    this.jumpTimer = 1;
+    this.body.setVelocityY(-150 + hiJumpVelocity);
+    this.isJumping = true;
+  }
+
+  jumpContinue(delta: number) {
+    const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
+    this.jumpTimer += delta;
+    this.body.setVelocityY(-160 + hiJumpVelocity);
+  }
+
+  jumpEnd() {
+    const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
+    this.jumpTimer = (301 + hiJumpTimer);
   }
 
   wallJump(delta: number) {
 
   }
-  
-
-
-      // this.scene.time.addEvent({
-      //   delay: 80,
-      //   callbackScope: this,
-      //   callback() {
-      //     this.knockbackX = 0;
-      //     this.knockbackY = 0;
-      //   }
-      // });
-
 
   pickupGet(pickup: Pickup): void {
     if (pickup instanceof BeamPickup) {
