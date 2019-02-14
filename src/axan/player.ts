@@ -45,6 +45,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   // states
   public isJumping = false;
+  private isStandJumping = false;
+  private isRunJumping = false;
   private isFalling = false;
   public isMoving = false;
   public isCrouching = false;
@@ -170,9 +172,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
       } else if (down) {
         anim = 'jump-aim-down';
       } else if (this.body.velocity.y <= 0) {
-        anim = 'jump-up';
+        if(this.isRunJumping) {
+          anim = 'jump-spin';
+        } else {
+          anim = 'jump-up';
+        }
       } else if (this.body.velocity.y > 80) {
-        anim = 'jump-down';
+        if (this.isRunJumping) {
+          anim = 'jump-spin';
+        } else {
+          anim = 'jump-down';
+        }
       }
     } 
 
@@ -240,6 +250,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   jumpStart() {
+    console.log(this.body.velocity.x);
+    if(this.body.velocity.x === 0 ) {
+      this.isStandJumping = true;
+      this.isRunJumping = false;
+    } else {
+      this.isStandJumping = false;
+      this.isRunJumping = true;
+    }
     const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
     this.jumpTimer = 1;
     this.body.setVelocityY(-150 + hiJumpVelocity);
@@ -255,6 +273,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   jumpEnd() {
     const hiJumpTimer = (this.inventory.hiJump) ? 100 : 0;
     this.jumpTimer = (301 + hiJumpTimer);
+    this.isStandJumping = false;
+    this.isRunJumping = false;
   }
 
   wallJump(delta: number) {

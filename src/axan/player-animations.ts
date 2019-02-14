@@ -72,6 +72,12 @@ export default function (scene): void {
       frames: scene.anims.generateFrameNames('player', { start: 2, end: 5, prefix: 'jump', zeroPad: 2 })
     },
     {
+      key: 'jump-spin',
+      frameRate: 15,
+      repeat: -1,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 8, prefix: 'spin', zeroPad: 2 })
+    },
+    {
       key: 'jump-aim-up',
       frameRate: 1,
       repeat: 0,
