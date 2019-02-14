@@ -133,16 +133,22 @@ export class Room {
   addPickups() {
     const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.constructor.name === "None")) || {};
     const randomX = randNoneTile.x + this.room.x;
-    const randomY = randNoneTile.y + this.room.y;
+    const randomY = this.room.height + this.room.y;
 
-    const worldX = this.scene.map.tileToWorldX(randomX);
-    const worldY = this.scene.map.tileToWorldY(randomY);
+    const worldX = this.scene.map.tileToWorldX(randomX) + 8;
+    const worldY = this.scene.map.tileToWorldY(randomY) - 32 - 8;
 
     const randPickup: Pickup | null = PickupFactory.randPickup(this.scene, worldX, worldY);
 
     if (randPickup) {
       this.scene.pickupGroup.add(randPickup, true);
       this.scene.physics.world.enable(randPickup, Phaser.Physics.Arcade.STATIC_BODY);
+      
+      const pickupHolder = this.scene.add.sprite(worldX, worldY+16, "pickups");
+      this.scene.physics.world.enable(pickupHolder, Phaser.Physics.Arcade.STATIC_BODY);
+      this.scene.physics.add.collider(this.scene.player, pickupHolder);
+      pickupHolder.play("pickup-holder");
+
     }
   }
 

@@ -190,6 +190,7 @@
             <key type="filename">pickups-frames/health-pickup1.png</key>
             <key type="filename">pickups-frames/health-pickup2.png</key>
             <key type="filename">pickups-frames/health-pickup3.png</key>
+            <key type="filename">pickups-frames/pickup-holder1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -214,6 +215,7 @@
             <filename>pickups-frames/globe-steel2.png</filename>
             <filename>pickups-frames/globe1.png</filename>
             <filename>pickups-frames/globe2.png</filename>
+            <filename>pickups-frames/pickup-holder1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

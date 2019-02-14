@@ -71,14 +71,22 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "pickup-holder1",
+	"frame": {"x":144,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
 }],
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "pickups-atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":144,"h":16},
+	"size": {"w":160,"h":16},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4ceb9f95d79d2024affd78d865881aa1:30258982e2ce1a416318a48ab6790493:9170cf48f73c7a404699de84ca44765d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:841e9096038aa52cc3eb1257ed396de6:b0a117d5654c29b8a81ce9e6819da64f:9170cf48f73c7a404699de84ca44765d$"
 }
 }

@@ -35,9 +35,10 @@ export class Ice extends Beam implements BeamProps {
 
   shoot() {
     const projectile = super.shoot();
-    projectile.effects.push('ice');
-    this.particleEffect(projectile);
-
+    if (projectile) {
+      projectile.effects.push('ice');
+      this.particleEffect(projectile);
+    }
     return projectile;
   }
 
