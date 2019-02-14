@@ -94,6 +94,18 @@ export default function (scene): void {
       frameRate: 1,
       repeat: 0,
       frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-down-fwd', zeroPad: 2 })
+    },
+    {
+      key: 'walljump-start',
+      frameRate: 1,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'walljump-start', zeroPad: 2 })
+    },
+    {
+      key: 'walljump-end',
+      frameRate: 15,
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'walljump-end', zeroPad: 2 })
     }
   ].forEach(anim => scene.anims.create(anim))
 }
