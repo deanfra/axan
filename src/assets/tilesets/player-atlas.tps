@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>json-array</string>
         <key>textureFileName</key>
-        <filename>../player-atlas.png</filename>
+        <filename>player-atlas.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../player-atlas.json</filename>
+                <filename>player-atlas.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -342,8 +342,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">player-frames/walljump-end02.png</key>
-            <key type="filename">player-frames/walljump-start01.png</key>
+            <key type="filename">player-frames/walljump01.png</key>
+            <key type="filename">player-frames/walljump02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -436,8 +436,8 @@
             <filename>player-frames/stand-aim-up01.png</filename>
             <filename>player-frames/stand-aim-up02.png</filename>
             <filename>player-frames/stand-aim-up03.png</filename>
-            <filename>player-frames/walljump-end02.png</filename>
-            <filename>player-frames/walljump-start01.png</filename>
+            <filename>player-frames/walljump01.png</filename>
+            <filename>player-frames/walljump02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

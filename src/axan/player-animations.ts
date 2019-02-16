@@ -2,6 +2,7 @@
 // it would be good to make all things folderised like modules
 
 export default function (scene): void {
+  const spinFrames = scene.anims.generateFrameNames('player', { start: 1, end: 8, prefix: 'spin', zeroPad: 2 });
   [
     {
       key: 'begin',
@@ -72,22 +73,27 @@ export default function (scene): void {
       frames: scene.anims.generateFrameNames('player', { start: 2, end: 5, prefix: 'jump', zeroPad: 2 })
     },
     {
+      key: 'jump-spin-begin',
+      repeat: 0,
+      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'spin-begin', zeroPad: 2 })
+    },
+    {
       key: 'jump-spin',
       frameRate: 15,
       repeat: -1,
-      frames: scene.anims.generateFrameNames('player', { start: 1, end: 8, prefix: 'spin', zeroPad: 2 })
+      frames: spinFrames
     },
     {
       key: 'jump-aim-up',
       frameRate: 1,
       repeat: 0,
-      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-up', zeroPad: 2 })
+      frames: [{ key: "player", frame: "jump-aim-up01" }]
     },
     {
       key: 'jump-aim-up-fwd',
       frameRate: 1,
       repeat: 0,
-      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-up-fwd', zeroPad: 2 })
+      frames: [{ key: "player", frame: "jump-aim-up-fwd01" }]
     },
     {
       key: 'jump-aim-down',
@@ -102,16 +108,10 @@ export default function (scene): void {
       frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'jump-aim-down-fwd', zeroPad: 2 })
     },
     {
-      key: 'walljump-start',
-      frameRate: 1,
-      repeat: 0,
-      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'walljump-start', zeroPad: 2 })
-    },
-    {
-      key: 'walljump-end',
+      key: 'walljump',
       frameRate: 15,
       repeat: 0,
-      frames: scene.anims.generateFrameNames('player', { start: 1, end: 1, prefix: 'walljump-end', zeroPad: 2 })
+      frames: [...scene.anims.generateFrameNames('player', { start: 1, end: 2, prefix: 'walljump', zeroPad: 2 }), ...spinFrames, ...spinFrames]
     }
   ].forEach(anim => scene.anims.create(anim))
 }

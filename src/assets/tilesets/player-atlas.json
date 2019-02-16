@@ -47,7 +47,7 @@
 },
 {
 	"filename": "crouch-run01",
-	"frame": {"x":31,"y":60,"w":32,"h":30},
+	"frame": {"x":96,"y":30,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -56,7 +56,7 @@
 },
 {
 	"filename": "crouch-run02",
-	"frame": {"x":95,"y":60,"w":32,"h":30},
+	"frame": {"x":32,"y":30,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -65,7 +65,7 @@
 },
 {
 	"filename": "crouch-run03",
-	"frame": {"x":63,"y":60,"w":32,"h":30},
+	"frame": {"x":0,"y":0,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -83,7 +83,7 @@
 },
 {
 	"filename": "crouch-run05",
-	"frame": {"x":96,"y":30,"w":32,"h":30},
+	"frame": {"x":64,"y":30,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -92,7 +92,7 @@
 },
 {
 	"filename": "crouch-run06",
-	"frame": {"x":0,"y":0,"w":32,"h":30},
+	"frame": {"x":96,"y":0,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -110,7 +110,7 @@
 },
 {
 	"filename": "crouch-run08",
-	"frame": {"x":96,"y":0,"w":32,"h":30},
+	"frame": {"x":0,"y":30,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -128,7 +128,7 @@
 },
 {
 	"filename": "crouch02",
-	"frame": {"x":64,"y":30,"w":32,"h":30},
+	"frame": {"x":63,"y":60,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -137,7 +137,7 @@
 },
 {
 	"filename": "jump-aim-down-fwd01",
-	"frame": {"x":0,"y":30,"w":32,"h":30},
+	"frame": {"x":31,"y":60,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -146,7 +146,7 @@
 },
 {
 	"filename": "jump-aim-down01",
-	"frame": {"x":32,"y":30,"w":32,"h":30},
+	"frame": {"x":95,"y":60,"w":32,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":30},
@@ -587,7 +587,7 @@
 },
 {
 	"filename": "spin-begin01",
-	"frame": {"x":58,"y":90,"w":27,"h":36},
+	"frame": {"x":31,"y":90,"w":27,"h":36},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":36},
@@ -605,15 +605,6 @@
 },
 {
 	"filename": "spin02",
-	"frame": {"x":0,"y":126,"w":27,"h":36},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":36},
-	"sourceSize": {"w":27,"h":36},
-	"pivot": {"x":0.5,"y":0.5}
-},
-{
-	"filename": "spin03",
 	"frame": {"x":27,"y":126,"w":27,"h":36},
 	"rotated": false,
 	"trimmed": false,
@@ -622,8 +613,17 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
+	"filename": "spin03",
+	"frame": {"x":0,"y":126,"w":27,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":36},
+	"sourceSize": {"w":27,"h":36},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
 	"filename": "spin04",
-	"frame": {"x":31,"y":90,"w":27,"h":36},
+	"frame": {"x":58,"y":90,"w":27,"h":36},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":36},
@@ -694,21 +694,21 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "walljump-end02",
-	"frame": {"x":0,"y":90,"w":31,"h":31},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":31,"h":31},
-	"sourceSize": {"w":31,"h":31},
-	"pivot": {"x":0.5,"y":0.5}
-},
-{
-	"filename": "walljump-start01",
+	"filename": "walljump01",
 	"frame": {"x":0,"y":60,"w":31,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":31,"h":30},
 	"sourceSize": {"w":31,"h":30},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "walljump02",
+	"frame": {"x":0,"y":90,"w":31,"h":31},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":31,"h":31},
+	"sourceSize": {"w":31,"h":31},
 	"pivot": {"x":0.5,"y":0.5}
 }],
 "meta": {
@@ -718,6 +718,6 @@
 	"format": "RGBA8888",
 	"size": {"w":128,"h":954},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f30ca4b87adfa379f07379aae58a376c:d6b848a1dcefbc80130273e6834395b2:3e0315d4a855bc8bce4ffaa4ba4c0b2b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:eef7f1ae228e732e80c8294b5e1f4101:f0cf705b2e89f4c48129232fbd8c0a7b:3e0315d4a855bc8bce4ffaa4ba4c0b2b$"
 }
 }

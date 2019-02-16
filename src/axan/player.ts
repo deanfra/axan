@@ -37,6 +37,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   private dashSpeed = 0;
   private knockbackX = 0;
   private knockbackY = 0;
+  private wallJumpX = 0;
 
   // timers
   private jumpTimer = 0;
@@ -47,6 +48,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   // states
   private isStandJumping = false;
   private isRunJumping = false;
+  private isWallJumping = false;
 
   private isFalling = false;
   public isMoving = false;
@@ -162,7 +164,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     } else if (!this.body.onFloor() && this.isJumping()) {
       // airborne
-      if (down && (left || right)) {
+      if (this.isWallJumping) {
+        anim = 'walljump';
+      } else if (down && (left || right)) {
         anim = 'jump-aim-down-fwd';
       } else if (up && (left || right)) {
         anim = 'jump-aim-up-fwd';
@@ -216,7 +220,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.beam.unShoot();
     }
 
-    if (left || right) {
+    if (this.wallJumpX) {
+      this.body.setVelocityX(this.wallJumpX);
+    } else if (left || right) {
       this.hasMoved = true;
       this.flipX = left ? true : false;
       const velocityX = this.runSpeed + this.knockbackX + this.dashSpeed;
@@ -246,6 +252,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     if (this.body.onFloor() && this.jumpTimer === 0) {
       this.jumpStart();
+    } else if (this.body.onWall() && this.isRunJumping && this.jumpTimer === 0) {
+      this.wallJump();
     } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
       this.jumpRise(delta);
     } else if (this.body.onCeiling()) {
@@ -279,8 +287,26 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.isRunJumping = false;
   }
 
-  wallJump(delta: number) {
-
+  wallJump() {
+    if (!this.isWallJumping) {
+      this.isWallJumping = true;
+      const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
+      this.wallJumpX = (this.body.blocked.left) ? 150 : -150;
+      this.runVelX = -this.runVelX;
+      this.flipX = !this.flipX;
+      this.jumpTimer = 1;
+  
+      this.scene.time.addEvent({
+        delay: 400,
+        callbackScope: this,
+        callback() {
+          this.isWallJumping = false;
+          this.wallJumpX = 0;
+        }
+      });
+      
+      this.body.setVelocityY(-150 + hiJumpVelocity);
+    }
   }
 
   pickupGet(pickup: Pickup): void {
