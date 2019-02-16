@@ -288,12 +288,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   wallJump() {
+
     if (!this.isWallJumping) {
       this.isWallJumping = true;
       const hiJumpVelocity = (this.inventory.hiJump) ? -100 : 0;
       this.wallJumpX = (this.body.blocked.left) ? 150 : -150;
       this.runVelX = -this.runVelX;
-      this.flipX = !this.flipX;
+      this.flipX = this.body.blocked.right;
       this.jumpTimer = 1;
   
       this.scene.time.addEvent({
