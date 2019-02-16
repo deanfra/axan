@@ -12,6 +12,8 @@ export default class Inventory {
   health: number = 100;
   maxHealth: number = 100;
   hiJump: boolean = false;
+  wallJump: boolean = false;
+  dash: boolean = false;
 
   constructor(scene) {
     this.scene = scene;
@@ -20,6 +22,12 @@ export default class Inventory {
   suitUpgrade(suitPickup: SuitPickup) {
     if(suitPickup.name === "HIJUMPBOOTS") {
       this.hiJump = true;
+      this.suit.push(suitPickup.name);
+    } else if(suitPickup.name === "WALLJUMPBOOTS") {
+      this.wallJump = true;
+      this.suit.push(suitPickup.name);
+    } else if(suitPickup.name === "DASHBOOTS") {
+      this.dash = true;
       this.suit.push(suitPickup.name);
     } else if(suitPickup.name === "HEALTHTANK") {
       this.maxHealth += 100;

@@ -191,6 +191,8 @@
             <key type="filename">pickups-frames/health-pickup2.png</key>
             <key type="filename">pickups-frames/health-pickup3.png</key>
             <key type="filename">pickups-frames/pickup-holder1.png</key>
+            <key type="filename">pickups-frames/walljump-pickup1.png</key>
+            <key type="filename">pickups-frames/walljump-pickup2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -200,6 +202,20 @@
                 <rect>4,4,8,8</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pickups-frames/dash-pickup1.png</key>
+            <key type="filename">pickups-frames/dash-pickup2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -216,6 +232,10 @@
             <filename>pickups-frames/globe1.png</filename>
             <filename>pickups-frames/globe2.png</filename>
             <filename>pickups-frames/pickup-holder1.png</filename>
+            <filename>pickups-frames/dash-pickup1.png</filename>
+            <filename>pickups-frames/dash-pickup2.png</filename>
+            <filename>pickups-frames/walljump-pickup1.png</filename>
+            <filename>pickups-frames/walljump-pickup2.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

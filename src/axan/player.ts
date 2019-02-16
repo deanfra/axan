@@ -209,7 +209,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     if (this.body.onCeiling() && this.body.onFloor()) { console.log('JAMMED') }
     if (this.body.onFloor() && this.isJumping()) { this.jumpEnd(); }
 
-    this.dashSpeed = (dash) ? 150 : 0;
+    this.dashSpeed = (this.scene.inventory.dash && dash) ? 150 : 0;
 
     if (shoot) {
       this.hasMoved = true;
@@ -252,7 +252,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     if (this.body.onFloor() && this.jumpTimer === 0) {
       this.jumpStart();
-    } else if (this.body.onWall() && this.isRunJumping && this.jumpTimer === 0) {
+    } else if (this.scene.inventory.wallJump && this.body.onWall() && this.isRunJumping && this.jumpTimer === 0) {
       this.wallJump();
     } else if (this.jumpTimer > 0 && this.jumpTimer < (301 + hiJumpTimer) && !this.body.onCeiling()) {
       this.jumpRise(delta);

@@ -17,8 +17,24 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
+	"filename": "dash-pickup1",
+	"frame": {"x":32,"y":0,"w":15,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
+	"sourceSize": {"w":15,"h":15}
+},
+{
+	"filename": "dash-pickup2",
+	"frame": {"x":47,"y":0,"w":15,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
+	"sourceSize": {"w":15,"h":15}
+},
+{
 	"filename": "globe-steel1",
-	"frame": {"x":32,"y":0,"w":16,"h":16},
+	"frame": {"x":62,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -26,7 +42,7 @@
 },
 {
 	"filename": "globe-steel2",
-	"frame": {"x":48,"y":0,"w":16,"h":16},
+	"frame": {"x":78,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -34,7 +50,7 @@
 },
 {
 	"filename": "globe1",
-	"frame": {"x":64,"y":0,"w":16,"h":16},
+	"frame": {"x":94,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -42,7 +58,7 @@
 },
 {
 	"filename": "globe2",
-	"frame": {"x":80,"y":0,"w":16,"h":16},
+	"frame": {"x":110,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -50,7 +66,7 @@
 },
 {
 	"filename": "health-pickup1",
-	"frame": {"x":96,"y":0,"w":16,"h":16},
+	"frame": {"x":126,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -58,7 +74,7 @@
 },
 {
 	"filename": "health-pickup2",
-	"frame": {"x":112,"y":0,"w":16,"h":16},
+	"frame": {"x":142,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -66,7 +82,7 @@
 },
 {
 	"filename": "health-pickup3",
-	"frame": {"x":128,"y":0,"w":16,"h":16},
+	"frame": {"x":158,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -74,7 +90,23 @@
 },
 {
 	"filename": "pickup-holder1",
-	"frame": {"x":144,"y":0,"w":16,"h":16},
+	"frame": {"x":174,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "walljump-pickup1",
+	"frame": {"x":190,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "walljump-pickup2",
+	"frame": {"x":206,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -85,8 +117,8 @@
 	"version": "1.0",
 	"image": "pickups-atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":160,"h":16},
+	"size": {"w":222,"h":16},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:841e9096038aa52cc3eb1257ed396de6:b0a117d5654c29b8a81ce9e6819da64f:9170cf48f73c7a404699de84ca44765d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a70dcea80d5c23b594d5022535778265:f81599f49beaaa3513d8f37445e3b0f4:9170cf48f73c7a404699de84ca44765d$"
 }
 }
