@@ -296,6 +296,11 @@ export default class MainScene extends Phaser.Scene {
       repeat: -1,
       frames: this.anims.generateFrameNames('enemies', { start: 0, end: 4, prefix: 'piq', zeroPad: 2 })
     }, {
+      key: 'gnid',
+      frameRate: 15,
+      repeat: -1,
+      frames: this.anims.generateFrameNames('enemies', { start: 1, end: 8, prefix: 'gnid' })
+    }, {
       key: 'jumper-idle',
       frameRate: 4,
       repeat: -1,

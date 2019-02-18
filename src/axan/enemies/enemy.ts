@@ -27,28 +27,6 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enable(this);
   }
 
-  firstUpdate(): void {
-  }
-
-  update(time: number, delta: number) {
-    if (this.isFirst) {
-      this.firstUpdate();
-    }
-
-    if (this.isDead || this.isFrozen) {
-      return;
-    }
-
-    this.flipX = this.body.velocity.x < 0;
-
-    if (this.body.velocity.x === 0) {
-      this.vel = -this.vel;
-      this.body.setVelocityX(this.vel);
-    }
-
-    this.falling = this.body.velocity.y > 50;
-  }
-
   hurt(amount: number = 0, multiplier = 2, flip = false): void {
     this.canDamage = false;
     this.health -= amount;

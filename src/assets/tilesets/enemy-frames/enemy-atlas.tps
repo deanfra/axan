@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.11.1</string>
+        <string>4.12.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -151,7 +151,7 @@
         <key>autoAliasEnabled</key>
         <false/>
         <key>trimSpriteNames</key>
-        <false/>
+        <true/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -181,6 +181,26 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">gnid1.png</key>
+            <key type="filename">gnid2.png</key>
+            <key type="filename">gnid3.png</key>
+            <key type="filename">gnid4.png</key>
+            <key type="filename">gnid5.png</key>
+            <key type="filename">gnid6.png</key>
+            <key type="filename">gnid7.png</key>
+            <key type="filename">gnid8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">jumper-idle01.png</key>
             <key type="filename">jumper-idle02.png</key>
             <key type="filename">jumper-idle03.png</key>
@@ -234,6 +254,14 @@
             <filename>vroll-attack02.gif</filename>
             <filename>vroll-idle01.gif</filename>
             <filename>vroll-idle02.png</filename>
+            <filename>gnid1.png</filename>
+            <filename>gnid2.png</filename>
+            <filename>gnid3.png</filename>
+            <filename>gnid4.png</filename>
+            <filename>gnid5.png</filename>
+            <filename>gnid6.png</filename>
+            <filename>gnid7.png</filename>
+            <filename>gnid8.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

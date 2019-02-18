@@ -21,4 +21,18 @@ export class Piq extends Enemy {
     this.body.setSize(20, 20);
   }
 
+  update(time: number, delta: number) {
+    if (this.isFirst) { this.firstUpdate(); }
+    if (this.isDead || this.isFrozen) { return; }
+
+    this.flipX = this.body.velocity.x < 0;
+
+    if (this.body.velocity.x === 0) {
+      this.vel = -this.vel;
+      this.body.setVelocityX(this.vel);
+    }
+
+    this.falling = this.body.velocity.y > 50;
+  }
+
 }
