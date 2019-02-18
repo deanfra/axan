@@ -4,6 +4,7 @@ import MainScene from 'axan/main.scene';
 export default class Projectile extends Phaser.GameObjects.Sprite {
   public effects: Array<string> = [];
   
+  depth:number = 3;
   gravity: boolean;
   key: string;
   size: number;
@@ -48,6 +49,7 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
 
   addBeamImpact() {
     this.impactBang = this.scene.add.sprite(this.x, this.y, 'effects');
+    this.impactBang.depth = 3;
     this.impactBang.play("beam-impact");
     this.impactBang.angle = this.angle;
   }

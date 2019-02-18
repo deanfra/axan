@@ -28,36 +28,41 @@ export default class Wall extends Tile {
     this.tileIndex = this.wallIndex();
     return super.placeTile();
   }
+  
+  placeBackTile(): void {
+    this.tileIndex = this.wallIndex();
+    return super.placeBackTile();
+  }
 
   wallIndex() {
     let mappedIndex = null;
     const NESWmappings: Array<{map: Array<string|null>, i:number}> = [
       // Better to check only NESW?
-      { map: ["None", "Wall", "Wall", "None"], i: TILES.TL_OUTER, },
-      { map: ["None", "None", "Wall", "Wall"], i: TILES.TR_OUTER, },
-      { map: ["Wall", "Wall", "None", "None"], i: TILES.BL_OUTER, },
-      { map: ["Wall", "None", "None", "Wall"], i: TILES.BR_OUTER, },
+      { map: ["None", "Wall|BackTile", "Wall|BackTile", "None"], i: TILES.TL_OUTER, },
+      { map: ["None", "None", "Wall|BackTile", "Wall|BackTile"], i: TILES.TR_OUTER, },
+      { map: ["Wall|BackTile", "Wall|BackTile", "None", "None"], i: TILES.BL_OUTER, },
+      { map: ["Wall|BackTile", "None", "None", "Wall|BackTile"], i: TILES.BR_OUTER, },
 
-      { map: ["None", "Wall", "None", "None"], i: TILES.LEDGE_L, },
-      { map: ["None", "Wall", "None|Wall", "Wall"], i: TILES.LEDGE_M, },
-      { map: ["None", "None", "None", "Wall"], i: TILES.LEDGE_R, },
-      { map: ["None", "None", "Wall", "None"], i: TILES.POLE_UP, },
-      { map: ["Wall", "None", "None", "None"], i: TILES.POLE_DOWN, },
-      { map: ["Wall", "None", "Wall", "None"], i: TILES.POLE_M, },
+      { map: ["None", "Wall|BackTile", "None", "None"], i: TILES.LEDGE_L, },
+      { map: ["None", "Wall|BackTile", "None|Wall|BackTile", "Wall|BackTile"], i: TILES.LEDGE_M, },
+      { map: ["None", "None", "None", "Wall|BackTile"], i: TILES.LEDGE_R, },
+      { map: ["None", "None", "Wall|BackTile", "None"], i: TILES.POLE_UP, },
+      { map: ["Wall|BackTile", "None", "None", "None"], i: TILES.POLE_DOWN, },
+      { map: ["Wall|BackTile", "None", "Wall|BackTile", "None"], i: TILES.POLE_M, },
       { map: ["None", "None", "None", "None"], i: -1, },
-      { map: ["Wall|", "Wall|", "Wall|", "Wall|"], i: TILES.ENCLOSED, },
+      { map: ["Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|"], i: TILES.ENCLOSED, },
     ];
       
     const fullMappings: Array<{map: Array<string|null>, i:number}> = [
       // Better to check all N NE E SE S SW W?
-      { map: ["None", "Wall|Door|None", "Wall|Door", "Wall|", "Wall|", "Wall|", "Wall|Door", "Wall|Door|None"], i: TILES.FLOOR, },
-      { map: ["Wall|", "Wall|", "Wall|Door", "Wall|Door|None", "None", "Wall|Door|None", "Wall|Door", "Wall|"], i: TILES.CEILING, },
-      { map: ["Wall|Door", "Wall|Door|None", "None", "Wall|Door|None", "Wall|Door", "Wall|", "Wall|", "Wall|"], i: TILES.LEFT, },
-      { map: ["Wall|Door", "Wall|", "Wall|", "Wall|", "Wall|Door", "Wall|Door|None", "None", "Wall|Door|None"], i: TILES.RIGHT, },
-      { map: ["Wall|", "Wall|", "Wall|Door", "None", "Wall|Door", "Wall|", "Wall|", "Wall|"], i: TILES.TL_INNER, },
-      { map: ["Wall|", "Wall|", "Wall|", "Wall|", "Wall|Door", "None", "Wall|Door", "Wall|"], i: TILES.TR_INNER, },
-      { map: ["Wall|Door", "None", "Wall|Door", "Wall|", "Wall|", "Wall|", "Wall|", "Wall|"], i: TILES.BL_INNER, },
-      { map: ["Wall|Door", "Wall|", "Wall|", "Wall|", "Wall|", "Wall|", "Wall|Door", "None"], i: TILES.BR_INNER, },
+      { map: ["None", "Wall|BackTile|Door|None", "Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "Wall|BackTile|Door|None"], i: TILES.FLOOR, },
+      { map: ["Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "Wall|BackTile|Door|None", "None", "Wall|BackTile|Door|None", "Wall|BackTile|Door", "Wall|BackTile|"], i: TILES.CEILING, },
+      { map: ["Wall|BackTile|Door", "Wall|BackTile|Door|None", "None", "Wall|BackTile|Door|None", "Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|"], i: TILES.LEFT, },
+      { map: ["Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "Wall|BackTile|Door|None", "None", "Wall|BackTile|Door|None"], i: TILES.RIGHT, },
+      { map: ["Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "None", "Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|"], i: TILES.TL_INNER, },
+      { map: ["Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "None", "Wall|BackTile|Door", "Wall|BackTile|"], i: TILES.TR_INNER, },
+      { map: ["Wall|BackTile|Door", "None", "Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|"], i: TILES.BL_INNER, },
+      { map: ["Wall|BackTile|Door", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|", "Wall|BackTile|Door", "None"], i: TILES.BR_INNER, },
 
       // { map: ["None", "Wall|Door", "Wall", "Wall|", "Wall", "Wall|Door", "None", "None|Wall|Door"], i: TILES.TL_OUTER, },
       // { map: ["None", "None|Wall|Door", "None", "Wall|None", "Wall", "Wall|Door", "Wall|", "Wall|Door"], i: TILES.TR_OUTER, },

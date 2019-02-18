@@ -17,14 +17,13 @@ export default class Level {
   public readonly scene: any;
   public readonly width: number;
   public readonly height: number;
-  public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public readonly rooms: Array<Room>;
 
   constructor(scene: MainScene) {
     this.dungeonInstance = new Dungeon({
       width: 200,
       height: 100,
-      randomSeed: undefined,
+      randomSeed: 1111,
       chanceToLinkRooms: 100,
       doorSize: 3,
       doorPadding: 2,
@@ -38,7 +37,6 @@ export default class Level {
     
     this.scene = scene;
     this.rooms = [];
-    this.groundLayer = scene.groundLayer;
   }
   
   instantiateRooms(): void {

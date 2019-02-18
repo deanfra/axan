@@ -3,6 +3,7 @@ import Door from "../tiles/door";
 import DoorGate from "../tiles/door-gate";
 import None from "../tiles/none";
 import Wall from "../tiles/wall";
+import BackTile from "../tiles/back-tile";
 import Tile from "../tiles/tile";
 import { Beam } from "../beams";
 import PickupFactory from "../pickups/pickup-factory";
@@ -24,10 +25,11 @@ import * as _ from "lodash";
 export class Room {
   public readonly room: RoomInstance;
   public readonly groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
-  public readonly platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  public readonly backLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private isSetup: boolean;
   private enemyGroup: Phaser.GameObjects.Group;
   public tiles: Array<Array<Tile>>;
+  public backTiles: Array<Array<Tile>>;
   public type: string = "default";
   private doorLookup: {[key: number]: Array<Door>} = {};
   private doorGateLookup: {[key: number]: DoorGate} = {};
@@ -57,7 +59,7 @@ export class Room {
 
     this.scene = scene;
     this.groundLayer = scene.groundLayer;
-    this.platformLayer = scene.platformLayer;
+    this.backLayer = scene.backLayer;
     this.enemyGroup = scene.enemyGroup;
   }
 
@@ -69,6 +71,10 @@ export class Room {
       this.instantiatePlatforms();
       this.clearDoorways();
       this.placeTiles();
+
+      this.instantiateBack();
+      this.placeBackTiles();
+
       const collisionArray = _.range(22);
       this.groundLayer.setCollision(collisionArray, true);
       this.addEnemies();
@@ -112,6 +118,14 @@ export class Room {
     })
   }
 
+  placeBackTiles(): void {
+    this.backTiles.forEach((tileY: any) => {
+      tileY.forEach((tileX: any) => {
+        tileX.placeBackTile();
+      })
+    })
+  }
+
   addEnemies(): void {
     const x = _.sample(_.range(this.room.x + 1, this.room.x+this.room.width-1));
     const y = _.sample(_.range(this.room.y + 1, this.room.y+this.room.height-1));
@@ -146,6 +160,7 @@ export class Room {
       this.scene.physics.world.enable(randPickup, Phaser.Physics.Arcade.STATIC_BODY);
       
       const pickupHolder = this.scene.add.sprite(worldX, worldY+16, "pickups");
+      pickupHolder.depth = 3;
       this.scene.physics.world.enable(pickupHolder, Phaser.Physics.Arcade.STATIC_BODY);
       this.scene.physics.add.collider(this.scene.player, pickupHolder);
       pickupHolder.play("pickup-holder");
@@ -162,6 +177,24 @@ export class Room {
         const cellularMapTile = cellularMap.grid[y][x];
         if (cellularMapTile) {
           this.tiles[y][x] = new Wall(x, y, this);
+        }
+      }
+    }
+  }
+
+  instantiateBack() {
+    const { width: roomWidth, height: roomHeight } = this.room;
+    const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.1 });
+    this.backTiles = [[]];
+
+    for (let y = 0; y < roomHeight; y++) {
+      this.backTiles.push([]);
+      for (let x = 0; x < roomWidth; x++) {
+        const cellularMapTile = cellularMap.grid[y][x];
+        if (cellularMapTile) {
+          this.backTiles[y][x] = new BackTile(x, y, this);
+        } else {
+          this.backTiles[y][x] = new None(x, y, this);
         }
       }
     }
@@ -206,6 +239,13 @@ export class Room {
       return null;
     }
     return this.tiles[y][x];
+  }
+
+  backTileAt(x: number, y: number): Tile | null {
+    if (!this.backTiles[y] || y < 0 || y >= this.room.height || x < 0 || x >= this.room.width) {
+      return null;
+    }
+    return this.backTiles[y][x];
   }
 
   movePlayerIntoRoom(previousRoom) {

@@ -20,9 +20,10 @@ export default class MainScene extends Phaser.Scene {
 
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private groundTileset: Phaser.Tilemaps.Tileset;
+  public backLayer: Phaser.Tilemaps.DynamicTilemapLayer;
+  private backTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private outOfBoundsTileset: Phaser.Tilemaps.Tileset;
-  public platformLayer: Phaser.Tilemaps.DynamicTilemapLayer;
 
   public backgroundGroup: Phaser.GameObjects.Group;
   public doorGateGroup: Phaser.GameObjects.Group;
@@ -41,9 +42,9 @@ export default class MainScene extends Phaser.Scene {
   public hud: HUD;
 
   private levelName: string = RandomPlanetName();
-  private levelPrefix: string = "suophus";
+  // private levelPrefix: string = "suophus";
   // private levelPrefix: string = "lahiri";
-  // private levelPrefix: string = "creotur";
+  private levelPrefix: string = "creotur";
   
   public inventoryText: Phaser.GameObjects.BitmapText;
   public healthText: Phaser.GameObjects.BitmapText;
@@ -62,6 +63,7 @@ export default class MainScene extends Phaser.Scene {
     this.level = new Level(this);
     this.inventory = new Inventory(this);
     this.makeTiles();
+    this.makeBackTiles();
     this.setupRoomVisibility();
     this.setupBackground();
     this.setupEnemyGroup();
@@ -94,9 +96,22 @@ export default class MainScene extends Phaser.Scene {
 
     this.groundTileset = this.map.addTilesetImage(this.levelPrefix+"-ground", this.levelPrefix+"-ground", 16, 16);
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
+    this.groundLayer.depth = 2;
     this.outOfBoundsTileset = this.map.addTilesetImage(this.levelPrefix+"-out-of-bounds", this.levelPrefix+"-out-of-bounds", 16, 16);
     this.outOfBoundsLayer = this.map.createBlankDynamicLayer("outOfBoundsLayer", this.outOfBoundsTileset);
-    this.platformLayer = this.map.createBlankDynamicLayer("platformLayer", this.groundTileset);
+  }
+
+  makeBackTiles() {
+    const backMap = this.make.tilemap({
+      tileWidth: 16,
+      tileHeight: 16,
+      width: this.level.dungeonInstance.width,
+      height: this.level.dungeonInstance.height
+    });
+
+    this.backTileset = backMap.addTilesetImage("creotur-back", "creotur-back", 16, 16);
+    this.backLayer = backMap.createBlankDynamicLayer("backLayer", this.backTileset);
+    this.backLayer.depth = 1;
   }
 
   setupRoomVisibility() {

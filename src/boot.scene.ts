@@ -6,6 +6,7 @@ import * as creoturBgMid from 'assets/tilesets/creotur-bg-mid.png';
 import * as creoturBgBack from 'assets/tilesets/creotur-bg-back.png';
 import * as creoturOutOfBounds from 'assets/tilesets/creotur-out-of-bounds.png';
 import * as creoturGroundTiles from 'assets/tilesets/creotur-ground-tiles.png';
+import * as creoturBackTiles from 'assets/tilesets/creotur-back-tiles.png';
 
 import * as lahiriBgFront from 'assets/tilesets/lahiri-bg-front.png';
 import * as lahiriBgMid from 'assets/tilesets/lahiri-bg-mid.png';
@@ -65,6 +66,7 @@ export default class BootScene extends Phaser.Scene {
       .atlas('pickups', pickupsSpriteSheet, pickupsAtlas)
       .bitmapFont('mario-font', marioFontPng, marioFont)
       .spritesheet("creotur-ground", creoturGroundTiles, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet("creotur-back", creoturBackTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet("lahiri-ground", lahiriGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet("suophus-ground", suophusGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })

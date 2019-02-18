@@ -14,6 +14,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   isFrozen = false;
   falling = false;
   killAt: number = 0;
+  depth: number = 3;
   isDead = false;
   canDamage = true;
   animWalk: string;
@@ -92,6 +93,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     if (this.isFrozen) { return }
 
     this.frozenMask = this.scene.add.sprite(this.x-4, this.y-4, 'beams', 1);
+    this.frozenMask.depth = 3;
     this.scene.physics.world.enable(this.frozenMask, Phaser.Physics.Arcade.STATIC_BODY);
     this.scene.physics.add.collider(this.scene.player, this.frozenMask);
     this.frozenMask.body.width = this.body.width+2;
@@ -106,6 +108,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   addDeathBang() {
     this.deathBang = this.scene.add.sprite(this.x, this.y, 'effects');
+    this.deathBang.depth = 3;
     this.deathBang.play("enemy-death")
   }
 
@@ -135,6 +138,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         // extract to pickup class
         const healthPickup = scene.add.sprite(this.x, this.y, "misc-pickups");
         healthPickup.play("health-pickup");
+        healthPickup.depth = 3;
         scene.physics.world.enable(healthPickup, Phaser.Physics.Arcade.STATIC_BODY);
         scene.physics.add.overlap(healthPickup, scene.player, () => {
           scene.inventory.heal(20);
