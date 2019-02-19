@@ -29,12 +29,6 @@ export default class Tile {
     this.room.groundLayer.putTileAt(this.tileIndex, worldX, worldY);
   }
 
-  placeBackTile(): void {
-    const worldX = this.x + this.room.x;
-    const worldY = this.y + this.room.y;
-    this.room.backLayer.putTileAt(this.tileIndex, worldX, worldY);
-  }
-
   getNeighbours(): { [dir: string]: Tile | null } {
     return {
       n: this.room.tileAt(this.x, this.y - 1),

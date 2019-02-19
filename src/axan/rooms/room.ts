@@ -119,8 +119,8 @@ export class Room {
   }
 
   placeBackTiles(): void {
-    this.backTiles.forEach((tileY: any) => {
-      tileY.forEach((tileX: any) => {
+    this.backTiles.forEach((tileY: Array<BackTile|None>) => {
+      tileY.forEach((tileX: BackTile|None) => {
         tileX.placeBackTile();
       })
     })

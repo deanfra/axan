@@ -28,11 +28,6 @@ export default class Wall extends Tile {
     this.tileIndex = this.wallIndex();
     return super.placeTile();
   }
-  
-  placeBackTile(): void {
-    this.tileIndex = this.wallIndex();
-    return super.placeBackTile();
-  }
 
   wallIndex() {
     let mappedIndex = null;

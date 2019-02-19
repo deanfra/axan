@@ -3,7 +3,15 @@ import { Room } from "../rooms/";
 
 export default class None extends Tile {
   placeTile(): void {
+    // TODO: noneIndex() for back tiles
+    //       to determine inner corners
     this.tileIndex = -1;
     return super.placeTile();    
+  }
+
+  placeBackTile(): void {
+    const worldX = this.x + this.room.x;
+    const worldY = this.y + this.room.y;
+    this.room.backLayer.putTileAt(this.tileIndex, worldX, worldY);
   }
 }
