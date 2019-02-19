@@ -47,6 +47,8 @@ export class Jumper extends Enemy {
   }
 
   firstUpdate(): void {
+    this.body.setSize(35, 24);
+    this.body.setOffset(0, 0); // Bugs without it
     this.anims.play(this.animIdle);
     this.isFirst = false;
     this.jumpTimer(this.scene);
