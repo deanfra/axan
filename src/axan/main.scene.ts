@@ -42,9 +42,7 @@ export default class MainScene extends Phaser.Scene {
   public hud: HUD;
 
   private levelName: string = RandomPlanetName();
-  // private levelPrefix: string = "suophus";
-  // private levelPrefix: string = "lahiri";
-  private levelPrefix: string = "creotur";
+  private levelPrefix: string = _.sample(["lahiri", "suophus", "creotur"]);
   
   public inventoryText: Phaser.GameObjects.BitmapText;
   public healthText: Phaser.GameObjects.BitmapText;
@@ -109,7 +107,7 @@ export default class MainScene extends Phaser.Scene {
       height: this.level.dungeonInstance.height
     });
 
-    this.backTileset = backMap.addTilesetImage("creotur-back", "creotur-back", 16, 16);
+    this.backTileset = backMap.addTilesetImage(this.levelPrefix+"-back", this.levelPrefix+"-back", 16, 16);
     this.backLayer = backMap.createBlankDynamicLayer("backLayer", this.backTileset);
     this.backLayer.depth = 1;
   }

@@ -13,12 +13,14 @@ import * as lahiriBgMid from 'assets/tilesets/lahiri-bg-mid.png';
 import * as lahiriBgBack from 'assets/tilesets/lahiri-bg-back.png';
 import * as lahiriGroundTiles from 'assets/tilesets/lahiri-ground-tiles.png';
 import * as lahiriOutOfBounds from 'assets/tilesets/lahiri-out-of-bounds.png';
+import * as lahiriBackTiles from 'assets/tilesets/lahiri-back-tiles.png';
 
 import * as suophusBgFront from 'assets/tilesets/suophus-bg-front.png';
 import * as suophusBgMid from 'assets/tilesets/suophus-bg-mid.png';
 import * as suophusBgBack from 'assets/tilesets/suophus-bg-back.png';
 import * as suophusGroundTiles from 'assets/tilesets/suophus-ground-tiles.png';
 import * as suophusOutOfBounds from 'assets/tilesets/suophus-out-of-bounds.png';
+import * as suophusBackTiles from 'assets/tilesets/suophus-back-tiles.png';
 
 import * as playerSpriteSheet from 'assets/tilesets/player-atlas.png';
 import * as playerSpriteAtlas from 'assets/tilesets/player-atlas.json';
@@ -65,10 +67,19 @@ export default class BootScene extends Phaser.Scene {
       .atlas('effects', effectsSpriteSheet, effectsAtlas)
       .atlas('pickups', pickupsSpriteSheet, pickupsAtlas)
       .bitmapFont('mario-font', marioFontPng, marioFont)
+
+      // Creotur
       .spritesheet("creotur-ground", creoturGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet("creotur-back", creoturBackTiles, { frameWidth: 16, frameHeight: 16 })
+
+      // Lahiri
       .spritesheet("lahiri-ground", lahiriGroundTiles, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet("lahiri-back", lahiriBackTiles, { frameWidth: 16, frameHeight: 16 })
+
+      // Suophus
       .spritesheet("suophus-ground", suophusGroundTiles, { frameWidth: 16, frameHeight: 16 })
+      .spritesheet("suophus-back", suophusBackTiles, { frameWidth: 16, frameHeight: 16 })
+
       .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })
       .spritesheet('doors-horiz', doorsHorizTiles, { frameWidth: 48, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
