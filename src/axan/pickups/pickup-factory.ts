@@ -8,7 +8,7 @@ const suitLib: Array<string> = ["HIJUMPBOOTS", "DASHBOOTS", "WALLJUMPBOOTS", "HE
 
 export default class PickupFactory {
 
-  static randPickup(scene, worldX: number, worldY: number): Pickup | null {
+  static createRandomPickup(scene, worldX: number, worldY: number): Pickup | null {
     // Difference will filter out items in inventory
     const inventoryItems = [...scene.inventory.beams, ...scene.inventory.suit];
     const pickupArray = _.difference(beamLib.concat(suitLib), inventoryItems);
@@ -36,10 +36,27 @@ export default class PickupFactory {
       pickupInstance.name = randPickup;
       pickupInstance.play(pickupFrame);
 
+      this.enablePickupInWorld(pickupInstance, scene);
+      this.placePickupHolder(scene, worldX, worldY);
+
       return pickupInstance;
     } else {
       return null;
     }
+  }
+
+  static placePickupHolder(scene, x: number, y: number) {
+    const pickupHolder = scene.add.sprite(x, y + 16, "pickups");
+    pickupHolder.depth = 3;
+
+    scene.physics.world.enable(pickupHolder, Phaser.Physics.Arcade.STATIC_BODY);
+    scene.physics.add.collider(scene.player, pickupHolder);
+    pickupHolder.play("pickup-holder");
+  }
+
+  static enablePickupInWorld(pickup, scene) {
+    scene.pickupGroup.add(pickup, true);
+    scene.physics.world.enable(pickup, Phaser.Physics.Arcade.STATIC_BODY);
   }
 }
 

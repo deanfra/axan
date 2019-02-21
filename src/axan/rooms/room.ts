@@ -5,10 +5,7 @@ import None from "../tiles/none";
 import Wall from "../tiles/wall";
 import BackTile from "../tiles/back-tile";
 import Tile from "../tiles/tile";
-import { Beam } from "../beams";
 import PickupFactory from "../pickups/pickup-factory";
-import BeamPickup from "../pickups/beam-pickup";
-import Pickup from "../pickups/pickup";
 
 import { Jumper } from "../enemies/jumper";
 import { Piq } from "../enemies/piq";
@@ -69,7 +66,6 @@ export class Room {
       // Group doors up
       this.instantiateTiles();
       this.instantiatePlatforms();
-      this.clearDoorways();
       this.placeTiles();
 
       this.instantiateBack();
@@ -111,8 +107,8 @@ export class Room {
   }
 
   placeTiles(): void {
-    this.tiles.forEach((tileY: any) => {
-      tileY.forEach((tileX: any) => {
+    this.tiles.forEach((tileY: Array<Tile>) => {
+      tileY.forEach((tileX: Tile) => {
         tileX.placeTile();
       })
     })
@@ -149,28 +145,15 @@ export class Room {
     const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.constructor.name === "None")) || {};
     const randomX = randNoneTile.x + this.room.x;
     const randomY = this.room.height + this.room.y;
-
     const worldX = this.scene.map.tileToWorldX(randomX) + 8;
     const worldY = this.scene.map.tileToWorldY(randomY) - 32 - 8;
 
-    const randPickup: Pickup | null = PickupFactory.randPickup(this.scene, worldX, worldY);
-
-    if (randPickup) {
-      this.scene.pickupGroup.add(randPickup, true);
-      this.scene.physics.world.enable(randPickup, Phaser.Physics.Arcade.STATIC_BODY);
-      
-      const pickupHolder = this.scene.add.sprite(worldX, worldY+16, "pickups");
-      pickupHolder.depth = 3;
-      this.scene.physics.world.enable(pickupHolder, Phaser.Physics.Arcade.STATIC_BODY);
-      this.scene.physics.add.collider(this.scene.player, pickupHolder);
-      pickupHolder.play("pickup-holder");
-
-    }
+    PickupFactory.createRandomPickup(this.scene, worldX, worldY);
   }
 
   instantiatePlatforms() {
     const { width: roomWidth, height: roomHeight } = this.room;
-    const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.1 });
+    const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.12 });
 
     for (let y = 1; y < (roomHeight-1); y++) {
       for (let x = 1; x < (roomWidth-1); x++) {
@@ -180,6 +163,7 @@ export class Room {
         }
       }
     }
+    this.clearDoorways();
   }
 
   instantiateBack() {
@@ -204,37 +188,12 @@ export class Room {
     // loop through doors
     _.forEach(this.doorLookup, doors => {
       doors.forEach(door => {
-        const doorTile: any = this.tiles[door.y][door.x];
-
-        // what direction to head in
-        const { xInc, yInc } = doorTile.clearance;
-        let [x, y] = [xInc, yInc];
-
-        // walk in a direction and check for blocking walls
-        let clear = false;
-        while (!clear) {
-          const tileY = this.tiles[door.y+y] || [];
-          const nextTile = tileY[door.x+x];
-          
-          if (!nextTile) {
-            // if we hit the edge of the room, step back and place wall
-            const lastY = (door.y+y)-yInc;
-            const lastX = (door.x+x)-xInc;
-            this.tiles[lastY][lastX] = new Wall(lastX, lastY, this);
-            clear = true;
-          } else if (nextTile.constructor.name==="Wall") {
-            this.tiles[nextTile.y][nextTile.x] = new None(nextTile.x, nextTile.y, this);
-            x += xInc;
-            y += yInc;
-          } else {
-            clear = true;
-          }
-        }
+        door.clearDoorway(this);
       });
     });
   }
 
-  tileAt(x: number, y: number): Tile | null {
+  tileAt(x: number, y: number): Door | Wall | Tile | null {
     if (!this.tiles[y] || y < 0 || y >= this.room.height || x < 0 || x >= this.room.width) {
       return null;
     }
