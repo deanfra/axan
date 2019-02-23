@@ -60,6 +60,7 @@ export default class MainScene extends Phaser.Scene {
     console.log("Welcome to " + this.levelName);
     this.level = new Level(this);
     this.inventory = new Inventory(this);
+
     this.makeTiles();
     this.makeBackTiles();
     this.setupRoomVisibility();
@@ -123,9 +124,7 @@ export default class MainScene extends Phaser.Scene {
     const { centerX, bottom } = this.level.startRoom.room;
     const playerX = this.map.tileToWorldX(centerX);
     const playerY = this.map.tileToWorldY(bottom-1);
-
-    // this.player = new Player(this, 130, 300, 'player');
-    this.player = new Player(this, playerX, playerY, 'player');
+    this.player = new Player(this, playerX, playerY);
     
     // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
@@ -157,33 +156,37 @@ export default class MainScene extends Phaser.Scene {
   }
   
   setupDoorGateGroup() {
+    [
+      {
+        key: 'door-open',
+        repeat: 0,
+        frameRate: 20,
+        frames: this.anims.generateFrameNames('door-gates', { start: 1, end: 3, prefix: 'door-open' })
+      }, {
+        key: 'door-close',
+        repeat: 0,
+        frameRate: 20,
+        frames: 
+          this.anims.generateFrameNames('door-gates', { start: 1, end: 3, prefix: 'door-open' }).reverse()
+            .concat(this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-active' }))
+            .concat(this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-active' }))
+            .concat(this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-active' }))
+            .concat(this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-active' }))
+            .concat(this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-closed' }))
+      }, {
+        key: 'door-closed',
+        repeat: -1,
+        frames: this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-closed' })
+      }, {
+        key: 'door-active',
+        repeat: -1,
+        frames: this.anims.generateFrameNames('door-gates', { start: 1, end: 1, prefix: 'door-active' })
+      }
+    ].forEach(anim => this.anims.create(anim));
+
     this.doorGateGroup = this.add.group();
     // enemy / door gate hit detection
     this.physics.add.collider(this.enemyGroup, this.doorGateGroup);
-
-    [
-      {
-        key: 'idle-vert',
-        repeat: -1,
-        defaultTextureKey: 'doors-vert',
-        frames: this.anims.generateFrameNames('doors-vert', { start: 1, end: 1 })
-      }, {
-        key: 'idle-vert-blank',
-        repeat: -1,
-        defaultTextureKey: 'doors-vert',
-        frames: this.anims.generateFrameNames('doors-vert', { start: 0, end: 0 })
-      }, {
-        key: 'idle-horiz',
-        repeat: -1,
-        defaultTextureKey: 'doors-horiz',
-        frames: this.anims.generateFrameNames('doors-horiz', { start: 1, end: 1 })
-      }, {
-        key: 'idle-horiz-blank',
-        repeat: -1,
-        defaultTextureKey: 'doors-horiz',
-        frames: this.anims.generateFrameNames('doors-horiz', { start: 0, end: 0 })
-      }
-    ].forEach(anim => this.anims.create(anim));
   }
 
   doorShot = (projectile: Projectile, doorGate: any) => {

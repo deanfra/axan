@@ -58,8 +58,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   private canHurt = true;
 
 
-  constructor(scene, x, y, key) {
-    super(scene, x, y, key);
+  constructor(scene, x, y) {
+    super(scene, x, y, "player");
     this.setOrigin(0.5, .8);
     this.scene.physics.world.enable(this);
     this.inventory = scene.inventory;

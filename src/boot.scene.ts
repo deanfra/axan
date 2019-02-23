@@ -1,6 +1,3 @@
-import * as doorsTiles from 'assets/tilesets/doors.png';
-import * as doorsHorizTiles from 'assets/tilesets/doors-horiz.png';
-
 import * as creoturBgFront from 'assets/tilesets/creotur-bg-front.png';
 import * as creoturBgMid from 'assets/tilesets/creotur-bg-mid.png';
 import * as creoturBgBack from 'assets/tilesets/creotur-bg-back.png';
@@ -32,6 +29,8 @@ import * as effectsAtlas from 'assets/tilesets/effects-atlas.json';
 import * as effectsSpriteSheet from 'assets/tilesets/effects-atlas.png';
 import * as pickupsAtlas from 'assets/tilesets/pickups-atlas.json';
 import * as pickupsSpriteSheet from 'assets/tilesets/pickups-atlas.png';
+import * as doorsAtlas from 'assets/tilesets/doors-atlas.json';
+import * as doorsSpriteSheet from 'assets/tilesets/doors-atlas.png';
 
 import * as beams from 'assets/tilesets/beams.png';
 import * as beamPickups from 'assets/tilesets/beam-pickups.png';
@@ -66,6 +65,8 @@ export default class BootScene extends Phaser.Scene {
       .atlas('projectiles', projectileSpriteSheet, projectileAtlas)
       .atlas('effects', effectsSpriteSheet, effectsAtlas)
       .atlas('pickups', pickupsSpriteSheet, pickupsAtlas)
+      .atlas('door-gates', doorsSpriteSheet, doorsAtlas)
+      
       .bitmapFont('mario-font', marioFontPng, marioFont)
 
       // Creotur
@@ -80,8 +81,6 @@ export default class BootScene extends Phaser.Scene {
       .spritesheet("suophus-ground", suophusGroundTiles, { frameWidth: 16, frameHeight: 16 })
       .spritesheet("suophus-back", suophusBackTiles, { frameWidth: 16, frameHeight: 16 })
 
-      .spritesheet('doors-vert', doorsTiles, { frameWidth: 16, frameHeight: 48 })
-      .spritesheet('doors-horiz', doorsHorizTiles, { frameWidth: 48, frameHeight: 16 })
       .spritesheet('beams', beams, { frameWidth: 16, frameHeight: 16 })
       .spritesheet('beam-pickups', beamPickups, { frameWidth: 16, frameHeight: 16 })
   }
