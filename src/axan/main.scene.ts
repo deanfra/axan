@@ -157,11 +157,6 @@ export default class MainScene extends Phaser.Scene {
     this.physics.add.collider(this.enemyGroup, this.doorGateGroup);
   }
 
-  doorShot = (projectile: Projectile, doorGate: any) => {
-    projectile.projectileCollide();
-    doorGate.open();
-  }
-
   setupPickupGroup() {
     this.pickupGroup = this.add.group();
   }
@@ -224,6 +219,11 @@ export default class MainScene extends Phaser.Scene {
       }
     }
     projectile.projectileCollide();
+  }
+
+  doorShot = (projectile: Projectile, doorGate: any) => {
+    projectile.projectileCollide();
+    doorGate.open();
   }
 
   cameraConstrainTo(room: Room): void {
