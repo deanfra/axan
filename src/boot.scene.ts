@@ -1,23 +1,23 @@
-import * as creoturBgFront from 'assets/tilesets/creotur-bg-front.png';
-import * as creoturBgMid from 'assets/tilesets/creotur-bg-mid.png';
-import * as creoturBgBack from 'assets/tilesets/creotur-bg-back.png';
-import * as creoturOutOfBounds from 'assets/tilesets/creotur-out-of-bounds.png';
-import * as creoturGroundTiles from 'assets/tilesets/creotur-ground-tiles.png';
-import * as creoturBackTiles from 'assets/tilesets/creotur-back-tiles.png';
+import * as creoturBgFront from 'assets/tilesets/worlds/creotur/creotur-bg-front.png';
+import * as creoturBgMid from 'assets/tilesets/worlds/creotur/creotur-bg-mid.png';
+import * as creoturBgBack from 'assets/tilesets/worlds/creotur/creotur-bg-back.png';
+import * as creoturOutOfBounds from 'assets/tilesets/worlds/creotur/creotur-out-of-bounds.png';
+import * as creoturGroundTiles from 'assets/tilesets/worlds/creotur/creotur-ground-tiles.png';
+import * as creoturBackTiles from 'assets/tilesets/worlds/creotur/creotur-back-tiles.png';
 
-import * as lahiriBgFront from 'assets/tilesets/lahiri-bg-front.png';
-import * as lahiriBgMid from 'assets/tilesets/lahiri-bg-mid.png';
-import * as lahiriBgBack from 'assets/tilesets/lahiri-bg-back.png';
-import * as lahiriGroundTiles from 'assets/tilesets/lahiri-ground-tiles.png';
-import * as lahiriOutOfBounds from 'assets/tilesets/lahiri-out-of-bounds.png';
-import * as lahiriBackTiles from 'assets/tilesets/lahiri-back-tiles.png';
+import * as lahiriBgFront from 'assets/tilesets/worlds/lahiri/lahiri-bg-front.png';
+import * as lahiriBgMid from 'assets/tilesets/worlds/lahiri/lahiri-bg-mid.png';
+import * as lahiriBgBack from 'assets/tilesets/worlds/lahiri/lahiri-bg-back.png';
+import * as lahiriGroundTiles from 'assets/tilesets/worlds/lahiri/lahiri-ground-tiles.png';
+import * as lahiriOutOfBounds from 'assets/tilesets/worlds/lahiri/lahiri-out-of-bounds.png';
+import * as lahiriBackTiles from 'assets/tilesets/worlds/lahiri/lahiri-back-tiles.png';
 
-import * as suophusBgFront from 'assets/tilesets/suophus-bg-front.png';
-import * as suophusBgMid from 'assets/tilesets/suophus-bg-mid.png';
-import * as suophusBgBack from 'assets/tilesets/suophus-bg-back.png';
-import * as suophusGroundTiles from 'assets/tilesets/suophus-ground-tiles.png';
-import * as suophusOutOfBounds from 'assets/tilesets/suophus-out-of-bounds.png';
-import * as suophusBackTiles from 'assets/tilesets/suophus-back-tiles.png';
+import * as suophusBgFront from 'assets/tilesets/worlds/suophus/suophus-bg-front.png';
+import * as suophusBgMid from 'assets/tilesets/worlds/suophus/suophus-bg-mid.png';
+import * as suophusBgBack from 'assets/tilesets/worlds/suophus/suophus-bg-back.png';
+import * as suophusGroundTiles from 'assets/tilesets/worlds/suophus/suophus-ground-tiles.png';
+import * as suophusOutOfBounds from 'assets/tilesets/worlds/suophus/suophus-out-of-bounds.png';
+import * as suophusBackTiles from 'assets/tilesets/worlds/suophus/suophus-back-tiles.png';
 
 import * as playerSpriteSheet from 'assets/tilesets/player-atlas.png';
 import * as playerSpriteAtlas from 'assets/tilesets/player-atlas.json';

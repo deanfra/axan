@@ -41,7 +41,7 @@ export default class MainScene extends Phaser.Scene {
   public inventory: Inventory;
   public hud: HUD;
 
-  private levelPrefix: string = _.sample(["lahiri", "suophus", "creotur"]);
+  public levelPrefix: string = _.sample(["lahiri", "suophus", "creotur"]);
   
   public nameText: Phaser.GameObjects.BitmapText;
 
@@ -92,6 +92,7 @@ export default class MainScene extends Phaser.Scene {
     this.groundTileset = this.map.addTilesetImage(this.levelPrefix+"-ground", this.levelPrefix+"-ground", 16, 16);
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
     this.groundLayer.depth = 2;
+    
     this.outOfBoundsTileset = this.map.addTilesetImage(this.levelPrefix+"-out-of-bounds", this.levelPrefix+"-out-of-bounds", 16, 16);
     this.outOfBoundsLayer = this.map.createBlankDynamicLayer("outOfBoundsLayer", this.outOfBoundsTileset);
   }
