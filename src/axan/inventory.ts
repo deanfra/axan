@@ -15,7 +15,7 @@ export default class Inventory {
   wallJump: boolean = false;
   dash: boolean = false;
 
-  constructor(scene) {
+  constructor(scene: MainScene) {
     this.scene = scene;
   }
 
@@ -53,7 +53,7 @@ export default class Inventory {
     } else {
       this.health = this.maxHealth;
     }
-    this.scene.healthText.setText(this.health.toString());
+    this.scene.hud.healthText.setText(this.health.toString());
   }
 
   hurt(amount: number = 0) {
@@ -63,6 +63,6 @@ export default class Inventory {
       this.health = 0;
     }
 
-    this.scene.healthText.setText(this.health.toString());
+    this.scene.hud.healthText.setText(this.health.toString());
   }
 }

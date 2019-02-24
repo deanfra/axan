@@ -5,7 +5,6 @@ import Level from "./level";
 import Inventory from "./inventory";
 import HUD from "./hud";
 import RoomVisibility from "./rooms/room-visibility";
-import RandomPlanetName from "../util/name-gen";
 import { Enemy } from "axan/enemies";
 import MakeAnimations from "./animations";
 import Projectile from "axan/beams/projectile";
@@ -42,11 +41,8 @@ export default class MainScene extends Phaser.Scene {
   public inventory: Inventory;
   public hud: HUD;
 
-  private levelName: string = RandomPlanetName();
   private levelPrefix: string = _.sample(["lahiri", "suophus", "creotur"]);
   
-  public inventoryText: Phaser.GameObjects.BitmapText;
-  public healthText: Phaser.GameObjects.BitmapText;
   public nameText: Phaser.GameObjects.BitmapText;
 
   constructor() {
@@ -58,7 +54,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    console.log("Welcome to " + this.levelName);
     this.level = new Level(this);
     this.inventory = new Inventory(this);
     
