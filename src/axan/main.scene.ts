@@ -10,16 +10,27 @@ import MakeAnimations from "./animations";
 import Projectile from "axan/beams/projectile";
 import * as _ from "lodash";
 
+import creoturTileMapping from "../assets/tilesets/worlds/creotur/creotur";
+import lahiriTileMapping from "../assets/tilesets/worlds/lahiri/lahiri";
+import suophusTileMapping from "../assets/tilesets/worlds/suophus/suophus";
+
 // The responsibility of Main should be to:
 // - Manage camera
 // - Manage player
 // - Preload assets
+
+const tileMaps = {
+  creotur: creoturTileMapping,
+  lahiri: lahiriTileMapping,
+  suophus: suophusTileMapping
+}
 
 export default class MainScene extends Phaser.Scene {
   public map: Phaser.Tilemaps.Tilemap;
 
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private groundTileset: Phaser.Tilemaps.Tileset;
+  public groundTileMapping: { [key: string] : Array<number> };
   public backLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private backTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
@@ -90,6 +101,7 @@ export default class MainScene extends Phaser.Scene {
     });
 
     this.groundTileset = this.map.addTilesetImage(this.levelPrefix+"-ground", this.levelPrefix+"-ground", 16, 16);
+    this.groundTileMapping = tileMaps[this.levelPrefix];
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
     this.groundLayer.depth = 2;
     
