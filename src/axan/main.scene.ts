@@ -43,6 +43,7 @@ export default class MainScene extends Phaser.Scene {
   public killedEnemies: Phaser.GameObjects.Group;
   public pickupGroup: Phaser.GameObjects.Group;
   public projectileGroup: Phaser.GameObjects.Group;
+  public vegetationGroup: Phaser.GameObjects.Group;
   
   public player: Player;
   public level: Level;
@@ -70,19 +71,29 @@ export default class MainScene extends Phaser.Scene {
     
     MakeAnimations(this);
 
+    this.setupGroups();
     this.makeTiles();
     this.makeBackTiles();
     this.setupRoomVisibility();
     this.setupBackground();
-    this.setupEnemyGroup();
-    this.setupDoorGateGroup();
-    this.setupPickupGroup();
+    this.setupEnemyColliders();
+    this.setupDoorGateColliders();
     this.level.instantiateRooms();
     this.setupPlayer();
     this.level.startRoom.setup();
-    this.setupProjectileGroup();
+    this.setupProjectileColliders();
     this.setupCamera();
     this.hud = new HUD(this);
+  }
+
+  setupGroups() {
+    this.doorGateGroup = this.add.group();
+    this.vegetationGroup = this.add.group();
+    this.backgroundGroup = this.add.group();
+    this.pickupGroup = this.add.group();
+    this.projectileGroup = this.add.group();
+    this.enemyGroup = this.add.group();
+    this.killedEnemies = this.add.group();
   }
 
   update(time: number, delta: number): void {
@@ -146,7 +157,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   setupBackground() {
-    this.backgroundGroup = this.add.group();
     this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-front", 0.9, -1));
     this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-mid", 0.7, -2));
     this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-back", 0.5, -3));
@@ -164,23 +174,16 @@ export default class MainScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
   }
   
-  setupDoorGateGroup() {
+  setupDoorGateColliders() {
     const enemyHitDoor = enemy => {
       if (enemy.constructor.name === "GnidPatrol") {
         enemy.touchedDoor();
       }
     }
-    this.doorGateGroup = this.add.group();
     this.physics.add.collider(this.enemyGroup, this.doorGateGroup, enemyHitDoor);
   }
 
-  setupPickupGroup() {
-    this.pickupGroup = this.add.group();
-  }
-
-  setupProjectileGroup() {
-    this.projectileGroup = this.add.group();
-
+  setupProjectileColliders() {
     // world / projectiles hit detection
     this.physics.add.collider(
       this.projectileGroup,
@@ -196,10 +199,7 @@ export default class MainScene extends Phaser.Scene {
     this.physics.add.overlap(this.projectileGroup, this.doorGateGroup, this.doorShot, undefined, this);
   }
 
-  setupEnemyGroup() {
-    this.enemyGroup = this.add.group();
-    this.killedEnemies = this.add.group();
-
+  setupEnemyColliders() {
     // world / enemy hit detection
     this.physics.add.collider(this.enemyGroup, this.groundLayer);
     this.physics.add.collider(this.killedEnemies, this.groundLayer);
