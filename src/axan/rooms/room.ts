@@ -38,9 +38,7 @@ export class Room {
   public readonly width: number;
   public readonly height: number;
   public readonly left: number;
-  public readonly top: number;
   public readonly right: number;
-  public readonly bottom: number;
   private readonly scene: MainScene;
 
   constructor(roomInstance, scene) {
@@ -51,9 +49,7 @@ export class Room {
     this.width = roomInstance.width;
     this.height = roomInstance.height;
     this.left = roomInstance.left;
-    this.top = roomInstance.top;
     this.right = roomInstance.right;
-    this.bottom = roomInstance.bottom;
 
     this.scene = scene;
     this.groundLayer = scene.groundLayer;

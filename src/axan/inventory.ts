@@ -3,17 +3,17 @@ import SuitPickup from "./pickups/suit-pickup";
 import MainScene from "./main.scene";
 
 export default class Inventory {
-  scene: MainScene;
+  private scene: MainScene;
   
-  activeBeam: string = "LASER";
-  beams: string[] = ["LASER"];
-  suit: string[] = [];
+  public activeBeam: string = "LASER";
+  private beams: string[] = ["LASER"];
+  private suit: string[] = [];
   
-  health: number = 100;
-  maxHealth: number = 100;
-  hiJump: boolean = false;
-  wallJump: boolean = false;
-  dash: boolean = false;
+  public health: number = 100;
+  private maxHealth: number = 100;
+  public hiJump: boolean = false;
+  public wallJump: boolean = false;
+  public dash: boolean = false;
 
   constructor(scene: MainScene) {
     this.scene = scene;
@@ -53,7 +53,7 @@ export default class Inventory {
     } else {
       this.health = this.maxHealth;
     }
-    this.scene.hud.healthText.setText(this.health.toString());
+    this.scene.hud.setHealth(this.health.toString());
   }
 
   hurt(amount: number = 0) {
@@ -63,6 +63,6 @@ export default class Inventory {
       this.health = 0;
     }
 
-    this.scene.hud.healthText.setText(this.health.toString());
+    this.scene.hud.setHealth(this.health.toString());
   }
 }

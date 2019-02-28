@@ -1,27 +1,24 @@
 import MainScene from 'axan/main.scene';
 
 export class Enemy extends Phaser.GameObjects.Sprite {
-  scene: MainScene;
-  body: Phaser.Physics.Arcade.Body;
+  public scene: MainScene;
+  public body: Phaser.Physics.Arcade.Body;
 
   public health = 6;
-
-  baseVel: number;
-  vel: number;
-  baseHealth = 6;
-  damage = 0;
-  isFirst = true;
-  isFrozen = false;
-  falling = false;
-  killAt: number = 0;
-  depth: number = 3;
-  isDead = false;
-  canDamage = true;
-  animWalk: string;
-  animMad: string;
-  smoke: Phaser.GameObjects.Particles.ParticleEmitter;
-  frozenMask: Phaser.GameObjects.Sprite;
-  deathBang: Phaser.GameObjects.Sprite;
+  public baseVel: number;
+  public vel: number;
+  public baseHealth = 6;
+  public damage = 0;
+  public isFirst = true;
+  public isFrozen = false;
+  public falling = false;
+  public killAt: number = 0;
+  public depth: number = 3;
+  public isDead = false;
+  public canDamage = true;
+  public animWalk: string;
+  public frozenMask: Phaser.GameObjects.Sprite;
+  public deathBang: Phaser.GameObjects.Sprite;
 
   constructor(scene: MainScene, x: number, y: number, public dir: number, key: string) {
     super(scene, x, y, key);

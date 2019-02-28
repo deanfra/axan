@@ -26,4 +26,8 @@ export default class Inventory {
     this.nameText.setDepth(100);
     this.nameText.setScrollFactor(0);
   }
+
+  setHealth(text) {
+    this.healthText.setText(text);
+  }
 }
