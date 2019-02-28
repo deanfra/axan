@@ -165,9 +165,14 @@ export default class MainScene extends Phaser.Scene {
   }
   
   setupDoorGateGroup() {
+    const enemyHitDoor = (enemy: any) => {
+      if (enemy.constructor.name === "GnidPatrol") {
+        enemy.touchedDoor();
+      }
+    }
     this.doorGateGroup = this.add.group();
-    // enemy / door gate hit detection
-    this.physics.add.collider(this.enemyGroup, this.doorGateGroup);
+    this.physics.add.collider(this.enemyGroup, this.doorGateGroup, enemyHitDoor);
+
   }
 
   setupPickupGroup() {

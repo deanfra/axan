@@ -48,39 +48,35 @@ export class GnidPatrol extends Enemy {
     const wasOnSomething = this.wasOnFloor || this.wasOnCeiling || wasLeft || wasRight;
 
     if (left) {
-      console.log("left")
       if (this.body.onFloor()) {
         this.goDownRight();
       } else {
         this.goDownLeft();
       }
     } else if (right) {
-      console.log("right")
       if (this.body.onCeiling()) {
         this.goUpLeft();
       } else {
         this.goUpRight();
       }
-    } else if (!onSomething && this.wasOnDoor) {
-      this.wasOnDoor = false;
-      if (wasLeft) { this.goDown(); this.stopX(); }
-        else if (wasRight) { this.goUp(); this.stopX(); }
-        else if (this.wasOnFloor) { this.goRight(); this.stopY(); }
-        else if (this.wasOnCeiling) { this.goLeft(); this.stopY(); }
-    } else if (wasRight && !onSomething) {
+    } else if (this.body.onFloor()) {
       this.goDownRight();
-    } else if (wasLeft && !onSomething) {
+    } else if (this.body.onCeiling()) {
       this.goUpLeft();
     } else if (this.wasOnFloor && !onSomething) {
       this.goDownLeft();
     } else if (this.wasOnCeiling && !onSomething) {
       this.goUpRight();
-    } else if (this.body.onFloor()){
-      console.log("on floor")
+    } else if (wasRight && !onSomething) {
       this.goDownRight();
-    } else if (this.body.onCeiling()){
-      console.log("on ceiling")
+    } else if (wasLeft && !onSomething) {
       this.goUpLeft();
+    } else if (!onSomething && this.wasOnDoor) {
+      this.wasOnDoor = false;
+      if (wasLeft) { this.x -= 1; this.goDown(); this.stopX(); }
+        else if (wasRight) { this.x += 1; this.goUp(); this.stopX(); }
+        else if (this.wasOnFloor) { this.goRight(); this.stopY(); }
+        else if (this.wasOnCeiling) { this.goLeft(); this.stopY(); }
     }
 
     // Falling

@@ -10,6 +10,7 @@ import PickupFactory from "../pickups/pickup-factory";
 import { Jumper } from "../enemies/jumper";
 import { Piq } from "../enemies/piq";
 import { Gnid } from "../enemies/gnid";
+import { GnidPatrol } from "../enemies/gnid-patrol";
 import { Vroll } from "../enemies/vroll";
 import MainScene from "axan/main.scene";
 import * as Cellular from "cellular-dungeon";
@@ -127,7 +128,7 @@ export class Room {
     const y = _.sample(_.range(this.room.y + 1, this.room.y+this.room.height-1));
     const worldX = this.scene.map.tileToWorldX(x);
     const worldY = this.scene.map.tileToWorldY(y);
-    const EnemyClass = _.sample([Vroll, Piq, Jumper, Gnid]);
+    const EnemyClass = _.sample([Vroll, Piq, Jumper, Gnid, GnidPatrol]);
     this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, _.sample([1,2])), true);
   }
 
