@@ -30,7 +30,7 @@ export class TallRoom extends Room {
           platformWidth++;
         } else {
           // chance to extend tiles into platforms
-          if (this.tiles[y][x - 1].constructor.name === 'Wall' && platformWidth > 0 && platformWidth <= 4 && curPlatformY === y) {
+          if (this.tiles[y][x - 1].tileLabel === 'Wall' && platformWidth > 0 && platformWidth <= 4 && curPlatformY === y) {
             this.tiles[y][x] = new Wall(x, y, this);
             platformWidth++;
           }

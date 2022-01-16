@@ -5,6 +5,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   public body: Phaser.Physics.Arcade.Body;
 
   public health = 6;
+  public name: string;
   public baseVel: number;
   public vel: number;
   public baseHealth = 6;

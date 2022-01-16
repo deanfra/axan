@@ -9,6 +9,7 @@ export default class Door extends Tile {
   constructor(x: number, y: number, room: Room) {
     super(x, y, room)
     this.clearance = this.determineClearance();
+    this.tileLabel = "Door";
   }
 
   placeTile(): void {
@@ -43,7 +44,7 @@ export default class Door extends Tile {
         const lastX = (this.x + x) - xInc;
         room.tiles[lastY][lastX] = new Wall(lastX, lastY, room);
         clear = true;
-      } else if (nextTile.constructor.name === "Wall") {
+      } else if (nextTile.tileLabel === "Wall") {
         room.tiles[nextTile.y][nextTile.x] = new None(nextTile.x, nextTile.y, room);
         x += xInc;
         y += yInc;

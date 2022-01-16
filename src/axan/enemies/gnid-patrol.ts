@@ -15,7 +15,8 @@ export class GnidPatrol extends Enemy {
   wasBlocked: { [key:string]: boolean };
 
   constructor(scene, x, y, dir) {
-    super(scene, x, y, dir, 'enemies');
+    super(scene, x, y, dir, "enemies");
+    this.name = "GnidPatrol";
   }
 
   touchedDoor() {

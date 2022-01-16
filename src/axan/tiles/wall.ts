@@ -7,6 +7,7 @@ export default class Wall extends Tile {
   constructor(x, y, room) {
     super(x, y, room);
     this.mapping = room.scene.groundTileMapping;
+    this.tileLabel = "Wall";
   }
 
   placeTile(): void {

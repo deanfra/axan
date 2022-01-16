@@ -2,6 +2,11 @@ import Tile from "./tile";
 import { Room } from "../rooms/";
 
 export default class None extends Tile {
+  constructor(x, y, room) {
+    super(x, y, room);
+    this.tileLabel = "None";
+  }
+
   placeTile(): void {
     // TODO: noneIndex() for back tiles
     //       to determine inner corners

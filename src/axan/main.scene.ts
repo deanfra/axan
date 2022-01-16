@@ -176,7 +176,7 @@ export default class MainScene extends Phaser.Scene {
   
   setupDoorGateColliders() {
     const enemyHitDoor = enemy => {
-      if (enemy.constructor.name === "GnidPatrol") {
+      if (enemy.name === "GnidPatrol") {
         enemy.touchedDoor();
       }
     }

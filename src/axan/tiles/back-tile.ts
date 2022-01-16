@@ -25,6 +25,11 @@ const TILES = {
 }
  
 export default class BackTile extends Tile {
+  constructor(x, y, room) {
+    super(x, y, room);
+    this.tileLabel = "BackTile";
+  }
+
   placeBackTile(): void {
     const worldX = this.x + this.room.x;
     const worldY = this.y + this.room.y;

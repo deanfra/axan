@@ -15,6 +15,7 @@ export default class Tile {
   public readonly y: number;
   public tileIndex: number;
   private neighbours: { [dir: string]: Tile | null}
+  public tileLabel: string;
 
   constructor(x: number, y: number, room: Room) {
     // this.collides = type !== TileType.None;
@@ -45,14 +46,14 @@ export default class Tile {
   getNeighboursTypes(): Array<string> {
     const neighbours = this.getNeighbours();
 
-    const n = (neighbours.n) ? neighbours.n.constructor.name : "";
-    const s = (neighbours.s) ? neighbours.s.constructor.name : "";
-    const w = (neighbours.w) ? neighbours.w.constructor.name : "";
-    const e = (neighbours.e) ? neighbours.e.constructor.name : "";
-    const nw = (neighbours.nw) ? neighbours.nw.constructor.name : "";
-    const ne = (neighbours.ne) ? neighbours.ne.constructor.name : "";
-    const sw = (neighbours.sw) ? neighbours.sw.constructor.name : "";
-    const se = (neighbours.se) ? neighbours.se.constructor.name : "";
+    const n = neighbours.n ? neighbours.n.tileLabel : "";
+    const s = neighbours.s ? neighbours.s.tileLabel : "";
+    const w = neighbours.w ? neighbours.w.tileLabel : "";
+    const e = neighbours.e ? neighbours.e.tileLabel : "";
+    const nw = neighbours.nw ? neighbours.nw.tileLabel : "";
+    const ne = neighbours.ne ? neighbours.ne.tileLabel : "";
+    const sw = neighbours.sw ? neighbours.sw.tileLabel : "";
+    const se = neighbours.se ? neighbours.se.tileLabel : "";
 
     return [n, ne, e, se, s, sw, w, nw];
   }
@@ -60,10 +61,10 @@ export default class Tile {
   getNESWNeighboursTypes(): Array<string> {
     const neighbours = this.getNeighbours();
 
-    const n = (neighbours.n) ? neighbours.n.constructor.name : "";
-    const s = (neighbours.s) ? neighbours.s.constructor.name : "";
-    const w = (neighbours.w) ? neighbours.w.constructor.name : "";
-    const e = (neighbours.e) ? neighbours.e.constructor.name : "";
+    const n = neighbours.n ? neighbours.n.tileLabel : "";
+    const s = neighbours.s ? neighbours.s.tileLabel : "";
+    const w = neighbours.w ? neighbours.w.tileLabel : "";
+    const e = neighbours.e ? neighbours.e.tileLabel : "";
 
     return [n, e, s, w];
   }

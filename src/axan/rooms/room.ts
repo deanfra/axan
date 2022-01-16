@@ -139,7 +139,7 @@ export class Room {
   }
 
   addPickups() {
-    const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.constructor.name === "None")) || {};
+    const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.tileLabel === "None")) || {};
     const randomX = randNoneTile.x + this.room.x;
     const randomY = this.room.height + this.room.y;
     const worldX = this.scene.map.tileToWorldX(randomX) + 8;
