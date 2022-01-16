@@ -20,16 +20,19 @@ export default class Inventory {
   }
 
   suitUpgrade(suitPickup: SuitPickup) {
-    if(suitPickup.name === "HIJUMPBOOTS") {
+    if (suitPickup.name === 'HIJUMPBOOTS') {
       this.hiJump = true;
       this.suit.push(suitPickup.name);
-    } else if(suitPickup.name === "WALLJUMPBOOTS") {
+      this.scene.hud.addToInventoryText(suitPickup.name);
+    } else if (suitPickup.name === 'WALLJUMPBOOTS') {
       this.wallJump = true;
       this.suit.push(suitPickup.name);
-    } else if(suitPickup.name === "DASHBOOTS") {
+      this.scene.hud.addToInventoryText(suitPickup.name);
+    } else if (suitPickup.name === 'DASHBOOTS') {
       this.dash = true;
       this.suit.push(suitPickup.name);
-    } else if(suitPickup.name === "HEALTHTANK") {
+      this.scene.hud.addToInventoryText(suitPickup.name);
+    } else if (suitPickup.name === 'HEALTHTANK') {
       this.maxHealth += 100;
       this.heal(100);
     }
@@ -53,7 +56,7 @@ export default class Inventory {
     } else {
       this.health = this.maxHealth;
     }
-    this.scene.hud.setHealth(this.health.toString());
+    this.scene.hud.setHealthText(this.health.toString());
   }
 
   hurt(amount: number = 0) {
@@ -63,6 +66,6 @@ export default class Inventory {
       this.health = 0;
     }
 
-    this.scene.hud.setHealth(this.health.toString());
+    this.scene.hud.setHealthText(this.health.toString());
   }
 }
