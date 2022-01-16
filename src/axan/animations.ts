@@ -117,7 +117,8 @@ const projectiles = (scene: MainScene) => {
     },
     {
       key: 'beam-fire',
-      frames: scene.anims.generateFrameNames('projectiles', { start: 1, end: 1, prefix: "fire", zeroPad: 2 })
+      frameRate: 7,
+      frames: scene.anims.generateFrameNames('projectiles', { start: 1, end: 3, prefix: "fire", zeroPad: 2 })
     }, {
       key: 'beam-impact',
       frameRate: 20,

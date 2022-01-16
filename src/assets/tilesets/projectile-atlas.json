@@ -9,7 +9,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "ice01",
+	"filename": "fire02",
 	"frame": {"x":16,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -17,7 +17,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "photon01",
+	"filename": "fire03",
 	"frame": {"x":32,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -25,7 +25,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "pill01",
+	"filename": "ice01",
 	"frame": {"x":48,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -33,7 +33,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "pulse01",
+	"filename": "photon01",
 	"frame": {"x":64,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -41,8 +41,24 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "rang01",
+	"filename": "pill01",
 	"frame": {"x":80,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "pulse01",
+	"frame": {"x":96,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "rang01",
+	"frame": {"x":112,"y":0,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -51,10 +67,10 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "projectile-atlas",
+	"image": "projectiles",
 	"format": "RGBA8888",
-	"size": {"w":96,"h":16},
+	"size": {"w":128,"h":16},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:410b98ed8efd1f564c483acb63b8e1ab:d6f0c3066975fe76744efcaa46d8bdaf:6459d866c2b4ce5da2d202ec9dc9df23$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a45bbb0fc323f572c556c89967eb86a0:5ab6e15c14eb748de41d6f8c0c1ce89d:d36fb3e81e0cc51f7613a93ff4650ce1$"
 }
 }

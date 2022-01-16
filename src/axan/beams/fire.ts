@@ -1,6 +1,6 @@
 import { Beam, BeamProps } from "./beam";
 import MainScene from "axan/main.scene";
-import ProjectileConfig from "../../interfaces/projectile-config"
+import ProjectileConfig from "../../interfaces/projectile-config";
 
 export class Fire extends Beam implements BeamProps {
   static id = "FIRE";
@@ -20,7 +20,7 @@ export class Fire extends Beam implements BeamProps {
     gravity: false,
     key: "projectile",
     size: 10,
-    velocity: 400
+    velocity: 80,
   };
 
   scene: MainScene;
@@ -29,5 +29,4 @@ export class Fire extends Beam implements BeamProps {
     super(scene, x, y, key, frame);
     this.body.setSize(this.size, this.size).allowGravity = false;
   }
-
 }
