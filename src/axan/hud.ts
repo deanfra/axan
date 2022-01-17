@@ -9,10 +9,11 @@ const LINE_HEIGHT = 4.5;
 export default class Inventory {
   private scene: MainScene;
   private levelName: string = RandomPlanetName();
-  public beamText: Phaser.GameObjects.BitmapText;
   public healthText: Phaser.GameObjects.BitmapText;
   public nameText: Phaser.GameObjects.BitmapText;
   public inventoryTexts: string[];
+  public beamTexts: Phaser.GameObjects.BitmapText[];
+
   public screenLeft: number;
   public screenRight: number;
   public screenTop: number;
@@ -22,6 +23,7 @@ export default class Inventory {
     this.scene = scene;
     scene.hudGroup = scene.add.group();
     this.inventoryTexts = [];
+    this.beamTexts = [];
 
     this.screenLeft = window.innerWidth / 3 + 15;
     this.screenRight = (window.innerWidth / 3) * 2 - 25;
@@ -34,13 +36,18 @@ export default class Inventory {
     inventoryLabel.setScrollFactor(0);
     inventoryLabel.setAlpha(0.5);
 
-    this.healthText = scene.add.bitmapText(this.screenRight, this.screenBottom, FONT, scene.inventory.health.toString(), HUD_SIZE, ALIGN_RIGHT);
+    // Beam label text
+    const beamsLabel = scene.add.bitmapText(this.screenLeft, this.screenTop + LINE_HEIGHT * 10, FONT, "BEAMS", HUD_SIZE);
+    beamsLabel.setDepth(100);
+    beamsLabel.setScrollFactor(0);
+    beamsLabel.setAlpha(0.5);
+
+    this.addToBeamsText("LASER");
+    this.setCurrentBeam("LASER");
+
+    this.healthText = scene.add.bitmapText(this.screenRight, this.screenTop, FONT, scene.inventory.health.toString(), HUD_SIZE, ALIGN_RIGHT);
     this.healthText.setDepth(100);
     this.healthText.setScrollFactor(0);
-
-    this.beamText = scene.add.bitmapText(this.screenLeft, this.screenBottom, FONT, "LASER BEAM", HUD_SIZE);
-    this.beamText.setDepth(100);
-    this.beamText.setScrollFactor(0);
 
     // World label text
     const worldLabel = scene.add.bitmapText(this.screenLeft, this.screenTop, FONT, "WORLD", HUD_SIZE);
@@ -57,6 +64,17 @@ export default class Inventory {
     this.healthText.setText(text);
   }
 
+  addToBeamsText(item: string) {
+    const offset = this.beamTexts.length * LINE_HEIGHT;
+    const topPosition = this.screenTop + LINE_HEIGHT * 11 + offset;
+
+    // Beam text
+    const bitmapText = this.scene.add.bitmapText(this.screenLeft, topPosition, FONT, `${item} BEAM`, HUD_SIZE);
+    bitmapText.setDepth(100);
+    bitmapText.setScrollFactor(0);
+    this.beamTexts.push(bitmapText);
+  }
+
   addToInventoryText(item: string) {
     const offset = this.inventoryTexts.length * LINE_HEIGHT;
     const topPosition = this.screenTop + LINE_HEIGHT * 5 + offset;
@@ -66,5 +84,15 @@ export default class Inventory {
     bitmapText.setDepth(100);
     bitmapText.setScrollFactor(0);
     this.inventoryTexts.push(item);
+  }
+
+  setCurrentBeam(currentName: string) {
+    this.beamTexts.forEach((beam) => {
+      if (beam.text === `${currentName} BEAM`) {
+        beam.setTint(0xa5ff33);
+      } else {
+        beam.setTint(0xffffff);
+      }
+    });
   }
 }

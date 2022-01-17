@@ -351,7 +351,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.beam.destroy();
     this.beam = BeamFactory.createBeam(beamName, this.scene, this.x, this.y);
     this.scene.inventory.activeBeam = this.beam.label;
-    this.scene.hud.beamText.setText(this.beam.label + " BEAM");
     this.scene.add.existing(this.beam);
   }
 

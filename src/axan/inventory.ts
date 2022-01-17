@@ -41,13 +41,17 @@ export default class Inventory {
   addBeam(beam: BeamPickup) {
     if (this.beams.indexOf(beam.name) === -1) {
       this.beams.push(beam.name);
+      this.scene.hud.addToBeamsText(beam.name);
     }
+    this.scene.hud.setCurrentBeam(beam.name);
   }
 
   nextBeam() {
     const activeIndex = this.beams.indexOf(this.activeBeam);
-    const nextBeam = this.beams[activeIndex + 1];
-    return nextBeam ? nextBeam : this.beams[0];
+    const maybeNextBeam = this.beams[activeIndex + 1];
+    const nextBeam = maybeNextBeam || this.beams[0];
+    this.scene.hud.setCurrentBeam(nextBeam);
+    return nextBeam;
   }
 
   heal(amount: number = 0) {
