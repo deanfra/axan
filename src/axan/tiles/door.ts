@@ -4,10 +4,10 @@ import None from "../tiles/none";
 import { Room } from "../rooms/room";
 
 export default class Door extends Tile {
-  clearance?: { xInc?: number, yInc?: number, dir?: string };
+  clearance?: { xInc?: number; yInc?: number; dir?: string };
 
   constructor(x: number, y: number, room: Room) {
-    super(x, y, room)
+    super(x, y, room);
     this.clearance = this.determineClearance();
     this.tileLabel = "Door";
   }
@@ -18,11 +18,14 @@ export default class Door extends Tile {
   }
 
   // Calculate which way the door is facing
-  determineClearance?(): { xInc: number, yInc: number, dir: string } {
-    return (this.x === 0) ? { xInc: 1, yInc: 0, dir: "e" } :
-           (this.x === (this.room.width-1)) ? { xInc: -1, yInc: 0, dir: "w" } :
-           (this.y === 0) ? { xInc: 0, yInc: 1, dir: "s" } :
-           { xInc: 0, yInc: -1, dir: "n" }
+  determineClearance?(): { xInc: number; yInc: number; dir: string } {
+    return this.x === 0
+      ? { xInc: 1, yInc: 0, dir: "e" }
+      : this.x === this.room.width - 1
+      ? { xInc: -1, yInc: 0, dir: "w" }
+      : this.y === 0
+      ? { xInc: 0, yInc: 1, dir: "s" }
+      : { xInc: 0, yInc: -1, dir: "n" };
   }
 
   clearDoorway(room) {
@@ -40,8 +43,8 @@ export default class Door extends Tile {
 
       if (!nextTile) {
         // if we hit the edge of the room, step back and place wall
-        const lastY = (this.y + y) - yInc;
-        const lastX = (this.x + x) - xInc;
+        const lastY = this.y + y - yInc;
+        const lastX = this.x + x - xInc;
         room.tiles[lastY][lastX] = new Wall(lastX, lastY, room);
         clear = true;
       } else if (nextTile.tileLabel === "Wall") {

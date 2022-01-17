@@ -1,6 +1,6 @@
-import MainScene from 'axan/main.scene';
+import MainScene from "axan/main.scene";
 import Projectile from "./projectile";
-import ProjectileConfig from "../../interfaces/projectile-config"
+import ProjectileConfig from "../../interfaces/projectile-config";
 import Pickup from "../pickups/pickup";
 
 export interface BeamProps {
@@ -26,23 +26,23 @@ export class Beam extends Pickup implements BeamProps {
   body: Phaser.Physics.Arcade.Body;
   scene: MainScene;
   label: string;
-  
+
   projectileConfig: ProjectileConfig = {
     velocity: 600,
     size: 10,
     gravity: false,
-    key: '',
-    anim: ''
+    key: "",
+    anim: "",
   };
 
   shootTimer: number;
 
   // TODO: lots of shared code can go in this class
-  constructor(scene, x, y, key = 'beams', frame?) {
+  constructor(scene, x, y, key = "beams", frame?) {
     super(scene, x, y, key, frame);
     this.scene.physics.world.enable(this as Phaser.GameObjects.Sprite);
   }
-      
+
   shoot() {
     if (this.canShoot) {
       this.canShoot = false;
@@ -54,26 +54,27 @@ export class Beam extends Pickup implements BeamProps {
 
       const projectile = new Projectile(this.scene, this.x, this.y, this.projectileConfig);
 
-      if (up && player.isMoving) { // run - up
+      if (up && player.isMoving) {
+        // run - up
         projectile.angle = this.flipX ? -135 : -45;
-        projectile.body.setVelocityY(-velocity)
-        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
-      } else if (down && player.isMoving) { // run - down
+        projectile.body.setVelocityY(-velocity);
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity);
+      } else if (down && player.isMoving) {
+        // run - down
         if (player.isJumping) {
           projectile.angle = this.flipX ? 135 : 45;
-          projectile.body.setVelocityY(velocity)
+          projectile.body.setVelocityY(velocity);
         }
-        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
-        
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity);
       } else if (up) {
         projectile.angle = -90;
-        projectile.body.setVelocityY(-velocity)
+        projectile.body.setVelocityY(-velocity);
       } else if (down && !player.body.onFloor()) {
         projectile.angle = 90;
-        projectile.body.setVelocityY(velocity)
+        projectile.body.setVelocityY(velocity);
       } else {
         projectile.angle = this.flipX ? 180 : 0;
-        projectile.body.setVelocityX(this.flipX ? -velocity : velocity)
+        projectile.body.setVelocityX(this.flipX ? -velocity : velocity);
       }
 
       this.scene.time.addEvent({
@@ -84,19 +85,19 @@ export class Beam extends Pickup implements BeamProps {
           if (this.active) {
             this.canShoot = true;
           }
-        }
+        },
       });
 
       this.scene.tweens.add({
         targets: this,
         duration: 100,
-        ease: 'Sine.easeIn',
+        ease: "Sine.easeIn",
         yoyo: true,
         angle: this.flipX ? 70 : -70,
         callbackScope: this,
         onComplete() {
           this.setAngle(0);
-        }
+        },
       });
 
       this.shootTimer = 0;
@@ -110,7 +111,7 @@ export class Beam extends Pickup implements BeamProps {
           if (this.active && this.released) {
             this.canShoot = true;
           }
-        }
+        },
       });
     }
     return;
@@ -118,7 +119,7 @@ export class Beam extends Pickup implements BeamProps {
 
   projectileCollide = (projectile, scene) => {
     projectile.destroy();
-  }
+  };
 
   unShoot(...args: any[]): void {
     this.released = true;
@@ -159,5 +160,7 @@ export class Beam extends Pickup implements BeamProps {
     this.shootTimer += delta;
   }
 
-  preDestroy(): void { /* */ }
+  preDestroy(): void {
+    /* */
+  }
 }

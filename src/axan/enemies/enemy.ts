@@ -1,4 +1,4 @@
-import MainScene from 'axan/main.scene';
+import MainScene from "axan/main.scene";
 
 export class Enemy extends Phaser.GameObjects.Sprite {
   public scene: MainScene;
@@ -40,7 +40,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
       this.scene.tweens.add({
         targets: this,
         duration: 70,
-        scaleY: .9,
+        scaleY: 0.9,
         yoyo: true,
         onComplete: () => {
           if (!this.isFrozen) {
@@ -48,7 +48,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
           }
           this.setScale(1, 1);
           this.canDamage = true;
-        }
+        },
       });
     }
   }
@@ -58,7 +58,9 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   freeze(): void {
-    if (this.isFrozen || this.isDead) { return }
+    if (this.isFrozen || this.isDead) {
+      return;
+    }
 
     this.anims.stop();
     this.body.gravity.y = -600;
@@ -73,12 +75,16 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.time.addEvent({
       delay: 6000,
       callbackScope: this,
-      callback: () => { this.unfreeze(); }
+      callback: () => {
+        this.unfreeze();
+      },
     });
   }
 
   unfreeze(): void {
-    if (!this.isFrozen || this.isDead) { return }
+    if (!this.isFrozen || this.isDead) {
+      return;
+    }
 
     this.isFrozen = false;
     this.removeFrozenMask();
@@ -88,14 +94,16 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   setFrozenMask() {
-    if (this.isFrozen) { return }
+    if (this.isFrozen) {
+      return;
+    }
 
-    this.frozenMask = this.scene.add.sprite(this.x-4, this.y-4, 'beams', 1);
+    this.frozenMask = this.scene.add.sprite(this.x - 4, this.y - 4, "beams", 1);
     this.frozenMask.depth = 3;
     this.scene.physics.world.enable(this.frozenMask, Phaser.Physics.Arcade.STATIC_BODY);
     this.scene.physics.add.collider(this.scene.player, this.frozenMask);
-    this.frozenMask.body.width = this.body.width+2;
-    this.frozenMask.body.height = this.body.height+2;
+    this.frozenMask.body.width = this.body.width + 2;
+    this.frozenMask.body.height = this.body.height + 2;
   }
 
   removeFrozenMask() {
@@ -105,14 +113,14 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   addDeathBang() {
-    this.deathBang = this.scene.add.sprite(this.x, this.y, 'effects');
+    this.deathBang = this.scene.add.sprite(this.x, this.y, "effects");
     this.deathBang.depth = 3;
-    this.deathBang.play("enemy-death")
+    this.deathBang.play("enemy-death");
   }
 
   die() {
     this.removeFrozenMask();
-    
+
     const scene = this.scene;
     this.isDead = true;
     this.body.allowGravity = false;
@@ -150,13 +158,11 @@ export class Enemy extends Phaser.GameObjects.Sprite {
             if (healthPickup) {
               healthPickup.destroy();
             }
-          }
+          },
         });
 
         this.destroy();
-      }
+      },
     });
-
   }
-
 }

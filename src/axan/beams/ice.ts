@@ -1,6 +1,6 @@
 import { Beam, BeamProps } from "./beam";
 import MainScene from "axan/main.scene";
-import ProjectileConfig from "../../interfaces/projectile-config"
+import ProjectileConfig from "../../interfaces/projectile-config";
 
 export class Ice extends Beam implements BeamProps {
   static id = "ICE";
@@ -22,21 +22,21 @@ export class Ice extends Beam implements BeamProps {
     gravity: false,
     key: "projectile",
     size: 10,
-    velocity: 400
+    velocity: 400,
   };
 
   scene: MainScene;
 
   constructor(scene, x, y, key = "beams", frame = 1) {
     super(scene, x, y, key, frame);
-    this.iceEmitter = scene.add.particles('projectiles');
+    this.iceEmitter = scene.add.particles("projectiles");
     this.body.setSize(this.size, this.size).allowGravity = false;
   }
 
   shoot() {
     const projectile = super.shoot();
     if (projectile) {
-      projectile.effects.push('ice');
+      projectile.effects.push("ice");
       this.particleEffect(projectile);
     }
     return projectile;
@@ -44,17 +44,16 @@ export class Ice extends Beam implements BeamProps {
 
   particleEffect(projectile) {
     projectile.emitterManager = this.iceEmitter;
-    projectile.emitter = this.iceEmitter
-      .createEmitter({
-        frame: 'ice01',
-        follow: projectile,
-        lifespan: 400,
-        frequency: 30,
-        angle: { min: 80, max: 100 },
-        alpha: { start: 1, end: .5 },
-        scale: { start: 0.5, end: 0.1 },
-        speed: { min: 50, max: 100 },
-        quantity: { min: 1, max: 5 },
-      });
+    projectile.emitter = this.iceEmitter.createEmitter({
+      frame: "ice01",
+      follow: projectile,
+      lifespan: 400,
+      frequency: 30,
+      angle: { min: 80, max: 100 },
+      alpha: { start: 1, end: 0.5 },
+      scale: { start: 0.5, end: 0.1 },
+      speed: { min: 50, max: 100 },
+      quantity: { min: 1, max: 5 },
+    });
   }
 }

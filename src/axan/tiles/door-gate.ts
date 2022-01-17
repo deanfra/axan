@@ -7,7 +7,7 @@ export default class DoorGate extends Phaser.GameObjects.Sprite {
 
     this.depth = 10;
     this.isClosed = true;
-    this.angle = { n: -90, e:0, s: 90, w: 180 }[door.clearance.dir];
+    this.angle = { n: -90, e: 0, s: 90, w: 180 }[door.clearance.dir];
     scene.physics.world.enable(this, Phaser.Physics.Arcade.STATIC_BODY);
     this.play("door-closed");
     this.setOffset(door.clearance);
@@ -16,7 +16,6 @@ export default class DoorGate extends Phaser.GameObjects.Sprite {
   setOffset(clearance) {
     const _thisdoor = this as any;
     _thisdoor.setCrop(16, 0, 16, 48); // missing fn in TS def
-    
 
     if (clearance.dir === "s") {
       this.body.width = 48;
@@ -35,7 +34,6 @@ export default class DoorGate extends Phaser.GameObjects.Sprite {
       this.body.setOffset(-8, 0);
       this.x -= 8;
     }
-
   }
 
   open() {
@@ -47,7 +45,7 @@ export default class DoorGate extends Phaser.GameObjects.Sprite {
       callbackScope: this,
       callback() {
         this.body.enable = false;
-      }
+      },
     });
   }
 

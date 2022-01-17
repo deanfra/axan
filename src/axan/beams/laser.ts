@@ -1,6 +1,6 @@
 import { Beam, BeamProps } from "./beam";
 import MainScene from "axan/main.scene";
-import ProjectileConfig from "../../interfaces/projectile-config"
+import ProjectileConfig from "../../interfaces/projectile-config";
 
 export class Laser extends Beam implements BeamProps {
   static id = "LASER";
@@ -20,7 +20,7 @@ export class Laser extends Beam implements BeamProps {
     gravity: false,
     key: "projectile",
     size: 10,
-    velocity: 400
+    velocity: 400,
   };
 
   scene: MainScene;
@@ -29,5 +29,4 @@ export class Laser extends Beam implements BeamProps {
     super(scene, x, y, key, frame);
     this.body.setSize(this.size, this.size).allowGravity = false;
   }
-
 }

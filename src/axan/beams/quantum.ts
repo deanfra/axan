@@ -1,32 +1,32 @@
-import { Laser } from './laser';
-import { BeamProps } from './beam';
+import { Laser } from "./laser";
+import { BeamProps } from "./beam";
 
 export class Quantum extends Laser implements BeamProps {
-  static id = 'QUANTUM';
-  id = 'QUANTUM';
+  static id = "QUANTUM";
+  id = "QUANTUM";
   label = "QUANTUM";
 
   cooldown = 75;
   shootTimer = 75;
   // recoil = 30;
-  damage = 2;
+  damage = 12;
   // pushBackFloor = 40;
   // pushBackAir = 60;
   angleSpread = 25;
 
   projectileConfig = {
-    anim: 'beam-pulse',
+    anim: "beam-pulse",
     damage: this.damage,
     gravity: false,
-    key: 'projectile',
+    key: "projectile",
     size: 5,
     velocity: 500,
   };
 
-  constructor(scene, x, y, key = 'beams', frame) {
+  constructor(scene, x, y, key = "beams", frame) {
     super(scene, x, y, key, frame);
   }
-/*  shoot() {
+  /*  shoot() {
     const x = this.flipX ? this.x - 8 : this.x + 8;
 
     const projectile =
@@ -56,7 +56,7 @@ export class Quantum extends Laser implements BeamProps {
     super.shoot();
   }*/
 
-    //   if (this.scene.player.body.onFloor()) {
+  //   if (this.scene.player.body.onFloor()) {
   //     if (this.flipX) {
   //       return this.pushBackFloor;
   //     } else {
@@ -70,5 +70,4 @@ export class Quantum extends Laser implements BeamProps {
   //     }
   //   }
   // }
-
 }

@@ -7,30 +7,29 @@ const beamLib: Array<string> = ["QUANTUM", "LASER", "RANG", "ICE", "FIRE"];
 const suitLib: Array<string> = ["HIJUMPBOOTS", "DASHBOOTS", "WALLJUMPBOOTS", "HEALTHTANK"];
 
 export default class PickupFactory {
-
   static createRandomPickup(scene, worldX: number, worldY: number): Pickup | null {
     // Difference will filter out items in inventory
     const inventoryItems = [...scene.inventory.beams, ...scene.inventory.suit];
     const pickupArray = _.difference(beamLib.concat(suitLib), inventoryItems);
     const randPickup = _.sample(pickupArray);
     const pickupFrame = {
-      "HEALTHTANK": "health-upgrade",
-      "HIJUMPBOOTS": "hi-jump-boots",
-      "WALLJUMPBOOTS": "wall-jump-boots",
-      "DASHBOOTS": "dash-boots",
-      "QUANTUM": "plasma",
-      "RANG": "wave",
-      "ICE": "ice",
-      "FIRE": "spazer",
-      "LASER": "charge",
+      HEALTHTANK: "health-upgrade",
+      HIJUMPBOOTS: "hi-jump-boots",
+      WALLJUMPBOOTS: "wall-jump-boots",
+      DASHBOOTS: "dash-boots",
+      QUANTUM: "plasma",
+      RANG: "wave",
+      ICE: "ice",
+      FIRE: "spazer",
+      LASER: "charge",
     }[randPickup];
 
     if (randPickup) {
       let pickupInstance;
       if (beamLib.indexOf(randPickup) > -1) {
-        pickupInstance = new BeamPickup(scene, worldX, worldY, 'beam-pickups')
+        pickupInstance = new BeamPickup(scene, worldX, worldY, "beam-pickups");
       } else if (suitLib.indexOf(randPickup) > -1) {
-        pickupInstance = new SuitPickup(scene, worldX, worldY, 'beam-pickups')
+        pickupInstance = new SuitPickup(scene, worldX, worldY, "beam-pickups");
       }
 
       pickupInstance.name = randPickup;
@@ -59,4 +58,3 @@ export default class PickupFactory {
     scene.physics.world.enable(pickup, Phaser.Physics.Arcade.STATIC_BODY);
   }
 }
-

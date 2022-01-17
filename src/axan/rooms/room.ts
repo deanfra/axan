@@ -29,8 +29,8 @@ export class Room {
   public tiles: Array<Array<Tile>>;
   public backTiles: Array<Array<Tile>>;
   public type: string = "default";
-  private doorLookup: {[key: number]: Array<Door>} = {};
-  private doorGateLookup: {[key: number]: DoorGate} = {};
+  private doorLookup: { [key: number]: Array<Door> } = {};
+  private doorGateLookup: { [key: number]: DoorGate } = {};
 
   public readonly id: number;
   public readonly x: number;
@@ -58,7 +58,7 @@ export class Room {
   }
 
   setup(): Room {
-    console.log(this.type, this.width, this.height)
+    console.log(this.type, this.width, this.height);
     if (!this.isSetup) {
       // Group doors up
       this.instantiateTiles();
@@ -75,7 +75,7 @@ export class Room {
       this.addDoorGate();
       this.isSetup = true;
     }
-    
+
     return this;
   }
 
@@ -96,8 +96,8 @@ export class Room {
       }
     }
 
-    this.room.doors.forEach(door => {
-      const doorTile: any = this.tileAt((door.x - this.room.left), (door.y-this.room.top));
+    this.room.doors.forEach((door) => {
+      const doorTile: any = this.tileAt(door.x - this.room.left, door.y - this.room.top);
       this.doorLookup[door.linksTo] = this.doorLookup[door.linksTo] || [];
       this.doorLookup[door.linksTo].push(doorTile);
     });
@@ -107,39 +107,39 @@ export class Room {
     this.tiles.forEach((tileY: Array<Tile>) => {
       tileY.forEach((tileX: Tile) => {
         tileX.placeTile();
-      })
-    })
+      });
+    });
   }
 
   placeBackTiles(): void {
-    this.backTiles.forEach((tileY: Array<BackTile|None>) => {
-      tileY.forEach((tileX: BackTile|None) => {
+    this.backTiles.forEach((tileY: Array<BackTile | None>) => {
+      tileY.forEach((tileX: BackTile | None) => {
         tileX.placeBackTile();
-      })
-    })
+      });
+    });
   }
 
   addEnemies(): void {
-    const x = _.sample(_.range(this.room.x + 1, this.room.x+this.room.width-1));
-    const y = _.sample(_.range(this.room.y + 1, this.room.y+this.room.height-1));
+    const x = _.sample(_.range(this.room.x + 1, this.room.x + this.room.width - 1));
+    const y = _.sample(_.range(this.room.y + 1, this.room.y + this.room.height - 1));
     const worldX = this.scene.map.tileToWorldX(x);
     const worldY = this.scene.map.tileToWorldY(y);
     const EnemyClass = _.sample([Vroll, Piq, Jumper, Gnid, GnidPatrol]);
-    this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, _.sample([1,2])), true);
+    this.enemyGroup.add(new EnemyClass(this.scene, worldX, worldY, _.sample([1, 2])), true);
   }
 
   addDoorGate(): void {
     _.forEach(this.doorLookup, ([door]: Array<Door>, id) => {
-      const worldX = this.scene.map.tileToWorldX(this.room.left+door.x);
-      const worldY = this.scene.map.tileToWorldY(this.room.top+door.y);
+      const worldX = this.scene.map.tileToWorldX(this.room.left + door.x);
+      const worldY = this.scene.map.tileToWorldY(this.room.top + door.y);
 
-      this.doorGateLookup[id] = new DoorGate(this.scene, (worldX + 8), (worldY + 8), door);
+      this.doorGateLookup[id] = new DoorGate(this.scene, worldX + 8, worldY + 8, door);
       this.scene.doorGateGroup.add(this.doorGateLookup[id], true);
     });
   }
 
   addPickups() {
-    const randNoneTile: any = _.sample(_.sample(this.tiles).filter(tile => tile.tileLabel === "None")) || {};
+    const randNoneTile: any = _.sample(_.sample(this.tiles).filter((tile) => tile.tileLabel === "None")) || {};
     const randomX = randNoneTile.x + this.room.x;
     const randomY = this.room.height + this.room.y;
     const worldX = this.scene.map.tileToWorldX(randomX) + 8;
@@ -152,8 +152,8 @@ export class Room {
     const { width: roomWidth, height: roomHeight } = this.room;
     const cellularMap = Cellular(this.room.width, this.room.height, { aliveThreshold: 4.12 });
 
-    for (let y = 1; y < (roomHeight-1); y++) {
-      for (let x = 1; x < (roomWidth-1); x++) {
+    for (let y = 1; y < roomHeight - 1; y++) {
+      for (let x = 1; x < roomWidth - 1; x++) {
         const cellularMapTile = cellularMap.grid[y][x];
         if (cellularMapTile) {
           this.tiles[y][x] = new Wall(x, y, this);
@@ -183,8 +183,8 @@ export class Room {
 
   clearDoorways() {
     // loop through doors
-    _.forEach(this.doorLookup, doors => {
-      doors.forEach(door => {
+    _.forEach(this.doorLookup, (doors) => {
+      doors.forEach((door) => {
         door.clearDoorway(this);
       });
     });
@@ -205,19 +205,19 @@ export class Room {
   }
 
   movePlayerIntoRoom(previousRoom) {
-    if (previousRoom){
+    if (previousRoom) {
       const { x, y, clearance: c } = this.doorLookup[previousRoom.id][1];
 
-      const xOffset = (c.dir==="e") ? 2 : (c.dir==="w") ? -1 : 2;
-      const yOffset = (c.dir==="n") ? 0 : (c.dir==="s") ? 4 : 3;
+      const xOffset = c.dir === "e" ? 2 : c.dir === "w" ? -1 : 2;
+      const yOffset = c.dir === "n" ? 0 : c.dir === "s" ? 4 : 3;
 
       // offset nesw based on door clearance
       this.scene.player.x = this.scene.map.tileToWorldX(this.x + x + xOffset);
       this.scene.player.y = this.scene.map.tileToWorldX(this.y + y + yOffset);
 
-      _.forEach(this.doorGateLookup, doorGate => {
-        doorGate.shut()
-      })
+      _.forEach(this.doorGateLookup, (doorGate) => {
+        doorGate.shut();
+      });
     }
   }
 }

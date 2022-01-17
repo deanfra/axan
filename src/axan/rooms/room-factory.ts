@@ -7,11 +7,11 @@ export default class RoomFactory {
     const room = new RoomType(roomInstance, scene);
     return room;
   }
-  
+
   static determineType(roomInstance: RoomInstance) {
     const { width, height } = roomInstance;
 
-    if(width <= 15 && height > 20) {
+    if (width <= 15 && height > 20) {
       return TallRoom;
     } else if (width >= 18 && height <= 9) {
       return Corridor;

@@ -31,14 +31,14 @@ export default class Level {
         width: { min: 10, max: 90 },
         height: { min: 7, max: 90 },
         maxArea: 400,
-        maxRooms: 50
-      }
+        maxRooms: 50,
+      },
     });
-    
+
     this.scene = scene;
     this.rooms = [];
   }
-  
+
   instantiateRooms(): void {
     this.dungeonInstance.rooms.forEach((roomInstance: RoomInstance) => {
       const room = RoomFactory.createRoom(roomInstance, this.scene);
@@ -55,5 +55,4 @@ export default class Level {
       }
     }
   }
-  
 }

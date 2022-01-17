@@ -1,16 +1,15 @@
-import { Enemy } from './enemy';
+import { Enemy } from "./enemy";
 
 export class Piq extends Enemy {
-
   baseVel: number = 40;
   vel: number = 40;
   health = 6;
   damage = 10;
   killAt: number = 0;
-  animWalk: string = 'piq';
+  animWalk: string = "piq";
 
   constructor(scene, x, y, dir) {
-    super(scene, x, y, dir, 'enemies');
+    super(scene, x, y, dir, "enemies");
   }
 
   firstUpdate(): void {
@@ -22,8 +21,12 @@ export class Piq extends Enemy {
   }
 
   update(time: number, delta: number) {
-    if (this.isFirst) { this.firstUpdate(); }
-    if (this.isDead || this.isFrozen) { return; }
+    if (this.isFirst) {
+      this.firstUpdate();
+    }
+    if (this.isDead || this.isFrozen) {
+      return;
+    }
 
     this.flipX = this.body.velocity.x < 0;
 
@@ -34,5 +37,4 @@ export class Piq extends Enemy {
 
     this.falling = this.body.velocity.y > 50;
   }
-
 }

@@ -1,4 +1,3 @@
 import Pickup from "./pickup";
 
-export default class SuitPickup extends Pickup {
-}
+export default class SuitPickup extends Pickup {}

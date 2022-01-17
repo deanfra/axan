@@ -4,7 +4,7 @@ import Wall from "./wall";
 export enum TileType {
   None,
   Wall,
-  Door
+  Door,
 }
 
 export default class Tile {
@@ -14,7 +14,7 @@ export default class Tile {
   public readonly x: number;
   public readonly y: number;
   public tileIndex: number;
-  private neighbours: { [dir: string]: Tile | null}
+  private neighbours: { [dir: string]: Tile | null };
   public tileLabel: string;
 
   constructor(x: number, y: number, room: Room) {
@@ -39,7 +39,7 @@ export default class Tile {
       nw: this.room.tileAt(this.x - 1, this.y - 1),
       ne: this.room.tileAt(this.x + 1, this.y - 1),
       sw: this.room.tileAt(this.x - 1, this.y + 1),
-      se: this.room.tileAt(this.x + 1, this.y + 1)
+      se: this.room.tileAt(this.x + 1, this.y + 1),
     };
   }
 
@@ -70,27 +70,31 @@ export default class Tile {
   }
 
   // Pass in an array of tile types to check if the neighbours match
-  checkAllNeighbours(checkNeighbours: Array<string|null>) {
+  checkAllNeighbours(checkNeighbours: Array<string | null>) {
     this.neighbours = this.neighbours || this.getNeighbours();
     const actualNeighbours = this.getNeighboursTypes();
 
     return checkNeighbours.every((tileName, i) => {
       // Basically stringifies nulls so we can call split
       let actualTile = actualNeighbours[i];
-      if (tileName === null) { tileName = "" }
+      if (tileName === null) {
+        tileName = "";
+      }
       // Split factors in a tile being multiple types
-      return tileName.split("|").indexOf(actualTile) >= 0
-    })
+      return tileName.split("|").indexOf(actualTile) >= 0;
+    });
   }
 
-  checkNESWNeighbours(checkNeighbours: Array<string|null>) {
+  checkNESWNeighbours(checkNeighbours: Array<string | null>) {
     this.neighbours = this.neighbours || this.getNeighbours();
     const actualNeighbours = this.getNESWNeighboursTypes();
 
     return checkNeighbours.every((tileName, i) => {
       let actualTile = actualNeighbours[i];
-      if (tileName === null) { tileName = "" }
-      return tileName.split("|").indexOf(actualTile) >= 0
-    })
+      if (tileName === null) {
+        tileName = "";
+      }
+      return tileName.split("|").indexOf(actualTile) >= 0;
+    });
   }
 }

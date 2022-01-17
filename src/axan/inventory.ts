@@ -4,11 +4,11 @@ import MainScene from "./main.scene";
 
 export default class Inventory {
   private scene: MainScene;
-  
+
   public activeBeam: string = "LASER";
   private beams: string[] = ["LASER"];
   private suit: string[] = [];
-  
+
   public health: number = 100;
   private maxHealth: number = 100;
   public hiJump: boolean = false;
@@ -20,38 +20,38 @@ export default class Inventory {
   }
 
   suitUpgrade(suitPickup: SuitPickup) {
-    if (suitPickup.name === 'HIJUMPBOOTS') {
+    if (suitPickup.name === "HIJUMPBOOTS") {
       this.hiJump = true;
       this.suit.push(suitPickup.name);
       this.scene.hud.addToInventoryText(suitPickup.name);
-    } else if (suitPickup.name === 'WALLJUMPBOOTS') {
+    } else if (suitPickup.name === "WALLJUMPBOOTS") {
       this.wallJump = true;
       this.suit.push(suitPickup.name);
       this.scene.hud.addToInventoryText(suitPickup.name);
-    } else if (suitPickup.name === 'DASHBOOTS') {
+    } else if (suitPickup.name === "DASHBOOTS") {
       this.dash = true;
       this.suit.push(suitPickup.name);
       this.scene.hud.addToInventoryText(suitPickup.name);
-    } else if (suitPickup.name === 'HEALTHTANK') {
+    } else if (suitPickup.name === "HEALTHTANK") {
       this.maxHealth += 100;
       this.heal(100);
     }
   }
 
   addBeam(beam: BeamPickup) {
-    if(this.beams.indexOf(beam.name) === -1){
+    if (this.beams.indexOf(beam.name) === -1) {
       this.beams.push(beam.name);
     }
   }
 
   nextBeam() {
     const activeIndex = this.beams.indexOf(this.activeBeam);
-    const nextBeam = this.beams[activeIndex+1];
-    return (nextBeam) ? nextBeam : this.beams[0];
+    const nextBeam = this.beams[activeIndex + 1];
+    return nextBeam ? nextBeam : this.beams[0];
   }
 
   heal(amount: number = 0) {
-    if ((this.health+amount) < this.maxHealth) {
+    if (this.health + amount < this.maxHealth) {
       this.health += amount;
     } else {
       this.health = this.maxHealth;

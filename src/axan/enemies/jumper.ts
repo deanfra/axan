@@ -1,18 +1,17 @@
-import { Enemy } from './enemy';
+import { Enemy } from "./enemy";
 
 export class Jumper extends Enemy {
-
   baseVel: number = 40;
   vel: number = 40;
   health = 10;
   damage = 10;
   killAt: number = 0;
-  animIdle: string = 'jumper-idle';
-  animJump: string = 'jumper-jump';
+  animIdle: string = "jumper-idle";
+  animJump: string = "jumper-jump";
   isJumping: boolean = false;
 
   constructor(scene, x, y, dir) {
-    super(scene, x, y, dir, 'enemies');
+    super(scene, x, y, dir, "enemies");
   }
 
   jumpTimer(scene) {
@@ -21,16 +20,18 @@ export class Jumper extends Enemy {
       callbackScope: this,
       callback: () => {
         this.jump(scene);
-      }
+      },
     });
   }
 
   jump(scene) {
-    if (this.isDead || this.isFrozen || this.isJumping) { return }
+    if (this.isDead || this.isFrozen || this.isJumping) {
+      return;
+    }
 
     const playerX = scene.player.x;
-    const velX = (playerX > this.x) ? 150 : -150;
-    
+    const velX = playerX > this.x ? 150 : -150;
+
     this.isJumping = true;
     this.anims.play(this.animJump);
     this.body.setVelocityY(-200);
@@ -39,8 +40,10 @@ export class Jumper extends Enemy {
     this.jumpTimer(scene);
   }
 
-  stopJump(){
-    if (this.isDead || this.isFrozen) { return }
+  stopJump() {
+    if (this.isDead || this.isFrozen) {
+      return;
+    }
     this.body.setVelocityX(0);
     this.isJumping = false;
     this.anims.play(this.animIdle);

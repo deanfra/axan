@@ -1,7 +1,7 @@
-import MainScene from './main.scene';
-import RandomPlanetName from '../util/name-gen';
+import MainScene from "./main.scene";
+import RandomPlanetName from "../util/name-gen";
 
-const FONT = 'mario-font';
+const FONT = "mario-font";
 const ALIGN_RIGHT = 3;
 const HUD_SIZE = 3;
 const LINE_HEIGHT = 4.5;
@@ -29,7 +29,7 @@ export default class Inventory {
     this.screenBottom = (window.innerHeight / 3) * 2 - 15;
 
     // Inventory label text
-    const inventoryLabel = scene.add.bitmapText(this.screenLeft, this.screenTop + LINE_HEIGHT * 4, FONT, 'INVENTORY', HUD_SIZE);
+    const inventoryLabel = scene.add.bitmapText(this.screenLeft, this.screenTop + LINE_HEIGHT * 4, FONT, "INVENTORY", HUD_SIZE);
     inventoryLabel.setDepth(100);
     inventoryLabel.setScrollFactor(0);
     inventoryLabel.setAlpha(0.5);
@@ -38,12 +38,12 @@ export default class Inventory {
     this.healthText.setDepth(100);
     this.healthText.setScrollFactor(0);
 
-    this.beamText = scene.add.bitmapText(this.screenLeft, this.screenBottom, FONT, 'LASER BEAM', HUD_SIZE);
+    this.beamText = scene.add.bitmapText(this.screenLeft, this.screenBottom, FONT, "LASER BEAM", HUD_SIZE);
     this.beamText.setDepth(100);
     this.beamText.setScrollFactor(0);
 
     // World label text
-    const worldLabel = scene.add.bitmapText(this.screenLeft, this.screenTop, FONT, 'WORLD', HUD_SIZE);
+    const worldLabel = scene.add.bitmapText(this.screenLeft, this.screenTop, FONT, "WORLD", HUD_SIZE);
     worldLabel.setDepth(100);
     worldLabel.setScrollFactor(0);
     worldLabel.setAlpha(0.5);

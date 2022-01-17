@@ -1,8 +1,8 @@
 export default {
-  RIGHT: [1,2],
-  LEFT: [3,4],
+  RIGHT: [1, 2],
+  LEFT: [3, 4],
   CEILING: [5],
-  FLOOR: [6,7,8],
+  FLOOR: [6, 7, 8],
   TR_INNER: [9],
   TL_INNER: [10],
   BR_INNER: [11],

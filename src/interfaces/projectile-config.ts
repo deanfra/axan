@@ -7,4 +7,4 @@ export default interface ProjectileConfig {
   key: string;
   size: number;
   velocity: number;
-};
+}

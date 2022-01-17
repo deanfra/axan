@@ -1,18 +1,17 @@
-import { Enemy } from './enemy';
+import { Enemy } from "./enemy";
 import { Room } from "../rooms/room";
 
 export class Gnid extends Enemy {
-
   baseVel: number = 50;
   vel: number = 50;
   health = 1;
   damage = 20;
   killAt: number = 0;
-  animWalk: string = 'gnid';
+  animWalk: string = "gnid";
   wasOnFloor: boolean;
 
   constructor(scene, x, y, dir) {
-    super(scene, x, y, dir, 'enemies');
+    super(scene, x, y, dir, "enemies");
   }
 
   firstUpdate(): void {
@@ -24,12 +23,15 @@ export class Gnid extends Enemy {
 
     this.body.setVelocityY(50);
     this.wasOnFloor = this.body.onFloor();
-
   }
 
   update(time: number, delta: number) {
-    if (this.isFirst) { this.firstUpdate(); }
-    if (this.isDead || this.isFrozen) { return; }
+    if (this.isFirst) {
+      this.firstUpdate();
+    }
+    if (this.isDead || this.isFrozen) {
+      return;
+    }
 
     const { left, right } = this.body.blocked;
 

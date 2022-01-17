@@ -20,6 +20,7 @@ export class Scene extends Phaser.Scene {
   //   super(config as any);
   // }
 
-  update(time: number, delta?: number): void { /* */ }
-
+  update(time: number, delta?: number): void {
+    /* */
+  }
 }

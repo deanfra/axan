@@ -7,7 +7,6 @@ export class Corridor extends Room {
   }
 
   instantiatePlatforms() {
-    return
+    return;
   }
-
 }

@@ -1,6 +1,5 @@
 import { RoomInstance } from "./room-instance";
 
-
 export default interface DungeonFactoryOutput {
   doorPadding: number;
   height: number;

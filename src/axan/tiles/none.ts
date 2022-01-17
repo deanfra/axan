@@ -11,7 +11,7 @@ export default class None extends Tile {
     // TODO: noneIndex() for back tiles
     //       to determine inner corners
     this.tileIndex = -1;
-    return super.placeTile();    
+    return super.placeTile();
   }
 
   placeBackTile(): void {

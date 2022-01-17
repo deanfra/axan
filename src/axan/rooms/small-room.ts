@@ -7,6 +7,6 @@ export class SmallRoom extends Room {
   }
 
   instantiatePlatforms() {
-    return
+    return;
   }
 }

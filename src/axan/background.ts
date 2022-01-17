@@ -1,4 +1,4 @@
-import MainScene from './main.scene';
+import MainScene from "./main.scene";
 
 export default class Background extends Phaser.GameObjects.TileSprite {
   public scene: MainScene;
@@ -17,12 +17,12 @@ export default class Background extends Phaser.GameObjects.TileSprite {
   setup() {
     this.positionToActiveRoom();
   }
-  
+
   positionToActiveRoom() {
     const { x, y, width, height } = this.scene.activeRoom;
     this.width = 1900;
     this.height = 1900;
-    this.x = this.scene.map.tileToWorldX(x + (height/2)); 
-    this.y = this.scene.map.tileToWorldY(y + (width/2));
+    this.x = this.scene.map.tileToWorldX(x + height / 2);
+    this.y = this.scene.map.tileToWorldY(y + width / 2);
   }
 }

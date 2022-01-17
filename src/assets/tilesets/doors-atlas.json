@@ -1,52 +1,53 @@
-{"frames": [
-
 {
-	"filename": "door-active1",
-	"frame": {"x":0,"y":0,"w":32,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
-	"sourceSize": {"w":32,"h":48}
-},
-{
-	"filename": "door-closed1",
-	"frame": {"x":0,"y":48,"w":32,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
-	"sourceSize": {"w":32,"h":48}
-},
-{
-	"filename": "door-open1",
-	"frame": {"x":0,"y":96,"w":32,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
-	"sourceSize": {"w":32,"h":48}
-},
-{
-	"filename": "door-open2",
-	"frame": {"x":0,"y":144,"w":32,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
-	"sourceSize": {"w":32,"h":48}
-},
-{
-	"filename": "door-open3",
-	"frame": {"x":0,"y":192,"w":32,"h":48},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
-	"sourceSize": {"w":32,"h":48}
-}],
-"meta": {
-	"app": "https://www.codeandweb.com/texturepacker",
-	"version": "1.0",
-	"image": "doors-atlas.png",
-	"format": "RGBA8888",
-	"size": {"w":32,"h":240},
-	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a560ee1c4bb7d43bbae173be6dfd358d:0d9cc6e064f2d1eda8ae8b04facee9dc:14e4487e093aa7bc2d4c4c29657e03b4$"
-}
+  "frames": [
+    {
+      "filename": "door-active1",
+      "frame": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "sourceSize": { "w": 32, "h": 48 }
+    },
+    {
+      "filename": "door-closed1",
+      "frame": { "x": 0, "y": 48, "w": 32, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "sourceSize": { "w": 32, "h": 48 }
+    },
+    {
+      "filename": "door-open1",
+      "frame": { "x": 0, "y": 96, "w": 32, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "sourceSize": { "w": 32, "h": 48 }
+    },
+    {
+      "filename": "door-open2",
+      "frame": { "x": 0, "y": 144, "w": 32, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "sourceSize": { "w": 32, "h": 48 }
+    },
+    {
+      "filename": "door-open3",
+      "frame": { "x": 0, "y": 192, "w": 32, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 48 },
+      "sourceSize": { "w": 32, "h": 48 }
+    }
+  ],
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "doors-atlas.png",
+    "format": "RGBA8888",
+    "size": { "w": 32, "h": 240 },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:a560ee1c4bb7d43bbae173be6dfd358d:0d9cc6e064f2d1eda8ae8b04facee9dc:14e4487e093aa7bc2d4c4c29657e03b4$"
+  }
 }

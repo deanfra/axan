@@ -1,9 +1,9 @@
-import { Beam } from './beam';
-import { Laser } from './laser';
-import { Quantum } from './quantum';
-import { Rang } from './rang';
-import { Ice } from './ice';
-import { Fire } from './fire';
+import { Beam } from "./beam";
+import { Laser } from "./laser";
+import { Quantum } from "./quantum";
+import { Rang } from "./rang";
+import { Ice } from "./ice";
+import { Fire } from "./fire";
 // import { Shotbeam } from './shotbeam';
 // import { DualPistol } from './dualpistol';
 // import { Minibeam } from './minibeam';
@@ -37,13 +37,13 @@ export const beams: Array<typeof Beam> = [
   // LaserBeam
 ];
 
-export * from './beam';
-export * from './beam-factory';
-export * from './laser';
-export * from './quantum';
-export * from './rang';
-export * from './ice';
-export * from './fire';
+export * from "./beam";
+export * from "./beam-factory";
+export * from "./laser";
+export * from "./quantum";
+export * from "./rang";
+export * from "./ice";
+export * from "./fire";
 // export * from './minibeam';
 // export * from './shotbeam';
 // export * from './dualpistol';

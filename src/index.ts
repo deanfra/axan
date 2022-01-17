@@ -1,12 +1,12 @@
-import 'phaser';
+import "phaser";
 
-import BootScene from 'boot.scene';
-import MainScene from './axan/main.scene';
+import BootScene from "boot.scene";
+import MainScene from "./axan/main.scene";
 
 const config: Opt<GameConfig> = {
   type: Phaser.WEBGL,
-  backgroundColor: '#121619',
-  parent: 'game',
+  backgroundColor: "#121619",
+  parent: "game",
   width: window.innerWidth,
   height: window.innerHeight,
   zoom: 2,
@@ -16,10 +16,10 @@ const config: Opt<GameConfig> = {
     mode: Phaser.DOM.RESIZE,
     parent: "game",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   input: {
-    gamepad: true
+    gamepad: true,
   },
   // fps: {
   //   min: 1,
@@ -28,16 +28,13 @@ const config: Opt<GameConfig> = {
   //   panicMax: 20
   // },
   physics: {
-    default: 'arcade',
+    default: "arcade",
     arcade: {
       gravity: { y: 600 },
-      debug: false
-    }
+      debug: false,
+    },
   },
-  scene: [
-    BootScene,
-    MainScene
-  ]
+  scene: [BootScene, MainScene],
 };
 
 const game = new Phaser.Game(config);

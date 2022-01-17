@@ -1,18 +1,17 @@
-import { Enemy } from './enemy';
+import { Enemy } from "./enemy";
 import { Room } from "../rooms/room";
 
 export class GnidPatrol extends Enemy {
-
   baseVel: number = 90;
   vel: number = 90;
   health = 1;
   damage = 20;
   killAt: number = 0;
-  animWalk: string = 'gnid';
+  animWalk: string = "gnid";
   wasOnDoor: boolean;
   wasOnFloor: boolean;
   wasOnCeiling: boolean;
-  wasBlocked: { [key:string]: boolean };
+  wasBlocked: { [key: string]: boolean };
 
   constructor(scene, x, y, dir) {
     super(scene, x, y, dir, "enemies");
@@ -39,12 +38,16 @@ export class GnidPatrol extends Enemy {
   }
 
   update(time: number, delta: number) {
-    if (this.isFirst) { this.firstUpdate(); }
-    if (this.isDead || this.isFrozen) { return; }
+    if (this.isFirst) {
+      this.firstUpdate();
+    }
+    if (this.isDead || this.isFrozen) {
+      return;
+    }
 
     const { left, right } = this.body.blocked;
     const { left: wasLeft, right: wasRight } = this.wasBlocked;
-    
+
     const onSomething = this.body.onFloor() || this.body.onCeiling() || left || right;
     const wasOnSomething = this.wasOnFloor || this.wasOnCeiling || wasLeft || wasRight;
 
@@ -74,10 +77,21 @@ export class GnidPatrol extends Enemy {
       this.goUpLeft();
     } else if (!onSomething && this.wasOnDoor) {
       this.wasOnDoor = false;
-      if (wasLeft) { this.x -= 1; this.goDown(); this.stopX(); }
-        else if (wasRight) { this.x += 1; this.goUp(); this.stopX(); }
-        else if (this.wasOnFloor) { this.goRight(); this.stopY(); }
-        else if (this.wasOnCeiling) { this.goLeft(); this.stopY(); }
+      if (wasLeft) {
+        this.x -= 1;
+        this.goDown();
+        this.stopX();
+      } else if (wasRight) {
+        this.x += 1;
+        this.goUp();
+        this.stopX();
+      } else if (this.wasOnFloor) {
+        this.goRight();
+        this.stopY();
+      } else if (this.wasOnCeiling) {
+        this.goLeft();
+        this.stopY();
+      }
     }
 
     // Falling

@@ -1,5 +1,5 @@
-import Player from './player';
-import Background from './background';
+import Player from "./player";
+import Background from "./background";
 import { Room } from "./rooms";
 import Level from "./level";
 import Inventory from "./inventory";
@@ -22,15 +22,15 @@ import suophusTileMapping from "../assets/tilesets/worlds/suophus/suophus";
 const tileMaps = {
   creotur: creoturTileMapping,
   lahiri: lahiriTileMapping,
-  suophus: suophusTileMapping
-}
+  suophus: suophusTileMapping,
+};
 
 export default class MainScene extends Phaser.Scene {
   public map: Phaser.Tilemaps.Tilemap;
 
   public groundLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private groundTileset: Phaser.Tilemaps.Tileset;
-  public groundTileMapping: { [key: string] : Array<number> };
+  public groundTileMapping: { [key: string]: Array<number> };
   public backLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   private backTileset: Phaser.Tilemaps.Tileset;
   private outOfBoundsLayer: Phaser.Tilemaps.DynamicTilemapLayer;
@@ -44,7 +44,7 @@ export default class MainScene extends Phaser.Scene {
   public pickupGroup: Phaser.GameObjects.Group;
   public projectileGroup: Phaser.GameObjects.Group;
   public vegetationGroup: Phaser.GameObjects.Group;
-  
+
   public player: Player;
   public level: Level;
   public roomVisibility: any;
@@ -54,11 +54,11 @@ export default class MainScene extends Phaser.Scene {
   public hud: HUD;
 
   public levelPrefix: string = _.sample(["lahiri", "suophus", "creotur"]);
-  
+
   public nameText: Phaser.GameObjects.BitmapText;
 
   constructor() {
-    super({ key: 'MainScene' });
+    super({ key: "MainScene" });
   }
 
   preload() {
@@ -68,7 +68,7 @@ export default class MainScene extends Phaser.Scene {
   create(): void {
     this.level = new Level(this);
     this.inventory = new Inventory(this);
-    
+
     MakeAnimations(this);
 
     this.setupGroups();
@@ -99,8 +99,7 @@ export default class MainScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     this.player.update(time, delta);
 
-    this.enemyGroup.children.entries.concat(this.killedEnemies.children.entries)
-      .forEach(enemy => enemy.update(time, delta), this);
+    this.enemyGroup.children.entries.concat(this.killedEnemies.children.entries).forEach((enemy) => enemy.update(time, delta), this);
   }
 
   makeTiles() {
@@ -108,15 +107,15 @@ export default class MainScene extends Phaser.Scene {
       tileWidth: 16,
       tileHeight: 16,
       width: this.level.dungeonInstance.width,
-      height: this.level.dungeonInstance.height
+      height: this.level.dungeonInstance.height,
     });
 
-    this.groundTileset = this.map.addTilesetImage(this.levelPrefix+"-ground", this.levelPrefix+"-ground", 16, 16);
+    this.groundTileset = this.map.addTilesetImage(this.levelPrefix + "-ground", this.levelPrefix + "-ground", 16, 16);
     this.groundTileMapping = tileMaps[this.levelPrefix];
     this.groundLayer = this.map.createBlankDynamicLayer("groundLayer", this.groundTileset);
     this.groundLayer.depth = 2;
-    
-    this.outOfBoundsTileset = this.map.addTilesetImage(this.levelPrefix+"-out-of-bounds", this.levelPrefix+"-out-of-bounds", 16, 16);
+
+    this.outOfBoundsTileset = this.map.addTilesetImage(this.levelPrefix + "-out-of-bounds", this.levelPrefix + "-out-of-bounds", 16, 16);
     this.outOfBoundsLayer = this.map.createBlankDynamicLayer("outOfBoundsLayer", this.outOfBoundsTileset);
   }
 
@@ -125,17 +124,17 @@ export default class MainScene extends Phaser.Scene {
       tileWidth: 16,
       tileHeight: 16,
       width: this.level.dungeonInstance.width,
-      height: this.level.dungeonInstance.height
+      height: this.level.dungeonInstance.height,
     });
 
-    this.backTileset = backMap.addTilesetImage(this.levelPrefix+"-back", this.levelPrefix+"-back", 16, 16);
+    this.backTileset = backMap.addTilesetImage(this.levelPrefix + "-back", this.levelPrefix + "-back", 16, 16);
     this.backLayer = backMap.createBlankDynamicLayer("backLayer", this.backTileset);
     this.backLayer.depth = 1;
   }
 
   setupRoomVisibility() {
     const tileArray = _.range(20);
-    this.outOfBoundsLayer.randomize(0, 0, this.level.dungeonInstance.width, this.level.dungeonInstance.height, tileArray)
+    this.outOfBoundsLayer.randomize(0, 0, this.level.dungeonInstance.width, this.level.dungeonInstance.height, tileArray);
     this.outOfBoundsLayer.setDepth(99);
     this.roomVisibility = new RoomVisibility(this.outOfBoundsLayer, this);
   }
@@ -143,9 +142,9 @@ export default class MainScene extends Phaser.Scene {
   setupPlayer() {
     const { centerX, bottom } = this.level.startRoom.room;
     const playerX = this.map.tileToWorldX(centerX);
-    const playerY = this.map.tileToWorldY(bottom-1);
+    const playerY = this.map.tileToWorldY(bottom - 1);
     this.player = new Player(this, playerX, playerY);
-    
+
     // player / world hit detection
     this.physics.add.collider(this.player, this.groundLayer);
     // player / enemy hit detection
@@ -157,9 +156,9 @@ export default class MainScene extends Phaser.Scene {
   }
 
   setupBackground() {
-    this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-front", 0.9, -1));
-    this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-mid", 0.7, -2));
-    this.backgroundGroup.add(new Background(this, this.levelPrefix+"-bg-back", 0.5, -3));
+    this.backgroundGroup.add(new Background(this, this.levelPrefix + "-bg-front", 0.9, -1));
+    this.backgroundGroup.add(new Background(this, this.levelPrefix + "-bg-mid", 0.7, -2));
+    this.backgroundGroup.add(new Background(this, this.levelPrefix + "-bg-back", 0.5, -3));
   }
 
   setupCamera() {
@@ -173,13 +172,13 @@ export default class MainScene extends Phaser.Scene {
     camera.startFollow(this.player, true, 0.3, 0.3, 0, 40);
     camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
   }
-  
+
   setupDoorGateColliders() {
-    const enemyHitDoor = enemy => {
+    const enemyHitDoor = (enemy) => {
       if (enemy.name === "GnidPatrol") {
         enemy.touchedDoor();
       }
-    }
+    };
     this.physics.add.collider(this.enemyGroup, this.doorGateGroup, enemyHitDoor);
   }
 
@@ -192,8 +191,10 @@ export default class MainScene extends Phaser.Scene {
         if (projectile.active) {
           projectile.projectileCollide();
         }
-      }, undefined, this);
-
+      },
+      undefined,
+      this
+    );
 
     this.physics.add.overlap(this.projectileGroup, this.enemyGroup, this.enemyShot, undefined, this);
     this.physics.add.overlap(this.projectileGroup, this.doorGateGroup, this.doorShot, undefined, this);
@@ -207,20 +208,20 @@ export default class MainScene extends Phaser.Scene {
 
   // refactor into enemy.ts
   enemyShot = (projectile: Projectile, enemy: Enemy) => {
-    if (enemy.canDamage || projectile.getData('bypass')) {
+    if (enemy.canDamage || projectile.getData("bypass")) {
       const scene = this as MainScene;
       let fromRight = projectile.x > enemy.x;
       let shouldFlip = false;
       let multiplier = 1;
 
-      if (fromRight && enemy.body.velocity.x > 0 && projectile.getData('flip')) {
+      if (fromRight && enemy.body.velocity.x > 0 && projectile.getData("flip")) {
         shouldFlip = true;
-      } else if (!fromRight && enemy.body.velocity.x < 0 && projectile.getData('flip')) {
+      } else if (!fromRight && enemy.body.velocity.x < 0 && projectile.getData("flip")) {
         shouldFlip = true;
       }
 
-      if (projectile.getData('force')) {
-        multiplier = projectile.getData('force');
+      if (projectile.getData("force")) {
+        multiplier = projectile.getData("force");
       }
 
       enemy.hurt(projectile.damage, multiplier, shouldFlip);
@@ -231,29 +232,29 @@ export default class MainScene extends Phaser.Scene {
         }
       }
 
-      if (projectile.getData('onEnemy')) {
-        projectile.getData('onEnemy')(projectile, enemy, scene);
+      if (projectile.getData("onEnemy")) {
+        projectile.getData("onEnemy")(projectile, enemy, scene);
       }
     }
     projectile.projectileCollide();
-  }
+  };
 
   doorShot = (projectile: Projectile, doorGate: any) => {
     projectile.projectileCollide();
     doorGate.open();
-  }
+  };
 
   cameraConstrainTo(room: Room): void {
     // If my camera is already following a target
     // if (this.game.camera.target) {
-    //   this.game.camera.follow(null);  // Unfollow the target  
+    //   this.game.camera.follow(null);  // Unfollow the target
     //   // Move the camera to the center of a planet, adjusting for the camera being 'centered' at the top-left.}
-    //   this.game.add.tween(this.game.camera).to({ x: pCenter.x - (this.game.camera.width / 2), y: pCenter.y - (this.game.camera.height / 2) }, 750, Phaser.Easing.Quadratic.InOut, true);  
+    //   this.game.add.tween(this.game.camera).to({ x: pCenter.x - (this.game.camera.width / 2), y: pCenter.y - (this.game.camera.height / 2) }, 750, Phaser.Easing.Quadratic.InOut, true);
 
     const camera = this.cameras.main;
     // Constrain camera to room bounds
     const { x, y, width, height, left, right } = room;
-    const [trX, trY, trLeft, trRight] = [x, y, width, height, left, right].map(rc => this.map.tileToWorldX(rc));
+    const [trX, trY, trLeft, trRight] = [x, y, width, height, left, right].map((rc) => this.map.tileToWorldX(rc));
 
     camera.setBounds(trX, trY, window.innerWidth, window.innerHeight);
     camera.stopFollow();

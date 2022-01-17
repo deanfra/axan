@@ -19,4 +19,4 @@ export default {
   POLE_DOWN: [18],
   POLE_M: [19],
   ENCLOSED: [24],
-} as { [key:string] : Array<number> };
+} as { [key: string]: Array<number> };
