@@ -233,6 +233,10 @@ export default class MainScene extends Phaser.Scene {
         }
       }
 
+      if (projectile.effects.includes("pushback")) {
+        enemy.pushback(projectile);
+      }
+
       if (projectile.getData("onEnemy")) {
         projectile.getData("onEnemy")(projectile, enemy, scene);
       }

@@ -28,4 +28,12 @@ export class Rang extends Beam implements BeamProps {
     super(scene, x, y, key, frame);
     this.body.setSize(this.size, this.size).allowGravity = false;
   }
+
+  shoot() {
+    const projectile = super.shoot();
+    if (projectile) {
+      projectile.effects.push("pushback");
+    }
+    return projectile;
+  }
 }

@@ -1,3 +1,4 @@
+import Projectile from "axan/beams/projectile";
 import MainScene from "axan/main.scene";
 
 export class Enemy extends Phaser.GameObjects.Sprite {
@@ -55,6 +56,16 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   flip(): void {
     this.body.setVelocityX(-this.body.velocity.x);
+  }
+
+  pushback(projectile: Projectile): void {
+    const pushBackAmount = 100;
+
+    const y = projectile.body.velocity.y;
+    const x = projectile.body.velocity.x;
+
+    this.body.setVelocityX(x);
+    this.body.setVelocityY(y);
   }
 
   freeze(): void {

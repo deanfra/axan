@@ -6,7 +6,7 @@ export default class Inventory {
   private scene: MainScene;
 
   public activeBeam: string = "LASER";
-  public beams: string[] = ["LASER", "ICE", "FIRE"];
+  public beams: string[] = ["LASER"];
   private suit: string[] = [];
 
   public health: number = 100;
