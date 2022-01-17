@@ -42,8 +42,10 @@ export default class Inventory {
     beamsLabel.setScrollFactor(0);
     beamsLabel.setAlpha(0.5);
 
-    this.addToBeamsText("LASER");
-    this.setCurrentBeam("LASER");
+    scene.inventory.beams.forEach((beam) => {
+      this.addToBeamsText(beam);
+    });
+    this.setCurrentBeam(scene.inventory.beams[0]);
 
     this.healthText = scene.add.bitmapText(this.screenRight, this.screenTop, FONT, scene.inventory.health.toString(), HUD_SIZE, ALIGN_RIGHT);
     this.healthText.setDepth(100);

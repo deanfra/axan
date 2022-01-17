@@ -129,7 +129,7 @@ export default class MainScene extends Phaser.Scene {
 
     this.backTileset = backMap.addTilesetImage(this.levelPrefix + "-back", this.levelPrefix + "-back", 16, 16);
     this.backLayer = backMap.createBlankDynamicLayer("backLayer", this.backTileset);
-    this.backLayer.depth = 1;
+    this.backLayer.depth = 0;
   }
 
   setupRoomVisibility() {
@@ -226,7 +226,8 @@ export default class MainScene extends Phaser.Scene {
 
       enemy.hurt(projectile.damage, multiplier, shouldFlip);
 
-      if (projectile.effects.indexOf("ice") >= 0) {
+      if (projectile.effects.includes("ice")) {
+        // If the enemy has only one shot remaining, freeze it
         if (enemy.health <= projectile.damage) {
           enemy.freeze();
         }

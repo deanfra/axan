@@ -4,7 +4,6 @@ import ProjectileConfig from "../../interfaces/projectile-config";
 
 export class Rang extends Beam implements BeamProps {
   static id = "RANG";
-  private direction: string;
   id = "RANG";
   label = "RANG";
 

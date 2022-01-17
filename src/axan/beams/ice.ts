@@ -4,7 +4,6 @@ import ProjectileConfig from "../../interfaces/projectile-config";
 
 export class Ice extends Beam implements BeamProps {
   static id = "ICE";
-  private direction: string;
   id = "ICE";
   label = "ICE";
 
